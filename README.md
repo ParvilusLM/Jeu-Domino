@@ -1,6 +1,8 @@
 # Jeu-Domino
 Codé en C++ avec la bibliotheque SFML
 
+#**Projet en cours de developpement**
+
 Ce jeu est une reproduction
 
 En tant que debutant, mon intention n'est pas de le realiser a l'identique.
