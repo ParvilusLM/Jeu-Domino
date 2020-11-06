@@ -13,15 +13,32 @@ struct ElDomino
 
 struct ElJoueur
 {
-   std::vector<ElDomino > vecDominos;
+   std::vector<ElDomino& > vecDominos;
    int points;
 
 };
 
-struct ElTableau
+struct PlateauJeu
 {
     std::vector<ElJoueur > vecJoueurs;
+    std::vector<ElDomino > vecDominos;
     int typeJeu;
 };
+
+enum
+{
+    CPU,
+    HUMAIN
+};
+
+enum
+{
+    D_CLASSIQUE,
+    D_5PARTOUT,
+    D_MATADOR,
+    D_MEMORY
+};
+
+
 
 #endif // DEF_ENUMS

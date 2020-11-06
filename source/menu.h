@@ -1,6 +1,10 @@
 #ifndef DEF_MENU
 #define DEF_MENU
 
+#include "enums.h"
+#include "constantes.h"
+#include "varG.h"
+
 class Menu
 {
 public:
