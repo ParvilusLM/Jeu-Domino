@@ -8,9 +8,25 @@
 class Info
 {
 public:
+    Info(sf::RenderWindow& fenetre);
 
+    //initialisation
+    void initInfo();
+
+    //traitement donnees
+    void gestInfoPartEnCours();
+    void majInfo();
+    int getDonnees(int typDonnees);
+    void setDonnees(int typDonnees, int action, int valeur=0);
+
+    //affichage
+    void afficheInfo();
+
+    ~Info();
 
 private:
+    sf::RenderWindow* m_fenetre;
+
 
 
 };
