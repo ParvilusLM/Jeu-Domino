@@ -22,11 +22,7 @@ public:
 
     bool finPartie();
 
-
-
-
     ~Joueur();
-
 
 private:
     sf::RenderWindow* m_fenetre;

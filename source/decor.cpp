@@ -6,7 +6,7 @@ Decor::Decor(sf::RenderWindow& fenetre):m_fenetre(0),m_menu(0),m_info(0),m_son(0
 
     m_menu= new Menu(*m_fenetre);
     m_info= new Info(*m_fenetre);
-    m_son= new Son(*m_fenetre);
+    m_son= new Son();
     m_joueur= new Joueur(*m_fenetre);
 
     m_tFondG.loadFromFile("donnees/fondEc.png");

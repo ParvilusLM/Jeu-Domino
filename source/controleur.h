@@ -11,9 +11,9 @@ public:
     void debutJeu();
 
     void gestionDplSouris();
-    void gestionSelecSelecSouris();
+    void gestionSelecSouris();
 
-    gestionMaJ();
+    void gestionMaJ();
 
     void afficheMenu();
     void afficheFondEc();

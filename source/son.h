@@ -9,9 +9,13 @@
 class Son
 {
 public:
+    Son();
+    void jouerSon();
 
+    ~Son();
 
 private:
+
 
 
 };
