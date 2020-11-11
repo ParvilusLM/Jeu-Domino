@@ -54,8 +54,8 @@ private:
     sf::Texture m_tSelectInstr,m_tSelectMP,m_tSelectTypeJ,m_tSelectMPause,m_tSelectMGO;
 
     //sprites pour les boutons
-    sf::Sprite m_sbInfo,m_sbSon,m_sbJoueur1,m_sbJoueur2;//menuPrincipal
-    sf::Sprite m_sbMenu,m_sbGrille1,m_sbGrille2,m_sbGrille3;//menuSelectTypeJ
+    sf::Sprite m_sbInfo,m_sbSon,m_sbJoueur1;//menuPrincipal
+    sf::Sprite m_sbMenu,m_sbType1,m_sbType2,m_sbType3,m_sbType4,m_sbNiveau1,m_sbNiveau2,m_sbNiveau3,m_sbJouer;//menuSelectTypeJ
     sf::Sprite m_sbOk;//menuInstructions
     sf::Sprite m_sbResume,m_sbRejouer,m_sbInstructions,m_sbQuitter;//menuPause
     sf::Sprite m_sbMenuFP,m_sbRejouerFP;//menu finPartie
@@ -72,6 +72,19 @@ private:
     //pour menu instructions
     sf::Texture m_tMenuI;
     sf::Sprite m_sMenuI;
+
+    sf::Texture m_tMenuI1;
+    sf::Sprite m_sMenuI1;
+
+    sf::Texture m_tMenuI2;
+    sf::Sprite m_sMenuI2;
+
+    sf::Texture m_tMenuI3;
+    sf::Sprite m_sMenuI3;
+
+    sf::Texture m_tMenuI4;
+    sf::Sprite m_sMenuI4;
+
 
     //pour menu pause
     sf::Texture m_tMenuPause;
