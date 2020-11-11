@@ -56,7 +56,7 @@ private:
     //sprites pour les boutons
     sf::Sprite m_sbInfo,m_sbSon,m_sbJoueur1;//menuPrincipal
     sf::Sprite m_sbMenu,m_sbType1,m_sbType2,m_sbType3,m_sbType4,m_sbNiveau1,m_sbNiveau2,m_sbNiveau3,m_sbJouer;//menuSelectTypeJ
-    sf::Sprite m_sbOk;//menuInstructions
+    sf::Sprite m_sbOk,m_sbPrec,m_sbSuiv;//menuInstructions
     sf::Sprite m_sbResume,m_sbRejouer,m_sbInstructions,m_sbQuitter;//menuPause
     sf::Sprite m_sbMenuFP,m_sbRejouerFP;//menu finPartie
 
