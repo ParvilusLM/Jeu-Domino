@@ -24,6 +24,75 @@ void Controleur::gestionSelecSouris()
 
 void Controleur::gestionMaJ()
 {
+    //gestions boutons presses pour les menus
+    if(boutonPresse)
+    {
+        //pour le son quand on clic sur un bouton
+        if(m_decor->getMenu().getBoutonPress()!= AUCUN_EL_ACT)
+        {
+            //m_decor->getSon().jouerSon(SON_BCLIK);
+        }
+
+        if(m_decor->getMenu().getBoutonPress()==B_INFO)
+        {
+
+        }
+        else if(m_decor->getMenu().getBoutonPress()==B_SON)
+        {
+
+        }
+        else if(m_decor->getMenu().getBoutonPress()==B_JOUEUR1)
+        {
+
+        }
+        else if(m_decor->getMenu().getBoutonPress()==B_OK)
+        {
+
+        }
+        else if(m_decor->getMenu().getBoutonPress()==B_MENU)
+        {
+
+        }
+        else if(m_decor->getMenu().getBoutonPress()==B_JOUER)
+        {
+
+        }
+        else if(m_decor->getMenu().getBoutonPress()==B_PAUSER)
+        {
+
+        }
+        else if(m_decor->getMenu().getBoutonPress()==B_PAUSEREJ)
+        {
+            debutJeu();
+        }
+        else if(m_decor->getMenu().getBoutonPress()==B_PAUSEI)
+        {
+
+        }
+        else if(m_decor->getMenu().getBoutonPress()==B_PAUSEQ)
+        {
+
+        }
+        else if(m_decor->getMenu().getBoutonPress()==B_FINPQ)
+        {
+            jeuPause=false;
+            jeuEnCours=false;
+            jeuDebut=false;
+            jeuFinPartie=false;
+            m_decor->getMenu().setTypeMenu(MenuPrincipal);
+        }
+        else if(m_decor->getMenu().getBoutonPress()==B_FINPR)
+        {
+            debutJeu();
+        }
+        else
+        {
+
+        }
+
+        m_decor->getMenu().resetBoutonPress();
+        boutonPresse=false;
+    }
 
 }
 

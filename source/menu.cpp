@@ -14,6 +14,8 @@ Menu::Menu(sf::RenderWindow& fenetre):m_fenetre(0)
     m_tSelectMGO.loadFromFile("donnees/bGameOver.png");
 
     //sprites pour les boutons
+
+    //menu principal
     m_sbInfo.setTexture(m_tSelectMP);
     m_sbInfo.setPosition(1.f*20.f,1.f*20.f);
     gestTexture(B_INFO,1);
@@ -27,6 +29,7 @@ Menu::Menu(sf::RenderWindow& fenetre):m_fenetre(0)
     gestTexture(B_JOUEUR1,1);
 
 
+    //select type jeu
     m_sbMenu.setTexture(m_tSelectTypeJ);
     m_sbMenu.setPosition(1.f*20.f,1.f*20.f);
     gestTexture(B_MENU,1);
@@ -63,32 +66,43 @@ Menu::Menu(sf::RenderWindow& fenetre):m_fenetre(0)
     m_sbJouer.setPosition(24.f*20.f,25.f*20.f);
     gestTexture(B_JOUER,1);
 
+    //menu instructions
     m_sbOk.setTexture(m_tSelectInstr);
-    m_sbOk.setPosition(20.5f*20.f,27.f*20.f);
+    m_sbOk.setPosition(31.f*20.f,5.5f*20.f);
     gestTexture(B_OK,1);
 
+    m_sbPrec.setTexture(m_tSelectInstr);
+    m_sbPrec.setPosition(24.5f*20.f,30.f*20.f);
+    gestTexture(B_PREC,1);
+
+    m_sbSuiv.setTexture(m_tSelectInstr);
+    m_sbSuiv.setPosition(28.5f*20.f,30.f*20.f);
+    gestTexture(B_SUIV,1);
+
+
+    //
     m_sbResume.setTexture(m_tSelectMPause);
-    m_sbResume.setPosition(16.5f*20.f,10.f*20.f);
+    m_sbResume.setPosition(16.f*20.f,11.f*20.f);
     gestTexture(B_PAUSER,1);
 
     m_sbRejouer.setTexture(m_tSelectMPause);
-    m_sbRejouer.setPosition(16.5f*20.f,14.f*20.f);
+    m_sbRejouer.setPosition(16.f*20.f,15.f*20.f);
     gestTexture(B_PAUSEREJ,1);
 
     m_sbInstructions.setTexture(m_tSelectMPause);
-    m_sbInstructions.setPosition(16.5f*20.f,18.f*20.f);
+    m_sbInstructions.setPosition(16.f*20.f,19.f*20.f);
     gestTexture(B_PAUSEI,1);
 
     m_sbQuitter.setTexture(m_tSelectMPause);
-    m_sbQuitter.setPosition(16.5f*20.f,22.f*20.f);
+    m_sbQuitter.setPosition(16.f*20.f,23.f*20.f);
     gestTexture(B_PAUSEQ,1);
 
     m_sbMenuFP.setTexture(m_tSelectMGO);
-    m_sbMenuFP.setPosition(16.f*20.f,27.f*20.f);
+    m_sbMenuFP.setPosition(14.f*20.f,24.5f*20.f);
     gestTexture(B_FINPQ,1);
 
     m_sbRejouerFP.setTexture(m_tSelectMGO);
-    m_sbRejouerFP.setPosition(26.5f*20.f,27.f*20.f);
+    m_sbRejouerFP.setPosition(27.5f*20.f,24.5f*20.f);
     gestTexture(B_FINPR,1);
 
 
@@ -284,6 +298,16 @@ void Menu::elementActif()
             m_elementActif=OK_ACTIF;
             gestTexture(B_OK,2);
         }
+        else if(collisionTS(m_sbPrec.getGlobalBounds()))
+        {
+            m_elementActif=PREC_ACTIF;
+            gestTexture(B_PREC,2);
+        }
+        else if(collisionTS(m_sbSuiv.getGlobalBounds()))
+        {
+            m_elementActif=SUIV_ACTIF;
+            gestTexture(B_SUIV,2);
+        }
         else
         {
             m_elementActif=AUCUN_EL_ACT;
@@ -424,6 +448,7 @@ void Menu::selectionElActif()
         {
             m_boutonPress=B_JOUER;
             boutonPresse=true;
+
         }
         else
         {
@@ -582,11 +607,33 @@ void Menu::gestTexture(int bouton, int type)
     {
         if(type==1)
         {
-            m_sbOk.setTextureRect(sf::IntRect(1*20,23*20,4*20,4*20));
+            m_sbOk.setTextureRect(sf::IntRect(31*20,5.5f*20,4*20,4*20));
         }
         else
         {
-            m_sbOk.setTextureRect(sf::IntRect(1*20,6*20,4*20,4*20));
+            m_sbOk.setTextureRect(sf::IntRect(26*20,5.5f*20,4*20,4*20));
+        }
+    }
+    else if(bouton==B_PREC)
+    {
+        if(type==1)
+        {
+            m_sbPrec.setTextureRect(sf::IntRect(24.5f*20,30.f*20,4*20,4*20));
+        }
+        else
+        {
+            m_sbPrec.setTextureRect(sf::IntRect(24.5f*20,26*20,4*20,4*20));
+        }
+    }
+    else if(bouton==B_SUIV)
+    {
+        if(type==1)
+        {
+            m_sbSuiv.setTextureRect(sf::IntRect(28.5f*20,30.f*20,4*20,4*20));
+        }
+        else
+        {
+            m_sbSuiv.setTextureRect(sf::IntRect(28.5*20,26*20,4*20,4*20));
         }
     }
     else if(bouton==B_MENU)
@@ -692,66 +739,66 @@ void Menu::gestTexture(int bouton, int type)
     {
         if(type==1)
         {
-            m_sbResume.setTextureRect(sf::IntRect(0,0,12*20,3*20));
+            m_sbResume.setTextureRect(sf::IntRect(1*20,1*20,12*20,3*20));
         }
         else
         {
-            m_sbResume.setTextureRect(sf::IntRect(0,16*20,12*20,3*20));
+            m_sbResume.setTextureRect(sf::IntRect(1*20,17*20,12*20,3*20));
         }
     }
     else if(bouton==B_PAUSEREJ)
     {
         if(type==1)
         {
-            m_sbRejouer.setTextureRect(sf::IntRect(0,4*20,12*20,3*20));
+            m_sbRejouer.setTextureRect(sf::IntRect(1*20,5*20,12*20,3*20));
         }
         else
         {
-            m_sbRejouer.setTextureRect(sf::IntRect(0,20*20,12*20,3*20));
+            m_sbRejouer.setTextureRect(sf::IntRect(1*20,21*20,12*20,3*20));
         }
     }
     else if(bouton==B_PAUSEI)
     {
         if(type==1)
         {
-            m_sbInstructions.setTextureRect(sf::IntRect(0,8*20,12*20,3*20));
+            m_sbInstructions.setTextureRect(sf::IntRect(1*20,9*20,12*20,3*20));
         }
         else
         {
-            m_sbInstructions.setTextureRect(sf::IntRect(0,24*20,12*20,3*20));
+            m_sbInstructions.setTextureRect(sf::IntRect(1*20,25*20,12*20,3*20));
         }
     }
     else if(bouton==B_PAUSEQ)
     {
         if(type==1)
         {
-            m_sbQuitter.setTextureRect(sf::IntRect(0,12*20,12*20,3*20));
+            m_sbQuitter.setTextureRect(sf::IntRect(1*20,13*20,12*20,3*20));
         }
         else
         {
-            m_sbQuitter.setTextureRect(sf::IntRect(0,28*20,12*20,3*20));
+            m_sbQuitter.setTextureRect(sf::IntRect(1*20,29*20,12*20,3*20));
         }
     }
     else if(bouton==B_FINPQ)
     {
         if(type==1)
         {
-            m_sbMenuFP.setTextureRect(sf::IntRect(1*20,10*20,2.5*20,2.5*20));
+            m_sbMenuFP.setTextureRect(sf::IntRect(1*20,1*20,2.5*20,2.5*20));
         }
         else
         {
-            m_sbMenuFP.setTextureRect(sf::IntRect(6*20,10*20,2.5*20,2.5*20));
+            m_sbMenuFP.setTextureRect(sf::IntRect(6*20,1*20,2.5*20,2.5*20));
         }
     }
     else if(bouton==B_FINPR)
     {
         if(type==1)
         {
-            m_sbRejouerFP.setTextureRect(sf::IntRect(1*20,14*20,2.5*20,2.5*20));
+            m_sbRejouerFP.setTextureRect(sf::IntRect(1*20,6*20,2.5*20,2.5*20));
         }
         else
         {
-            m_sbRejouerFP.setTextureRect(sf::IntRect(6*20,14*20,2.5*20,2.5*20));
+            m_sbRejouerFP.setTextureRect(sf::IntRect(6*20,6*20,2.5*20,2.5*20));
         }
     }
     else
@@ -786,6 +833,8 @@ void Menu::afficheMenuI()
 {
     m_fenetre->draw(m_sMenuI);
     m_fenetre->draw(m_sbOk);
+    m_fenetre->draw(m_sbPrec);
+    m_fenetre->draw(m_sbSuiv);
 }
 
 void Menu::afficheMenuPause()

@@ -23,6 +23,7 @@ struct PlateauJeu
     std::vector<ElJoueur > vecJoueurs;
     std::vector<ElDomino > vecDominos;
     int typeJeu;
+
 };
 
 enum
@@ -64,6 +65,8 @@ enum
     NIVEAU3_ACTIF,
     JOUER_ACTIF,
     OK_ACTIF,
+    PREC_ACTIF,
+    SUIV_ACTIF,
     PAUSER_ACTIF,
     PAUSEREJ_ACTIF,
     PAUSEI_ACTIF,
@@ -79,6 +82,8 @@ enum
     B_SON,
     B_JOUEUR1,
     B_OK,
+    B_PREC,
+    B_SUIV,
     B_MENU,
     B_TYPE1,
     B_TYPE2,

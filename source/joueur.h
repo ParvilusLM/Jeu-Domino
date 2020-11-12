@@ -22,6 +22,8 @@ public:
 
     bool finPartie();
 
+    void affichePartie();
+
     ~Joueur();
 
 private:

@@ -45,6 +45,11 @@ bool Joueur::finPartie()
 
 }
 
+void Joueur::affichePartie()
+{
+
+}
+
 Joueur::~Joueur()
 {
 
