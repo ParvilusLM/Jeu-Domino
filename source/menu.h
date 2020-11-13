@@ -28,6 +28,7 @@ public:
     void quitterJeu();
 
     void gestTexture(int bouton, int type);
+    void resetTextureB(int sauf);
 
     void afficheMenuP();
     void afficheMenuSelectP();
@@ -65,25 +66,25 @@ private:
     sf::Texture m_tMenuP;
     sf::Sprite m_sMenuP;
 
+    bool musicOn;
+
     //pour menu TypeJeu
     sf::Texture m_tTypeJeu;
     sf::Sprite m_sTypeJeu;
+    TypeJeuChoisi m_TypeJeuChoisi;
+    NiveauChoisi m_NiveauChoisi;
 
     //pour menu instructions
     sf::Texture m_tMenuI;
     sf::Sprite m_sMenuI;
 
     sf::Texture m_tMenuI1;
+    sf::Texture m_tMenuI2;
+    sf::Texture m_tMenuI3;
+    sf::Texture m_tMenuI4;
     sf::Sprite m_sMenuI1;
 
-    sf::Texture m_tMenuI2;
-    sf::Sprite m_sMenuI2;
-
-    sf::Texture m_tMenuI3;
-    sf::Sprite m_sMenuI3;
-
-    sf::Texture m_tMenuI4;
-    sf::Sprite m_sMenuI4;
+    int pageI;
 
 
     //pour menu pause

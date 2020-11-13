@@ -108,6 +108,23 @@ enum
     SON_INTERDIT
 };
 
+enum TypeJeuChoisi
+{
+    AUCUN_TJ,
+    TJ_CLASSIQUE,
+    TJ_5PARTOUT,
+    TJ_MATADOR,
+    TJ_MEMORY
+};
+
+enum NiveauChoisi
+{
+    AUCUN_NIV,
+    NIV_FACILE,
+    NIV_MOYEN,
+    NIV_DIFFICILE
+};
+
 
 
 #endif // DEF_ENUMS

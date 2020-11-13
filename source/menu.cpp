@@ -22,7 +22,7 @@ Menu::Menu(sf::RenderWindow& fenetre):m_fenetre(0)
 
     m_sbSon.setTexture(m_tSelectMP);
     m_sbSon.setPosition(39.f*20.f,1*20.f);
-    gestTexture(B_SON,1);
+    gestTexture(B_SON,3);
 
     m_sbJoueur1.setTexture(m_tSelectMP);
     m_sbJoueur1.setPosition(24.5f*20.f,28.5f*20.f);
@@ -119,6 +119,10 @@ Menu::Menu(sf::RenderWindow& fenetre):m_fenetre(0)
 
 
     m_typeMenu=MenuPrincipal;
+    m_TypeJeuChoisi=AUCUN_TJ;
+    m_NiveauChoisi=AUCUN_NIV;
+    musicOn=true;
+    pageI=1;
 
     initMenuP();
     initMenuI();
@@ -144,6 +148,7 @@ void Menu::initMenuSelectP()
 void Menu::initMenuI()
 {
     m_sMenuI.setTexture(m_tMenuI);
+    m_sMenuI1.setTexture(m_tMenuI1);
 }
 
 void Menu::initMenuPause()
@@ -197,13 +202,6 @@ void Menu::retourMenuP()
 
 void Menu::elementActif()
 {
-    int compt=0;
-    while(compt<15)
-    {
-        gestTexture(compt,1);
-        compt++;
-    }
-
     if(m_typeMenu==MenuPrincipal)
     {
         if(collisionTS(m_sbJoueur1.getGlobalBounds()))
@@ -226,7 +224,15 @@ void Menu::elementActif()
             m_elementActif=AUCUN_EL_ACT;
             gestTexture(B_JOUEUR1,1);
             gestTexture(B_INFO,1);
-            gestTexture(B_SON,1);
+            if(musicOn)
+            {
+                gestTexture(B_SON,3);
+            }
+            else
+            {
+                gestTexture(B_SON,1);
+            }
+
         }
 
     }
@@ -280,14 +286,76 @@ void Menu::elementActif()
         else
         {
             m_elementActif=AUCUN_EL_ACT;
+
+            if(m_TypeJeuChoisi==TJ_CLASSIQUE)
+            {
+                gestTexture(B_TYPE1,3);
+
+                gestTexture(B_TYPE2,1);
+                gestTexture(B_TYPE3,1);
+                gestTexture(B_TYPE4,1);
+            }
+            else if(m_TypeJeuChoisi==TJ_5PARTOUT)
+            {
+                gestTexture(B_TYPE2,3);
+
+                gestTexture(B_TYPE1,1);
+                gestTexture(B_TYPE3,1);
+                gestTexture(B_TYPE4,1);
+            }
+            else if(m_TypeJeuChoisi==TJ_MATADOR)
+            {
+                gestTexture(B_TYPE3,3);
+
+                gestTexture(B_TYPE1,1);
+                gestTexture(B_TYPE2,1);
+                gestTexture(B_TYPE4,1);
+            }
+            else if(m_TypeJeuChoisi==TJ_MEMORY)
+            {
+                gestTexture(B_TYPE4,3);
+
+                gestTexture(B_TYPE1,1);
+                gestTexture(B_TYPE2,1);
+                gestTexture(B_TYPE3,1);
+            }
+            else
+            {
+                gestTexture(B_TYPE1,1);
+                gestTexture(B_TYPE2,1);
+                gestTexture(B_TYPE3,1);
+                gestTexture(B_TYPE4,1);
+            }
             gestTexture(B_MENU,1);
-            gestTexture(B_TYPE1,1);
-            gestTexture(B_TYPE2,1);
-            gestTexture(B_TYPE3,1);
-            gestTexture(B_TYPE4,1);
-            gestTexture(B_NIVEAU1,1);
-            gestTexture(B_NIVEAU2,1);
-            gestTexture(B_NIVEAU3,1);
+
+            if(m_NiveauChoisi==NIV_FACILE)
+            {
+                gestTexture(B_NIVEAU1,3);
+
+                gestTexture(B_NIVEAU2,1);
+                gestTexture(B_NIVEAU3,1);
+            }
+            else if(m_NiveauChoisi==NIV_MOYEN)
+            {
+                gestTexture(B_NIVEAU2,3);
+
+                gestTexture(B_NIVEAU1,1);
+                gestTexture(B_NIVEAU3,1);
+            }
+            else if(m_NiveauChoisi==NIV_DIFFICILE)
+            {
+                gestTexture(B_NIVEAU3,3);
+
+                gestTexture(B_NIVEAU1,1);
+                gestTexture(B_NIVEAU2,1);
+            }
+            else
+            {
+                gestTexture(B_NIVEAU1,1);
+                gestTexture(B_NIVEAU2,1);
+                gestTexture(B_NIVEAU3,1);
+            }
+
             gestTexture(B_JOUER,1);
         }
     }
@@ -312,6 +380,8 @@ void Menu::elementActif()
         {
             m_elementActif=AUCUN_EL_ACT;
             gestTexture(B_OK,1);
+            gestTexture(B_PREC,1);
+            gestTexture(B_SUIV,1);
         }
     }
     else if(m_typeMenu==MenuPause)
@@ -382,6 +452,7 @@ void Menu::selectionElActif()
             m_boutonPress=B_JOUEUR1;
             boutonPresse=true;
             m_typeMenu=MenuSelectTypeJ;
+            gestTexture(B_JOUEUR1,1);
 
         }
         else if(m_elementActif==INSTRUCTIONS_ACTIF)
@@ -389,11 +460,23 @@ void Menu::selectionElActif()
             m_boutonPress=B_INFO;
             boutonPresse=true;
             m_typeMenu=MenuInstructions;
+            gestTexture(B_INFO,1);
         }
         else if(m_elementActif==SON_ACTIF)
         {
             m_boutonPress=B_SON;
             boutonPresse=true;
+            if(musicOn)
+            {
+               musicOn=false;
+               gestTexture(B_SON,1);
+            }
+            else
+            {
+                musicOn=true;
+                gestTexture(B_SON,3);
+            }
+
         }
         else
         {
@@ -413,36 +496,43 @@ void Menu::selectionElActif()
         {
             m_boutonPress=B_TYPE1;
             boutonPresse=true;
+            m_TypeJeuChoisi=TJ_CLASSIQUE;
         }
         else if(m_elementActif==TYPE2_ACTIF)
         {
             m_boutonPress=B_TYPE2;
             boutonPresse=true;
+            m_TypeJeuChoisi=TJ_5PARTOUT;
         }
         else if(m_elementActif==TYPE3_ACTIF)
         {
             m_boutonPress=B_TYPE3;
             boutonPresse=true;
+            m_TypeJeuChoisi=TJ_MATADOR;
         }
         else if(m_elementActif==TYPE4_ACTIF)
         {
             m_boutonPress=B_TYPE4;
             boutonPresse=true;
+            m_TypeJeuChoisi=TJ_MEMORY;
         }
         else if(m_elementActif==NIVEAU1_ACTIF)
         {
             m_boutonPress=B_NIVEAU1;
             boutonPresse=true;
+            m_NiveauChoisi=NIV_FACILE;
         }
         else if(m_elementActif==NIVEAU2_ACTIF)
         {
             m_boutonPress=B_NIVEAU2;
             boutonPresse=true;
+            m_NiveauChoisi=NIV_MOYEN;
         }
         else if(m_elementActif==NIVEAU3_ACTIF)
         {
             m_boutonPress=B_NIVEAU3;
             boutonPresse=true;
+            m_NiveauChoisi=NIV_DIFFICILE;
         }
         else if(m_elementActif==JOUER_ACTIF)
         {
@@ -471,6 +561,42 @@ void Menu::selectionElActif()
                 m_boutonPress=B_OK;
                 boutonPresse=true;
             }
+            gestTexture(B_OK,1);
+        }
+        else if(m_elementActif==PREC_ACTIF || m_elementActif==SUIV_ACTIF)
+        {
+            if(m_elementActif==PREC_ACTIF)
+            {
+                if(pageI>1)
+                {
+                    pageI--;
+                }
+            }
+            else
+            {
+                if(pageI<4)
+                {
+                    pageI++;
+                }
+            }
+
+            if(pageI==1)
+            {
+                m_sMenuI1.setTexture(m_tMenuI1);
+            }
+            else if(pageI==2)
+            {
+                m_sMenuI1.setTexture(m_tMenuI2);
+            }
+            else if(pageI==3)
+            {
+                m_sMenuI1.setTexture(m_tMenuI3);
+            }
+            else
+            {
+                m_sMenuI1.setTexture(m_tMenuI4);
+            }
+
         }
         else
         {
@@ -484,6 +610,7 @@ void Menu::selectionElActif()
             jeuPause=false;
             m_boutonPress=B_PAUSER;
             boutonPresse=true;
+            gestTexture(B_PAUSER,1);
 
         }
         if(m_elementActif==PAUSEREJ_ACTIF)
@@ -491,6 +618,7 @@ void Menu::selectionElActif()
             jeuPause=false;
             m_boutonPress=B_PAUSEREJ;
             boutonPresse=true;
+            gestTexture(B_PAUSEREJ,1);
 
         }
         else if(m_elementActif==PAUSEI_ACTIF)
@@ -498,6 +626,7 @@ void Menu::selectionElActif()
             m_typeMenu=MenuInstructions;
             m_boutonPress=B_PAUSEI;
             boutonPresse=true;
+            gestTexture(B_PAUSEI,1);
         }
         else if(m_elementActif==PAUSEQ_ACTIF)
         {
@@ -507,6 +636,7 @@ void Menu::selectionElActif()
             m_typeMenu=MenuPrincipal;
             m_boutonPress=B_PAUSEQ;
             boutonPresse=true;
+            gestTexture(B_PAUSEQ,1);
         }
         else
         {
@@ -519,6 +649,7 @@ void Menu::selectionElActif()
         {
             m_boutonPress=B_FINPQ;
             boutonPresse=true;
+            gestTexture(B_FINPQ,1);
         }
         else if(m_elementActif==FINPR_ACTIF)
         {
@@ -527,6 +658,7 @@ void Menu::selectionElActif()
             m_typeMenu=MenuPrincipal;
             m_boutonPress=B_FINPR;
             boutonPresse=true;
+            gestTexture(B_FINPR,1);
         }
         else
         {
@@ -587,9 +719,13 @@ void Menu::gestTexture(int bouton, int type)
         {
             m_sbSon.setTextureRect(sf::IntRect(1*20,8*20,5*20,5*20));
         }
-        else
+        else if(type==2)
         {
             m_sbSon.setTextureRect(sf::IntRect(8*20,8*20,5*20,5*20));
+        }
+        else
+        {
+            m_sbSon.setTextureRect(sf::IntRect(15*20,8*20,5*20,5*20));
         }
     }
     else if(bouton==B_JOUEUR1)
@@ -653,6 +789,10 @@ void Menu::gestTexture(int bouton, int type)
         {
             m_sbType1.setTextureRect(sf::IntRect(2*20,20*20,2*20,2*20));
         }
+        else if(type==2)
+        {
+            m_sbType1.setTextureRect(sf::IntRect(6*20,20*20,2*20,2*20));
+        }
         else
         {
             m_sbType1.setTextureRect(sf::IntRect(6*20,20*20,2*20,2*20));
@@ -663,6 +803,10 @@ void Menu::gestTexture(int bouton, int type)
         if(type==1)
         {
             m_sbType2.setTextureRect(sf::IntRect(2*20,20*20,2*20,2*20));
+        }
+        else if(type==2)
+        {
+            m_sbType2.setTextureRect(sf::IntRect(6*20,20*20,2*20,2*20));
         }
         else
         {
@@ -675,6 +819,10 @@ void Menu::gestTexture(int bouton, int type)
         {
             m_sbType3.setTextureRect(sf::IntRect(2*20,20*20,2*20,2*20));
         }
+        else if(type==2)
+        {
+            m_sbType3.setTextureRect(sf::IntRect(6*20,20*20,2*20,2*20));
+        }
         else
         {
             m_sbType3.setTextureRect(sf::IntRect(6*20,20*20,2*20,2*20));
@@ -685,6 +833,10 @@ void Menu::gestTexture(int bouton, int type)
         if(type==1)
         {
             m_sbType4.setTextureRect(sf::IntRect(2*20,20*20,2*20,2*20));
+        }
+        else if(type==2)
+        {
+            m_sbType4.setTextureRect(sf::IntRect(6*20,20*20,2*20,2*20));
         }
         else
         {
@@ -697,6 +849,10 @@ void Menu::gestTexture(int bouton, int type)
         {
             m_sbNiveau1.setTextureRect(sf::IntRect(2*20,20*20,2*20,2*20));
         }
+        else if(type==2)
+        {
+            m_sbNiveau1.setTextureRect(sf::IntRect(6*20,20*20,2*20,2*20));
+        }
         else
         {
             m_sbNiveau1.setTextureRect(sf::IntRect(6*20,20*20,2*20,2*20));
@@ -708,6 +864,10 @@ void Menu::gestTexture(int bouton, int type)
         {
             m_sbNiveau2.setTextureRect(sf::IntRect(2*20,20*20,2*20,2*20));
         }
+        else if(type==2)
+        {
+            m_sbNiveau2.setTextureRect(sf::IntRect(6*20,20*20,2*20,2*20));
+        }
         else
         {
             m_sbNiveau2.setTextureRect(sf::IntRect(6*20,20*20,2*20,2*20));
@@ -718,6 +878,10 @@ void Menu::gestTexture(int bouton, int type)
         if(type==1)
         {
             m_sbNiveau3.setTextureRect(sf::IntRect(2*20,20*20,2*20,2*20));
+        }
+        else if(type==2)
+        {
+            m_sbNiveau3.setTextureRect(sf::IntRect(6*20,20*20,2*20,2*20));
         }
         else
         {
@@ -807,6 +971,58 @@ void Menu::gestTexture(int bouton, int type)
     }
 }
 
+void Menu::resetTextureB(int sauf)
+{
+    int compt=1;
+    while(compt<=21)
+    {
+        if(m_typeMenu==MenuPrincipal)
+        {
+            if(compt>=1 && compt<=3)
+            {
+                if(compt != sauf)
+                {
+                    if(compt==B_SON)
+                    {
+
+                    }
+                    else
+                    {
+                        gestTexture(compt,1);
+                    }
+
+                }
+            }
+        }
+        else if(m_typeMenu==MenuSelectTypeJ)
+        {
+            if(compt>=1 && compt<=3)
+            {
+                if(compt != sauf)
+                {
+
+                }
+            }
+        }
+        else if(m_typeMenu==MenuInstructions)
+        {
+
+        }
+        else if(m_typeMenu==MenuPause)
+        {
+
+        }
+        else if(m_typeMenu==MenuFinPartie)
+        {
+
+        }
+        else
+        {
+
+        }
+    }
+}
+
 void Menu::afficheMenuP()
 {
     m_fenetre->draw(m_sbInfo);
@@ -832,6 +1048,7 @@ void Menu::afficheMenuSelectP()
 void Menu::afficheMenuI()
 {
     m_fenetre->draw(m_sMenuI);
+    m_fenetre->draw(m_sMenuI1);
     m_fenetre->draw(m_sbOk);
     m_fenetre->draw(m_sbPrec);
     m_fenetre->draw(m_sbSuiv);

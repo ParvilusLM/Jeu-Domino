@@ -30,7 +30,7 @@ void Controleur::gestionMaJ()
         //pour le son quand on clic sur un bouton
         if(m_decor->getMenu().getBoutonPress()!= AUCUN_EL_ACT)
         {
-            //m_decor->getSon().jouerSon(SON_BCLIK);
+            m_decor->getSon().jouerSon(SON_BCLIK);
         }
 
         if(m_decor->getMenu().getBoutonPress()==B_INFO)

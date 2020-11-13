@@ -169,6 +169,8 @@ int main()
         }
 
         //traitement des donnees
+        controleurJ.gestionMaJ();
+
         if(jeuEnCours)
         {
 
