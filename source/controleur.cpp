@@ -49,7 +49,43 @@ void Controleur::gestionMaJ()
         {
 
         }
+        else if(m_decor->getMenu().getBoutonPress()==B_PREC)
+        {
+
+        }
+        else if(m_decor->getMenu().getBoutonPress()==B_SUIV)
+        {
+
+        }
         else if(m_decor->getMenu().getBoutonPress()==B_MENU)
+        {
+
+        }
+        else if(m_decor->getMenu().getBoutonPress()==B_TYPE1)
+        {
+
+        }
+        else if(m_decor->getMenu().getBoutonPress()==B_TYPE2)
+        {
+
+        }
+        else if(m_decor->getMenu().getBoutonPress()==B_TYPE3)
+        {
+
+        }
+        else if(m_decor->getMenu().getBoutonPress()==B_TYPE4)
+        {
+
+        }
+        else if(m_decor->getMenu().getBoutonPress()==B_NIVEAU1)
+        {
+
+        }
+        else if(m_decor->getMenu().getBoutonPress()==B_NIVEAU2)
+        {
+
+        }
+        else if(m_decor->getMenu().getBoutonPress()==B_NIVEAU3)
         {
 
         }

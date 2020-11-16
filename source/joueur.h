@@ -1,6 +1,7 @@
 #ifndef DEF_JOUEUR
 #define DEF_JOEUEUR
 
+#include <iostream>
 #include "enums.h"
 #include "constantes.h"
 #include "varG.h"
@@ -21,6 +22,7 @@ public:
     void arrangerDomino();
 
     bool finPartie();
+    void gestTextureD(int noDomino);
 
     void affichePartie();
 
@@ -29,6 +31,7 @@ public:
 private:
     sf::RenderWindow* m_fenetre;
     PlateauJeu m_plateauJeu;
+    sf::Texture m_tFond,m_tElements;
 
 
 };

@@ -9,11 +9,15 @@ struct ElDomino
     int cote1,cote2;
     int angle;
     bool debord;
+    int etat;
+    int noDomino;
+
 };
 
 struct ElJoueur
 {
-   std::vector<ElDomino& > *vecDominos;
+   std::vector<ElDomino* > vecDominos;
+   sf::Sprite sCadreJoueur;
    int points;
 
 };
@@ -23,6 +27,8 @@ struct PlateauJeu
     std::vector<ElJoueur > vecJoueurs;
     std::vector<ElDomino > vecDominos;
     int typeJeu;
+    int niveauJeu;
+
 
 };
 
@@ -123,6 +129,12 @@ enum NiveauChoisi
     NIV_FACILE,
     NIV_MOYEN,
     NIV_DIFFICILE
+};
+
+enum
+{
+    RETOURNE,
+    VISIBLE
 };
 
 

@@ -242,6 +242,7 @@ void Menu::elementActif()
         {
             m_elementActif=MENU_ACTIF;
             gestTexture(B_MENU,2);
+
         }
         else if(collisionTS(m_sbType1.getGlobalBounds()))
         {
@@ -370,11 +371,13 @@ void Menu::elementActif()
         {
             m_elementActif=PREC_ACTIF;
             gestTexture(B_PREC,2);
+            resetTextureB(B_PREC);
         }
         else if(collisionTS(m_sbSuiv.getGlobalBounds()))
         {
             m_elementActif=SUIV_ACTIF;
             gestTexture(B_SUIV,2);
+            resetTextureB(B_SUIV);
         }
         else
         {
@@ -973,6 +976,7 @@ void Menu::gestTexture(int bouton, int type)
 
 void Menu::resetTextureB(int sauf)
 {
+    //le compteur compt est compare a chaque fois avec un numero de bouton de l'enum correspondant
     int compt=1;
     while(compt<=21)
     {
@@ -984,7 +988,14 @@ void Menu::resetTextureB(int sauf)
                 {
                     if(compt==B_SON)
                     {
-
+                        if(musicOn)
+                        {
+                            gestTexture(compt,3);
+                        }
+                        else
+                        {
+                            gestTexture(compt,1);
+                        }
                     }
                     else
                     {
@@ -996,30 +1007,50 @@ void Menu::resetTextureB(int sauf)
         }
         else if(m_typeMenu==MenuSelectTypeJ)
         {
-            if(compt>=1 && compt<=3)
+            if(compt>=7 && compt<=15)
             {
                 if(compt != sauf)
                 {
-
+                    gestTexture(compt,1);
                 }
             }
         }
         else if(m_typeMenu==MenuInstructions)
         {
-
+            if(compt>=4 && compt<=6)
+            {
+                if(compt != sauf)
+                {
+                    gestTexture(compt,1);
+                }
+            }
         }
         else if(m_typeMenu==MenuPause)
         {
-
+            if(compt>=16 && compt<=19)
+            {
+                if(compt != sauf)
+                {
+                    gestTexture(compt,1);
+                }
+            }
         }
         else if(m_typeMenu==MenuFinPartie)
         {
-
+            if(compt>=20 && compt<=21)
+            {
+                if(compt != sauf)
+                {
+                    gestTexture(compt,1);
+                }
+            }
         }
         else
         {
 
         }
+
+        compt++;
     }
 }
 
