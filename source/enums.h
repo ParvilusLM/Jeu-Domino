@@ -26,6 +26,9 @@ struct PlateauJeu
 {
     std::vector<ElJoueur > vecJoueurs;
     std::vector<ElDomino > vecDominos;
+    std::vector<ElDomino* > vecDominosPoses;
+    std::vector<sf::Sprite > vecIndicateurs;//pour montrer ou on peut placer le domino selectionne
+
     int typeJeu;
     int niveauJeu;
 

@@ -91,7 +91,8 @@ void Controleur::gestionMaJ()
         }
         else if(m_decor->getMenu().getBoutonPress()==B_JOUER)
         {
-
+            jeuEnCours=true;
+            jeuDebut=true;
         }
         else if(m_decor->getMenu().getBoutonPress()==B_PAUSER)
         {
@@ -130,6 +131,12 @@ void Controleur::gestionMaJ()
         boutonPresse=false;
     }
 
+    if(jeuDebut)
+    {
+        m_decor->getJoueur().initPlateauJeu();
+        jeuDebut=false;
+    }
+
 }
 
 void Controleur::afficheMenu()
@@ -144,7 +151,7 @@ void Controleur::afficheFondEc()
 
 void Controleur::afficheJeu()
 {
-
+    m_decor->getJoueur().affichePartie();
 }
 
 void Controleur::afficheInfo()

@@ -22,7 +22,8 @@ public:
     void arrangerDomino();
 
     bool finPartie();
-    void gestTextureD(int noDomino);
+    void gestTextureD(int noDomino,bool visible);
+    void gestTexture(int elem);
 
     void affichePartie();
 
@@ -31,7 +32,8 @@ public:
 private:
     sf::RenderWindow* m_fenetre;
     PlateauJeu m_plateauJeu;
-    sf::Texture m_tFond,m_tElements;
+    sf::Texture m_tFond,m_tDominos,m_tElements;
+    sf::Sprite m_sFond;
 
 
 };
