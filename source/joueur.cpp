@@ -102,8 +102,8 @@ void Joueur::initPlateauJeu()
     m_plateauJeu.sCadreDAP.setPosition(1*20,25*20);
     m_plateauJeu.sCadreDAP.setTextureRect(sf::IntRect(1*20,25*20,43*20,4*20));
 
-    //positionner les dominos
-
+    //on melange les dominos
+    melangeDomino();
 
     //affiche les dominos
     int compt4=0;
@@ -114,11 +114,19 @@ void Joueur::initPlateauJeu()
     }
 
 
+
 }
 
 void Joueur::melangeDomino()
 {
-
+    int compt=0;
+    while(compt<197)
+    {
+        int nombrAleatoire=rand()%28;
+        m_plateauJeu.vecDominos.insert(m_plateauJeu.vecDominos.end(),m_plateauJeu.vecDominos.at(nombrAleatoire));
+        m_plateauJeu.vecDominos.erase(m_plateauJeu.vecDominos.begin()+nombrAleatoire);
+        compt++;
+    }
 }
 
 void Joueur::distribuerDomino()

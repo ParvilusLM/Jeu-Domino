@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "controleur.h"
+#include <ctime>
 
 using namespace sf;
 
