@@ -10,6 +10,10 @@ Joueur::Joueur(sf::RenderWindow& fenetre):m_fenetre(0)
 
     m_sFond.setTexture(m_tFond);
 
+    m_sbPause.setTexture(m_tElements);
+    m_sbPause.setPosition(0.5f*20,0.5f*20);
+    m_sbPause.setTextureRect(sf::IntRect(0.5*20,0.5*20,3*20,3*20));
+
 
 }
 
@@ -31,7 +35,7 @@ void Joueur::initPlateauJeu()
         nouvDomino.sDomino.setTexture(m_tDominos);
         nouvDomino.sDomino.setTextureRect(sf::IntRect(22*20,27*20,80,160));
         nouvDomino.sDomino.setOrigin(40.f,80.f);
-        nouvDomino.sDomino.setPosition(40.f+(compt*30),80.f);
+        nouvDomino.sDomino.setPosition(45.f+(compt*30),27*20);
         nouvDomino.sDomino.setScale(0.3f,0.3f);
         nouvDomino.cote1=0;
         nouvDomino.cote2=0;
@@ -79,13 +83,24 @@ void Joueur::initPlateauJeu()
         nouvJ.sCadreJoueur.setTexture(m_tElements);
         if(compt3==0)
         {
-
+            nouvJ.sCadreJoueur.setPosition(10*20,0);
+            nouvJ.sCadreJoueur.setTextureRect(sf::IntRect(10*20,0,25*20,4*20));
+        }
+        else
+        {
+            nouvJ.sCadreJoueur.setPosition(8*20,31*20);
+            nouvJ.sCadreJoueur.setTextureRect(sf::IntRect(8*20,31*20,30*20,4*20));
         }
 
         m_plateauJeu.vecJoueurs.insert(m_plateauJeu.vecJoueurs.end(),nouvJ);
 
         compt3++;
     }
+
+    //gest support des dominos a piocher
+    m_plateauJeu.sCadreDAP.setTexture(m_tElements);
+    m_plateauJeu.sCadreDAP.setPosition(1*20,25*20);
+    m_plateauJeu.sCadreDAP.setTextureRect(sf::IntRect(1*20,25*20,43*20,4*20));
 
     //positionner les dominos
 
@@ -160,9 +175,64 @@ void Joueur::gestTexture(int elem)
 
 }
 
+bool Joueur::collisionTS(sf::FloatRect elem)
+{
+    bool collision=false;
+    if((elem.left<sourisX && elem.left+elem.width>sourisX) &&
+       (elem.top<sourisY && elem.top+elem.height>sourisY))
+    {
+        collision=true;
+    }
+    return collision;
+}
+
+bool Joueur::boutonSelect()
+{
+    bool select=false;
+    if(collisionTS(m_sbPause.getGlobalBounds()))
+    {
+        select=true;
+
+    }
+
+    return select;
+}
+
+void Joueur::gestBouton()
+{
+    if(!jeuPause)
+    {
+        if(collisionTS(m_sbPause.getGlobalBounds()))
+        {
+            m_sbPause.setTextureRect(sf::IntRect(0.5*20,4*20,3*20,3*20));
+        }
+        else
+        {
+            m_sbPause.setTextureRect(sf::IntRect(0.5*20,0.5*20,3*20,3*20));
+        }
+    }
+}
+
+void Joueur::gestMaj()
+{
+    gestBouton();
+}
+
 void Joueur::affichePartie()
 {
     m_fenetre->draw(m_sFond);
+
+    //affiche bouton
+    afficheBouton();
+
+    //on affiche les supports des dominos
+    int comp=0;
+    while(comp<m_plateauJeu.vecJoueurs.size())
+    {
+        m_fenetre->draw(m_plateauJeu.vecJoueurs.at(comp).sCadreJoueur);
+        comp++;
+    }
+    m_fenetre->draw(m_plateauJeu.sCadreDAP);
 
     //on affiche les dominos
     int compt=0;
@@ -171,6 +241,14 @@ void Joueur::affichePartie()
         m_fenetre->draw(m_plateauJeu.vecDominos.at(compt).sDomino);
         compt++;
     }
+
+
+
+}
+
+void Joueur::afficheBouton()
+{
+    m_fenetre->draw(m_sbPause);
 }
 
 Joueur::~Joueur()

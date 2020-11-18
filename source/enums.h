@@ -28,7 +28,7 @@ struct PlateauJeu
     std::vector<ElDomino > vecDominos;
     std::vector<ElDomino* > vecDominosPoses;
     std::vector<sf::Sprite > vecIndicateurs;//pour montrer ou on peut placer le domino selectionne
-
+    sf::Sprite sCadreDAP;//support dominos a piocher
     int typeJeu;
     int niveauJeu;
 

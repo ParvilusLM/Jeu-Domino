@@ -25,7 +25,14 @@ public:
     void gestTextureD(int noDomino,bool visible);
     void gestTexture(int elem);
 
+    bool collisionTS(sf::FloatRect elem);
+    bool boutonSelect();
+    void gestBouton();
+
+    void gestMaj();
+
     void affichePartie();
+    void afficheBouton();
 
     ~Joueur();
 
@@ -34,6 +41,9 @@ private:
     PlateauJeu m_plateauJeu;
     sf::Texture m_tFond,m_tDominos,m_tElements;
     sf::Sprite m_sFond;
+
+    //bouton pause
+    sf::Sprite m_sbPause;
 
 
 };

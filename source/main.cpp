@@ -82,7 +82,7 @@ int main()
 
                         if (button == Mouse::Left) // Bouton gauche
                         {
-                            //controleurJ.gestBoutonsJeu();
+                            controleurJ.gestBoutonsJeu();
                         }
 
                         if (button == Mouse::Right) // Bouton droite

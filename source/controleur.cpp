@@ -9,7 +9,14 @@ Controleur::Controleur(sf::RenderWindow& fenetre):m_decor(0)
 
 void Controleur::debutJeu()
 {
+    //init plateauJeu de la classe Joueur
+    m_decor->getJoueur().initPlateauJeu();
+}
 
+void Controleur::pauseJeu()
+{
+    jeuPause=true;
+    m_decor->getMenu().setTypeMenu(MenuPause);
 }
 
 void Controleur::gestionDplSouris()
@@ -20,6 +27,14 @@ void Controleur::gestionDplSouris()
 void Controleur::gestionSelecSouris()
 {
     m_decor->getMenu().selectionElActif();
+}
+
+void Controleur::gestBoutonsJeu()
+{
+    if(m_decor->getJoueur().boutonSelect())
+    {
+        pauseJeu();
+    }
 }
 
 void Controleur::gestionMaJ()
@@ -133,9 +148,11 @@ void Controleur::gestionMaJ()
 
     if(jeuDebut)
     {
-        m_decor->getJoueur().initPlateauJeu();
+        debutJeu();
         jeuDebut=false;
     }
+
+    m_decor->getJoueur().gestMaj();
 
 }
 
@@ -152,6 +169,11 @@ void Controleur::afficheFondEc()
 void Controleur::afficheJeu()
 {
     m_decor->getJoueur().affichePartie();
+
+    if(jeuPause)
+    {
+        m_decor->getMenu().afficheMenu();
+    }
 }
 
 void Controleur::afficheInfo()

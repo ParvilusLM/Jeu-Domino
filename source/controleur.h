@@ -9,11 +9,13 @@ public:
     Controleur(sf::RenderWindow& fenetre);
 
     void debutJeu();
+    void pauseJeu();
 
     void gestionDplSouris();
     void gestionSelecSouris();
 
     void gestionMaJ();
+    void gestBoutonsJeu();//gestion boutons autres que ceux du menu
 
     void afficheMenu();
     void afficheFondEc();
