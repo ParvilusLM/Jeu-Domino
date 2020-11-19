@@ -21,6 +21,7 @@ public:
     void placerDomino();
     void arrangerDomino();
 
+    PlateauJeu& getPlateauJeu();
     bool finPartie();
     void gestTextureD(int noDomino,bool visible);
     void gestTexture(int elem);

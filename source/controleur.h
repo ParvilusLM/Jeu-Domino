@@ -2,6 +2,7 @@
 #define DEF_CONTROLEUR
 
 #include "decor.h"
+#include "animations.h"
 
 class Controleur
 {
@@ -27,6 +28,7 @@ public:
 private:
     sf::RenderWindow* m_fenetre;
     Decor* m_decor;
+    Animations* m_animations;
 
 
 };

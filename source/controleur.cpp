@@ -1,16 +1,19 @@
 #include "controleur.h"
 
-Controleur::Controleur(sf::RenderWindow& fenetre):m_decor(0)
+Controleur::Controleur(sf::RenderWindow& fenetre):m_decor(0),m_animations(0)
 {
     m_fenetre=&fenetre;
 
     m_decor=new Decor(*m_fenetre);
+    m_animations=new Animations(*m_decor);
 }
 
 void Controleur::debutJeu()
 {
     //init plateauJeu de la classe Joueur
     m_decor->getJoueur().initPlateauJeu();
+
+    m_animations->debuterAnim(ANIM_DISTRIBUTION);
 }
 
 void Controleur::pauseJeu()
@@ -153,6 +156,8 @@ void Controleur::gestionMaJ()
     }
 
     m_decor->getJoueur().gestMaj();
+
+    m_animations->gestMaJ();
 
 }
 

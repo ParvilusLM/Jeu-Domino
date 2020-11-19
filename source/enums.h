@@ -27,6 +27,7 @@ struct PlateauJeu
     std::vector<ElJoueur > vecJoueurs;
     std::vector<ElDomino > vecDominos;
     std::vector<ElDomino* > vecDominosPoses;
+    std::vector<ElDomino* > vecDominosAP; //vecteur dominos dans lequel piocher
     std::vector<sf::Sprite > vecIndicateurs;//pour montrer ou on peut placer le domino selectionne
     sf::Sprite sCadreDAP;//support dominos a piocher
     int typeJeu;
@@ -138,6 +139,18 @@ enum
 {
     RETOURNE,
     VISIBLE
+};
+
+enum
+{
+    ANIM_DISTRIBUTION,
+    ANIM_JOUEUR1_C,
+    ANIM_JOUEUR1_V,
+    ANIM_JOUEUR2_C,
+    ANIM_JOUEUR2_V,
+    ANIM_PIOCHE_C,
+    ANIM_PIOCHE_V
+
 };
 
 

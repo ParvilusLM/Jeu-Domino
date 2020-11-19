@@ -5,16 +5,18 @@
 	"controleur.h"
 	<ctime>
 
-1604634414 source:c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\animations.cpp
+1605757674 source:c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\animations.cpp
 	"animations.h"
 
-1604634414 c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\animations.h
+1605730471 c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\animations.h
+	"decor.h"
 
-1605667267 source:c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\controleur.cpp
+1605756398 source:c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\controleur.cpp
 	"controleur.h"
 
-1605666442 c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\controleur.h
+1605715615 c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\controleur.h
 	"decor.h"
+	"animations.h"
 
 1604629674 c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\decor.h
 	"menu.h"
@@ -27,7 +29,7 @@
 	"constantes.h"
 	"varG.h"
 
-1605660082 c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\enums.h
+1605727075 c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\enums.h
 	<SFML/Graphics.hpp>
 
 1525812018 c:\program files (x86)\codeblocks\sfml-2.5.1\include\sfml\graphics.hpp
@@ -454,7 +456,7 @@
 	"constantes.h"
 	"varG.h"
 
-1605664102 c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\joueur.h
+1605755948 c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\joueur.h
 	<iostream>
 	"enums.h"
 	"constantes.h"
@@ -466,7 +468,7 @@
 1604971336 source:c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\info.cpp
 	"info.h"
 
-1605671981 source:c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\joueur.cpp
+1605757508 source:c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\joueur.cpp
 	"joueur.h"
 
 1605226292 source:c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\son.cpp

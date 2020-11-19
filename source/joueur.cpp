@@ -23,6 +23,7 @@ void Joueur::initPlateauJeu()
     m_plateauJeu.vecJoueurs.clear();
     m_plateauJeu.vecDominosPoses.clear();
     m_plateauJeu.vecIndicateurs.clear();
+    m_plateauJeu.vecDominosAP.clear();
 
     //creation et injection des dominos dans le vecteur correspondant
     int compt=0;
@@ -97,19 +98,32 @@ void Joueur::initPlateauJeu()
         compt3++;
     }
 
+
+    //on melange les dominos
+    melangeDomino();
+
+    //mettre les dominos dans le vecteur correspondant pour piocher
+    int comptt=0;
+    while(comptt<28)
+    {
+        ElDomino* pDomino=&m_plateauJeu.vecDominos.at(comptt);
+        m_plateauJeu.vecDominosAP.insert(m_plateauJeu.vecDominosAP.end(),pDomino);
+        comptt++;
+    }
+
     //gest support des dominos a piocher
     m_plateauJeu.sCadreDAP.setTexture(m_tElements);
     m_plateauJeu.sCadreDAP.setPosition(1*20,25*20);
     m_plateauJeu.sCadreDAP.setTextureRect(sf::IntRect(1*20,25*20,43*20,4*20));
 
-    //on melange les dominos
-    melangeDomino();
+    //distribuer les dominos
+    distribuerDomino();
 
     //affiche les dominos
     int compt4=0;
-    while(compt4<m_plateauJeu.vecDominos.size())
+    while(compt4<m_plateauJeu.vecDominosAP.size())
     {
-        std::cout<<"Domino "<<compt4<<" :   "<<m_plateauJeu.vecDominos.at(compt4).cote1<<" , "<<m_plateauJeu.vecDominos.at(compt4).cote2<<std::endl;
+        std::cout<<"Domino "<<compt4<<" :   "<<m_plateauJeu.vecDominosAP.at(compt4)->cote1<<" , "<<m_plateauJeu.vecDominosAP.at(compt4)->cote2<<std::endl;
         compt4++;
     }
 
@@ -131,7 +145,25 @@ void Joueur::melangeDomino()
 
 void Joueur::distribuerDomino()
 {
+    int indicD=0;
+    int compt=0;
+    while(compt<2)
+    {
+        int compt2=0;
+        while(compt2<7)
+        {
+            ElDomino* pDomino=m_plateauJeu.vecDominosAP.at(27-indicD);
+            m_plateauJeu.vecDominosAP.erase(m_plateauJeu.vecDominosAP.begin()+27-indicD);
 
+            m_plateauJeu.vecJoueurs.at(compt).vecDominos.insert(m_plateauJeu.vecJoueurs.at(compt).vecDominos.end(),pDomino);
+            compt2++;
+            indicD++;
+        }
+        compt++;
+    }
+
+    //std::cout<<"Pointeur reference :  "<<m_plateauJeu.vecJoueurs.at(0).vecDominos.size()<<std::endl;
+    //std::cout<<"Pointeur reference :  "<<m_plateauJeu.vecJoueurs.at(1).vecDominos.size()<<std::endl;
 }
 
 void Joueur::piocherDomino(int joueur)
@@ -152,6 +184,11 @@ void Joueur::placerDomino()
 void Joueur::arrangerDomino()
 {
 
+}
+
+PlateauJeu& Joueur::getPlateauJeu()
+{
+    return m_plateauJeu;
 }
 
 bool Joueur::finPartie()
