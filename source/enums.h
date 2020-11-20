@@ -10,6 +10,7 @@ struct ElDomino
     int angle;
     bool debord;
     int etat;
+    sf::Vector2f scale;
     int noDomino;
 
 };
@@ -38,8 +39,8 @@ struct PlateauJeu
 
 enum
 {
-    CPU,
-    HUMAIN
+    HUMAIN,
+    CPU
 };
 
 enum
@@ -153,6 +154,11 @@ enum
 
 };
 
-
+enum
+{
+    DOMINOS_VECDOMINOSAP,
+    DOMINOS_JOUEUR1,
+    DOMINOS_JOUEUR2
+};
 
 #endif // DEF_ENUMS

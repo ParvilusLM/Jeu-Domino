@@ -10,5 +10,4 @@ extern bool boutonPresse;
 extern bool laMain;
 extern int sourisX,sourisY;
 
-
 #endif // DEF_VARG

@@ -21,13 +21,12 @@ void Animations::gestionAnimation()
 {
     if(m_animDistrib)
     {
-        bool finAnim=false;
         sf::Vector2f posReferenceJ1,posReferenceJ2;
         posReferenceJ1.x=13*20;
-        posReferenceJ1.y=33*20;
+        posReferenceJ1.y=33*20-5;
 
         posReferenceJ2.x=15*20;
-        posReferenceJ2.y=2*20;
+        posReferenceJ2.y=2*20+5;
 
         int elementsEnPlace=0;
 
@@ -118,37 +117,154 @@ void Animations::gestionAnimation()
         {
             m_animDistrib=false;
             m_pDecor->getJoueur().retourneDominos(HUMAIN,true);
+            sf::Vector2f augmenteScale;
+            augmenteScale.x=0.4;
+            augmenteScale.y=0.4;
+            m_pDecor->getJoueur().changementEchelleD(DOMINOS_JOUEUR1,augmenteScale);
+            m_pDecor->getJoueur().changementEchelleD(DOMINOS_JOUEUR2,augmenteScale);
+            m_animPiocheC=true;
+            m_animJoueur1C=true;
+            //m_animJoueur2C=true;
+            std::cout<<"Fin animDistribution"<<std::endl;
         }
     }
+
 
     if(m_animJoueur1C)
     {
 
+        if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).sCadreJoueur.getPosition().y < 31*20+10)
+        {
+            m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).sCadreJoueur.move(0,1.f);
+
+            int compt=0;
+            while(compt < m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).vecDominos.size())
+            {
+                m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).vecDominos.at(compt)->sDomino.move(0,1.f);
+                compt++;
+            }
+        }
+        else
+        {
+            m_animJoueur1C=false;
+            m_animJoueur1V=true;
+            std::cout<<"Fin animJoueur1C"<<std::endl;
+        }
+
     }
+
 
     if(m_animJoueur1V)
     {
+        if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).sCadreJoueur.getPosition().y > 31*20)
+        {
+            m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).sCadreJoueur.move(0,-1.f);
 
+            int compt=0;
+            while(compt < m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).vecDominos.size())
+            {
+                m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).vecDominos.at(compt)->sDomino.move(0,-1.f);
+                compt++;
+            }
+        }
+        else
+        {
+            m_animJoueur1V=false;
+            std::cout<<"Fin animJoueur1V"<<std::endl;
+        }
     }
+
+    /*
 
     if(m_animJoueur2C)
     {
+        if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).sCadreJoueur.getPosition().y > -10.f)
+        {
+
+            m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).sCadreJoueur.move(0,-1.f);
+
+            int compt=0;
+            while(compt < m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.size())
+            {
+                m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.at(compt)->sDomino.move(0,-1.f);
+                compt++;
+            }
+        }
+        else
+        {
+            m_animJoueur2C=false;
+            //m_animJoueur2V=true;
+            std::cout<<"Fin animJoueur2C"<<std::endl;
+        }
 
     }
+
+
 
     if(m_animJoueur2V)
     {
+        if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).sCadreJoueur.getPosition().y < 0)
+        {
+            m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).sCadreJoueur.move(0,1.f);
+
+            int compt=0;
+            while(compt < m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.size())
+            {
+                m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.at(compt)->sDomino.move(0,1.f);
+                compt++;
+            }
+        }
+        else
+        {
+            m_animJoueur2V=false;
+            std::cout<<"Fin animJoueur2V"<<std::endl;
+        }
 
     }
+    */
+
+
 
     if(m_animPiocheC)
     {
+        //deplacer le support et les dominos du vector vecDominosAP vers le bas
+        if(m_pDecor->getJoueur().getPlateauJeu().sCadreDAP.getPosition().y < 700)
+        {
+            m_pDecor->getJoueur().getPlateauJeu().sCadreDAP.move(0,1.f);
+
+            int compt=0;
+            while(compt < m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.size())
+            {
+                m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(compt)->sDomino.move(0,1.f);
+                compt++;
+            }
+        }
+        else
+        {
+            m_animPiocheC=false;
+            std::cout<<"Fin animPiocheC"<<std::endl;
+        }
 
     }
 
     if(m_animPiocheV)
     {
+        if(m_pDecor->getJoueur().getPlateauJeu().sCadreDAP.getPosition().y > 25*20)
+        {
+            m_pDecor->getJoueur().getPlateauJeu().sCadreDAP.move(0,-1.f);
 
+            int compt=0;
+            while(compt < m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.size())
+            {
+                m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(compt)->sDomino.move(0,-1.f);
+                compt++;
+            }
+        }
+        else
+        {
+            m_animPiocheV=false;
+            std::cout<<"Fin animPiocheV"<<std::endl;
+        }
     }
 }
 

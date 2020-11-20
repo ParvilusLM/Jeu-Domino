@@ -189,5 +189,6 @@ void Controleur::afficheInfo()
 Controleur::~Controleur()
 {
     delete m_decor;
+    delete m_animations;
 }
 

@@ -38,6 +38,7 @@ void Joueur::initPlateauJeu()
         nouvDomino.sDomino.setOrigin(40.f,80.f);
         nouvDomino.sDomino.setPosition(45.f+(compt*30),27*20);
         nouvDomino.sDomino.setScale(0.3f,0.3f);
+        nouvDomino.scale=nouvDomino.sDomino.getScale();
         nouvDomino.cote1=0;
         nouvDomino.cote2=0;
 
@@ -82,15 +83,15 @@ void Joueur::initPlateauJeu()
         ElJoueur nouvJ;
         nouvJ.points=0;
         nouvJ.sCadreJoueur.setTexture(m_tElements);
-        if(compt3==CPU)
-        {
-            nouvJ.sCadreJoueur.setPosition(10*20,0);
-            nouvJ.sCadreJoueur.setTextureRect(sf::IntRect(10*20,0,25*20,4*20));
-        }
-        else
+        if(compt3==HUMAIN)
         {
             nouvJ.sCadreJoueur.setPosition(8*20,31*20);
             nouvJ.sCadreJoueur.setTextureRect(sf::IntRect(8*20,31*20,30*20,4*20));
+        }
+        else
+        {
+            nouvJ.sCadreJoueur.setPosition(10*20,0);
+            nouvJ.sCadreJoueur.setTextureRect(sf::IntRect(10*20,0,25*20,4*20));
         }
 
         m_plateauJeu.vecJoueurs.insert(m_plateauJeu.vecJoueurs.end(),nouvJ);
@@ -153,7 +154,7 @@ void Joueur::distribuerDomino()
         while(compt2<7)
         {
             ElDomino* pDomino=m_plateauJeu.vecDominosAP.at(27-indicD);
-            //m_plateauJeu.vecDominosAP.erase(m_plateauJeu.vecDominosAP.begin()+27-indicD);
+            m_plateauJeu.vecDominosAP.erase(m_plateauJeu.vecDominosAP.begin()+27-indicD);
 
             m_plateauJeu.vecJoueurs.at(compt).vecDominos.insert(m_plateauJeu.vecJoueurs.at(compt).vecDominos.end(),pDomino);
             compt2++;
@@ -162,8 +163,8 @@ void Joueur::distribuerDomino()
         compt++;
     }
 
-    //std::cout<<"Pointeur reference :  "<<m_plateauJeu.vecJoueurs.at(0).vecDominos.size()<<std::endl;
-    //std::cout<<"Pointeur reference :  "<<m_plateauJeu.vecJoueurs.at(1).vecDominos.size()<<std::endl;
+    std::cout<<"Pointeur reference :  "<<m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size()<<std::endl;
+    std::cout<<"Pointeur reference :  "<<m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size()<<std::endl;
 }
 
 void Joueur::piocherDomino(int joueur)
@@ -191,10 +192,9 @@ void Joueur::retourneDominos(int joueur,bool rendreVisible)
     if(joueur==HUMAIN)
     {
         int compt=0;
-        while(compt<m_plateauJeu.vecJoueurs.at(0).vecDominos.size())
+        while(compt<m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size())
         {
-            m_plateauJeu.vecJoueurs.at(0).vecDominos.at(compt)->etat=VISIBLE;
-            gestTextureD(m_plateauJeu.vecJoueurs.at(0).vecDominos.at(compt)->noDomino,true);
+            m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->etat=VISIBLE;
             compt++;
         }
     }
@@ -205,6 +205,41 @@ void Joueur::retourneDominos(int joueur,bool rendreVisible)
     else
     {
 
+    }
+    gestTextureD();
+}
+
+void Joueur::changementEchelleD(int categorie,sf::Vector2f facteur)
+{
+    if(categorie==DOMINOS_VECDOMINOSAP)
+    {
+        int compt=0;
+        while(compt<m_plateauJeu.vecDominosAP.size())
+        {
+            m_plateauJeu.vecDominosAP.at(compt)->scale=facteur;
+            m_plateauJeu.vecDominosAP.at(compt)->sDomino.setScale(facteur);
+            compt++;
+        }
+    }
+    else if(categorie==DOMINOS_JOUEUR1)
+    {
+        int compt=0;
+        while(compt<m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size())
+        {
+            m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->scale=facteur;
+            m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->sDomino.setScale(facteur);
+            compt++;
+        }
+    }
+    else
+    {
+        int compt=0;
+        while(compt<m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size())
+        {
+            m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->scale=facteur;
+            m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->sDomino.setScale(facteur);
+            compt++;
+        }
     }
 }
 
@@ -218,29 +253,30 @@ bool Joueur::finPartie()
 
 }
 
-void Joueur::gestTextureD(int noDomino,bool visible)
+void Joueur::gestTextureD()
 {
-    if(visible)
+    int comptt=0;
+    while(comptt<28)
     {
-        int pX=noDomino%8;
-        int pY=noDomino/8;
+        if(m_plateauJeu.vecDominos.at(comptt).etat==VISIBLE)
+        {
+            int pX=comptt%8;
+            int pY=comptt/8;
 
-        m_plateauJeu.vecDominos.at(noDomino).sDomino.setTextureRect(sf::IntRect((pX*20)+20+(pX*80),(pY*20)+(pY*160),80,160));
-    }
-    else
-    {
-        int pX=noDomino%8;
-        int pY=noDomino/8;
+            m_plateauJeu.vecDominos.at(comptt).sDomino.setTextureRect(sf::IntRect((pX*20)+20+(pX*80),(pY*20)+(pY*160),80,160));
+        }
+        else
+        {
+            int pX=comptt%8;
+            int pY=comptt/8;
 
-        m_plateauJeu.vecDominos.at(noDomino).sDomino.setTextureRect(sf::IntRect(22*20,27*20,80,160));
+            m_plateauJeu.vecDominos.at(comptt).sDomino.setTextureRect(sf::IntRect(22*20,27*20,80,160));
+        }
+        comptt++;
     }
 
 }
 
-void Joueur::gestTexture(int elem)
-{
-
-}
 
 bool Joueur::collisionTS(sf::FloatRect elem)
 {
@@ -293,13 +329,14 @@ void Joueur::affichePartie()
     afficheBouton();
 
     //on affiche les supports des dominos
+    m_fenetre->draw(m_plateauJeu.sCadreDAP);
+
     int comp=0;
     while(comp<m_plateauJeu.vecJoueurs.size())
     {
         m_fenetre->draw(m_plateauJeu.vecJoueurs.at(comp).sCadreJoueur);
         comp++;
     }
-    m_fenetre->draw(m_plateauJeu.sCadreDAP);
 
     //on affiche les dominos
     int compt=0;
@@ -308,8 +345,6 @@ void Joueur::affichePartie()
         m_fenetre->draw(m_plateauJeu.vecDominos.at(compt).sDomino);
         compt++;
     }
-
-
 
 }
 

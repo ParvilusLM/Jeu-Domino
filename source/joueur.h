@@ -21,11 +21,11 @@ public:
     void placerDomino();
     void arrangerDomino();
     void retourneDominos(int joueur,bool rendreVisible);
+    void changementEchelleD(int categorie,sf::Vector2f facteur);
 
     PlateauJeu& getPlateauJeu();
     bool finPartie();
-    void gestTextureD(int noDomino,bool visible);
-    void gestTexture(int elem);
+    void gestTextureD();
 
     bool collisionTS(sf::FloatRect elem);
     bool boutonSelect();
