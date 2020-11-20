@@ -20,6 +20,7 @@ public:
     void selectionDomino(int joueur);
     void placerDomino();
     void arrangerDomino();
+    void retourneDominos(int joueur,bool rendreVisible);
 
     PlateauJeu& getPlateauJeu();
     bool finPartie();

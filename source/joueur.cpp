@@ -82,7 +82,7 @@ void Joueur::initPlateauJeu()
         ElJoueur nouvJ;
         nouvJ.points=0;
         nouvJ.sCadreJoueur.setTexture(m_tElements);
-        if(compt3==0)
+        if(compt3==CPU)
         {
             nouvJ.sCadreJoueur.setPosition(10*20,0);
             nouvJ.sCadreJoueur.setTextureRect(sf::IntRect(10*20,0,25*20,4*20));
@@ -99,9 +99,6 @@ void Joueur::initPlateauJeu()
     }
 
 
-    //on melange les dominos
-    melangeDomino();
-
     //mettre les dominos dans le vecteur correspondant pour piocher
     int comptt=0;
     while(comptt<28)
@@ -110,6 +107,9 @@ void Joueur::initPlateauJeu()
         m_plateauJeu.vecDominosAP.insert(m_plateauJeu.vecDominosAP.end(),pDomino);
         comptt++;
     }
+
+    //on melange les dominos
+    melangeDomino();
 
     //gest support des dominos a piocher
     m_plateauJeu.sCadreDAP.setTexture(m_tElements);
@@ -137,8 +137,8 @@ void Joueur::melangeDomino()
     while(compt<197)
     {
         int nombrAleatoire=rand()%28;
-        m_plateauJeu.vecDominos.insert(m_plateauJeu.vecDominos.end(),m_plateauJeu.vecDominos.at(nombrAleatoire));
-        m_plateauJeu.vecDominos.erase(m_plateauJeu.vecDominos.begin()+nombrAleatoire);
+        m_plateauJeu.vecDominosAP.insert(m_plateauJeu.vecDominosAP.end(),m_plateauJeu.vecDominosAP.at(nombrAleatoire));
+        m_plateauJeu.vecDominosAP.erase(m_plateauJeu.vecDominosAP.begin()+nombrAleatoire);
         compt++;
     }
 }
@@ -153,7 +153,7 @@ void Joueur::distribuerDomino()
         while(compt2<7)
         {
             ElDomino* pDomino=m_plateauJeu.vecDominosAP.at(27-indicD);
-            m_plateauJeu.vecDominosAP.erase(m_plateauJeu.vecDominosAP.begin()+27-indicD);
+            //m_plateauJeu.vecDominosAP.erase(m_plateauJeu.vecDominosAP.begin()+27-indicD);
 
             m_plateauJeu.vecJoueurs.at(compt).vecDominos.insert(m_plateauJeu.vecJoueurs.at(compt).vecDominos.end(),pDomino);
             compt2++;
@@ -184,6 +184,28 @@ void Joueur::placerDomino()
 void Joueur::arrangerDomino()
 {
 
+}
+
+void Joueur::retourneDominos(int joueur,bool rendreVisible)
+{
+    if(joueur==HUMAIN)
+    {
+        int compt=0;
+        while(compt<m_plateauJeu.vecJoueurs.at(0).vecDominos.size())
+        {
+            m_plateauJeu.vecJoueurs.at(0).vecDominos.at(compt)->etat=VISIBLE;
+            gestTextureD(m_plateauJeu.vecJoueurs.at(0).vecDominos.at(compt)->noDomino,true);
+            compt++;
+        }
+    }
+    else if(joueur==CPU)
+    {
+
+    }
+    else
+    {
+
+    }
 }
 
 PlateauJeu& Joueur::getPlateauJeu()

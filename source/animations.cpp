@@ -12,7 +12,7 @@ Animations::Animations(Decor& decor):m_pDecor(0)
     m_animPiocheV=false;
 
     m_timer=0.f;
-    m_delai=0.1f;
+    m_delai=0.001f;
 
 
 }
@@ -21,23 +21,103 @@ void Animations::gestionAnimation()
 {
     if(m_animDistrib)
     {
+        bool finAnim=false;
+        sf::Vector2f posReferenceJ1,posReferenceJ2;
+        posReferenceJ1.x=13*20;
+        posReferenceJ1.y=33*20;
+
+        posReferenceJ2.x=15*20;
+        posReferenceJ2.y=2*20;
+
+        int elementsEnPlace=0;
+
         int compt=0;
         while(compt<2)
         {
             int compt2=0;
             while(compt2<7)
             {
+                bool xFinal=false,yFinal=false;
                 if(compt==0)
                 {
-                    m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.move(2.f,2.f);
+                    if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.getPosition().x != posReferenceJ1.x +(compt2*70) )
+                    {
+                        if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.getPosition().x > posReferenceJ1.x +(compt2*70))
+                        {
+                            m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.move(-1.f,0);
+                        }
+                        else
+                        {
+                            m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.move(1.f,0);
+                        }
+
+                    }
+                    else
+                    {
+                        xFinal=true;
+                    }
+
+
+                    if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.getPosition().y != posReferenceJ1.y)
+                    {
+                        m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.move(0.f,1.f);
+                    }
+                    else
+                    {
+                        yFinal=true;
+                    }
+
+                    if(xFinal && yFinal)
+                    {
+                        elementsEnPlace++;
+                    }
+
                 }
                 else
                 {
-                    m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.move(2.f,-2.f);
+                    bool xFinal=false,yFinal=false;
+
+                    if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.getPosition().x != posReferenceJ2.x +(compt2*50) )
+                    {
+                        if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.getPosition().x > posReferenceJ2.x +(compt2*50))
+                        {
+                            m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.move(-1.f,0);
+                        }
+                        else
+                        {
+                            m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.move(1.f,0);
+                        }
+
+                    }
+                    else
+                    {
+                        xFinal=true;
+                    }
+
+                    if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.getPosition().y != posReferenceJ2.y)
+                    {
+                        m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.move(0.f,-1.f);
+                    }
+                    else
+                    {
+                        yFinal=true;
+                    }
+
+                    if(xFinal && yFinal)
+                    {
+                        elementsEnPlace++;
+                    }
+
                 }
                 compt2++;
             }
             compt++;
+        }
+
+        if(elementsEnPlace==14)
+        {
+            m_animDistrib=false;
+            m_pDecor->getJoueur().retourneDominos(HUMAIN,true);
         }
     }
 
