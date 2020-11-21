@@ -12,7 +12,7 @@ bool jeuFinPartie=false;
 bool jeuDebut=false;
 bool jeuRejouer=false;
 bool boutonPresse=false;//pour savoir s'il y a clic
-bool laMain=true;
+bool laMain=false;
 int sourisX=0,sourisY=0;
 
 int main()

@@ -22,6 +22,7 @@ public:
     void arrangerDomino();
     void retourneDominos(int joueur,bool rendreVisible);
     void changementEchelleD(int categorie,sf::Vector2f facteur);
+    void glisserDeposerD(int action);
 
     PlateauJeu& getPlateauJeu();
     bool finPartie();

@@ -6,7 +6,7 @@ Animations::Animations(Decor& decor):m_pDecor(0)
     m_animDistrib=false;
     m_animJoueur1C=false;
     m_animJoueur1V=false;
-    m_animJoueur2V=false;
+    m_animJoueur2C=false;
     m_animJoueur2V=false;
     m_animPiocheC=false;
     m_animPiocheV=false;
@@ -124,7 +124,7 @@ void Animations::gestionAnimation()
             m_pDecor->getJoueur().changementEchelleD(DOMINOS_JOUEUR2,augmenteScale);
             m_animPiocheC=true;
             m_animJoueur1C=true;
-            //m_animJoueur2C=true;
+            m_animJoueur2C=true;
             std::cout<<"Fin animDistribution"<<std::endl;
         }
     }
@@ -147,7 +147,6 @@ void Animations::gestionAnimation()
         else
         {
             m_animJoueur1C=false;
-            m_animJoueur1V=true;
             std::cout<<"Fin animJoueur1C"<<std::endl;
         }
 
@@ -174,56 +173,7 @@ void Animations::gestionAnimation()
         }
     }
 
-    /*
-
-    if(m_animJoueur2C)
-    {
-        if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).sCadreJoueur.getPosition().y > -10.f)
-        {
-
-            m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).sCadreJoueur.move(0,-1.f);
-
-            int compt=0;
-            while(compt < m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.size())
-            {
-                m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.at(compt)->sDomino.move(0,-1.f);
-                compt++;
-            }
-        }
-        else
-        {
-            m_animJoueur2C=false;
-            //m_animJoueur2V=true;
-            std::cout<<"Fin animJoueur2C"<<std::endl;
-        }
-
-    }
-
-
-
-    if(m_animJoueur2V)
-    {
-        if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).sCadreJoueur.getPosition().y < 0)
-        {
-            m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).sCadreJoueur.move(0,1.f);
-
-            int compt=0;
-            while(compt < m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.size())
-            {
-                m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.at(compt)->sDomino.move(0,1.f);
-                compt++;
-            }
-        }
-        else
-        {
-            m_animJoueur2V=false;
-            std::cout<<"Fin animJoueur2V"<<std::endl;
-        }
-
-    }
-    */
-
-
+    //std::cout<<"Taille Vecteur vecJoueurs: "<<m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.size()<<std::endl;
 
     if(m_animPiocheC)
     {
@@ -247,6 +197,7 @@ void Animations::gestionAnimation()
 
     }
 
+
     if(m_animPiocheV)
     {
         if(m_pDecor->getJoueur().getPlateauJeu().sCadreDAP.getPosition().y > 25*20)
@@ -266,6 +217,54 @@ void Animations::gestionAnimation()
             std::cout<<"Fin animPiocheV"<<std::endl;
         }
     }
+
+
+    if(m_animJoueur2C)
+    {
+        if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).sCadreJoueur.getPosition().y > -10.f)
+        {
+
+            m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).sCadreJoueur.move(0,-1.f);
+
+            int compt=0;
+            while(compt < m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.size())
+            {
+                m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.at(compt)->sDomino.move(0,-1.f);
+                compt++;
+            }
+        }
+        else
+        {
+            m_animJoueur2C=false;
+            std::cout<<"Fin animJoueur2C"<<std::endl;
+        }
+
+    }
+
+
+    if(m_animJoueur2V)
+    {
+        if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).sCadreJoueur.getPosition().y < 0)
+        {
+            m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).sCadreJoueur.move(0,1.f);
+
+            int compt=0;
+            while(compt < m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.size())
+            {
+                m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.at(compt)->sDomino.move(0,1.f);
+                compt++;
+            }
+        }
+        else
+        {
+            m_animJoueur2V=false;
+            std::cout<<"Fin animJoueur2V"<<std::endl;
+        }
+
+    }
+
+
+
 }
 
 void Animations::debuterAnim(int typeAnim)

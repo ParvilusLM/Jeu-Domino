@@ -157,7 +157,10 @@ void Controleur::gestionMaJ()
 
     m_decor->getJoueur().gestMaj();
 
-    m_animations->gestMaJ();
+    if(jeuEnCours)
+    {
+        m_animations->gestMaJ();
+    }
 
 }
 

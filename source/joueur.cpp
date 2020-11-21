@@ -33,6 +33,7 @@ void Joueur::initPlateauJeu()
         nouvDomino.angle=0;
         nouvDomino.etat=RETOURNE;
         nouvDomino.noDomino=compt;
+        nouvDomino.selectionne=false;
         nouvDomino.sDomino.setTexture(m_tDominos);
         nouvDomino.sDomino.setTextureRect(sf::IntRect(22*20,27*20,80,160));
         nouvDomino.sDomino.setOrigin(40.f,80.f);

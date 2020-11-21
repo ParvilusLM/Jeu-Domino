@@ -10,6 +10,7 @@ struct ElDomino
     int angle;
     bool debord;
     int etat;
+    bool selectionne;
     sf::Vector2f scale;
     int noDomino;
 
@@ -20,6 +21,7 @@ struct ElJoueur
    std::vector<ElDomino* > vecDominos;
    sf::Sprite sCadreJoueur;
    int points;
+
 
 };
 
