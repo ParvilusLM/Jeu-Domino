@@ -163,4 +163,10 @@ enum
     DOMINOS_JOUEUR2
 };
 
+enum
+{
+    GLISSER,
+    DEPOSER
+};
+
 #endif // DEF_ENUMS

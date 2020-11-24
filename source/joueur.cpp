@@ -173,9 +173,24 @@ void Joueur::piocherDomino(int joueur)
 
 }
 
-void Joueur::selectionDomino(int joueur)
+bool Joueur::selectionDomino(int joueur)
 {
+    bool dominoSelect=false;
+    if(joueur==HUMAIN)
+    {
+        int compt=0;
+        while(compt<m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size())
+        {
+            if(collisionTS(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->sDomino.getGlobalBounds()))
+            {
+                m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->selectionne=true;
+                dominoSelect=true;
+            }
+            compt++;
+        }
 
+    }
+    return dominoSelect;
 }
 
 void Joueur::placerDomino()
@@ -239,6 +254,34 @@ void Joueur::changementEchelleD(int categorie,sf::Vector2f facteur)
         {
             m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->scale=facteur;
             m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->sDomino.setScale(facteur);
+            compt++;
+        }
+    }
+}
+
+void Joueur::glisserDeposerD(int action)
+{
+    if(action==GLISSER)
+    {
+        int compt=0;
+        while(compt<m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size())
+        {
+            if(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->selectionne)
+            {
+                m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->sDomino.setPosition(sourisX,sourisY);
+            }
+            compt++;
+        }
+    }
+    else
+    {
+        int compt=0;
+        while(compt<m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size())
+        {
+            if(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->selectionne)
+            {
+                m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->selectionne=false;
+            }
             compt++;
         }
     }
@@ -320,6 +363,21 @@ void Joueur::gestBouton()
 void Joueur::gestMaj()
 {
     gestBouton();
+
+    if(!jeuPause)
+    {
+        if(glisser)
+        {
+            glisserDeposerD(GLISSER);
+        }
+
+        if(deposer)
+        {
+            glisser=false;
+            glisserDeposerD(DEPOSER);
+            deposer=false;
+        }
+    }
 }
 
 void Joueur::affichePartie()

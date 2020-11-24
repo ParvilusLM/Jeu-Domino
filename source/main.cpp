@@ -14,6 +14,7 @@ bool jeuRejouer=false;
 bool boutonPresse=false;//pour savoir s'il y a clic
 bool laMain=false;
 int sourisX=0,sourisY=0;
+bool glisser=false,deposer=false; //autoriser l'action glisser ou deposer
 
 int main()
 {
@@ -53,7 +54,6 @@ int main()
                 }
             }
 
-
             switch(evenement.type)
             {
             case Event::MouseButtonPressed:
@@ -84,6 +84,14 @@ int main()
                         if (button == Mouse::Left) // Bouton gauche
                         {
                             controleurJ.gestBoutonsJeu();
+                            if(!glisser)
+                            {
+                                controleurJ.glisserDeposer(GLISSER);
+                            }
+                            else
+                            {
+                                controleurJ.glisserDeposer(DEPOSER);
+                            }
                         }
 
                         if (button == Mouse::Right) // Bouton droite
@@ -100,6 +108,7 @@ int main()
                         controleurJ.gestionSelecSouris();
                     }
                 }
+
                 break;
 
             case Event::KeyPressed:
@@ -158,6 +167,14 @@ int main()
                 {
 
                 }
+                break;
+
+            case Event::KeyReleased:
+                if(jeuEnCours)
+                {
+
+                }
+
                 break;
 
             case Event::TextEntered:

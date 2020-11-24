@@ -17,7 +17,7 @@ public:
     void melangeDomino();
     void distribuerDomino();
     void piocherDomino(int joueur);
-    void selectionDomino(int joueur);
+    bool selectionDomino(int joueur);
     void placerDomino();
     void arrangerDomino();
     void retourneDominos(int joueur,bool rendreVisible);

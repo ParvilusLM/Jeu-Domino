@@ -40,6 +40,21 @@ void Controleur::gestBoutonsJeu()
     }
 }
 
+void Controleur::glisserDeposer(int action)
+{
+    if(action==GLISSER)
+    {
+        if(m_decor->getJoueur().selectionDomino(HUMAIN))
+        {
+            glisser=true;
+        }
+    }
+    else
+    {
+        deposer=true;
+    }
+}
+
 void Controleur::gestionMaJ()
 {
     //gestions boutons presses pour les menus

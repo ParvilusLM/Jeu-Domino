@@ -16,7 +16,9 @@ public:
     void gestionSelecSouris();
 
     void gestionMaJ();
-    void gestBoutonsJeu();//gestion boutons autres que ceux du menu
+    //gestion jeu en cours
+    void gestBoutonsJeu(); //gestion boutons autres que ceux du menu
+    void glisserDeposer(int action); //pour bouger le domino avec le curseur
 
     void afficheMenu();
     void afficheFondEc();
