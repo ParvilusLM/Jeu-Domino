@@ -291,7 +291,6 @@ void Menu::elementActif()
             if(m_TypeJeuChoisi==TJ_CLASSIQUE)
             {
                 gestTexture(B_TYPE1,3);
-
                 gestTexture(B_TYPE2,1);
                 gestTexture(B_TYPE3,1);
                 gestTexture(B_TYPE4,1);
@@ -299,7 +298,6 @@ void Menu::elementActif()
             else if(m_TypeJeuChoisi==TJ_5PARTOUT)
             {
                 gestTexture(B_TYPE2,3);
-
                 gestTexture(B_TYPE1,1);
                 gestTexture(B_TYPE3,1);
                 gestTexture(B_TYPE4,1);
@@ -307,7 +305,6 @@ void Menu::elementActif()
             else if(m_TypeJeuChoisi==TJ_MATADOR)
             {
                 gestTexture(B_TYPE3,3);
-
                 gestTexture(B_TYPE1,1);
                 gestTexture(B_TYPE2,1);
                 gestTexture(B_TYPE4,1);
@@ -315,7 +312,6 @@ void Menu::elementActif()
             else if(m_TypeJeuChoisi==TJ_MEMORY)
             {
                 gestTexture(B_TYPE4,3);
-
                 gestTexture(B_TYPE1,1);
                 gestTexture(B_TYPE2,1);
                 gestTexture(B_TYPE3,1);
@@ -366,6 +362,7 @@ void Menu::elementActif()
         {
             m_elementActif=OK_ACTIF;
             gestTexture(B_OK,2);
+            resetTextureB(B_OK);
         }
         else if(collisionTS(m_sbPrec.getGlobalBounds()))
         {
@@ -393,21 +390,25 @@ void Menu::elementActif()
         {
             m_elementActif=PAUSER_ACTIF;
             gestTexture(B_PAUSER,2);
+            resetTextureB(B_PAUSER);
         }
         else if(collisionTS(m_sbRejouer.getGlobalBounds()))
         {
             m_elementActif=PAUSEREJ_ACTIF;
             gestTexture(B_PAUSEREJ,2);
+            resetTextureB(B_PAUSEREJ);
         }
         else if(collisionTS(m_sbInstructions.getGlobalBounds()))
         {
             m_elementActif=PAUSEI_ACTIF;
             gestTexture(B_PAUSEI,2);
+            resetTextureB(B_PAUSEI);
         }
         else if(collisionTS(m_sbQuitter.getGlobalBounds()))
         {
             m_elementActif=PAUSEQ_ACTIF;
             gestTexture(B_PAUSEQ,2);
+            resetTextureB(B_PAUSEQ);
         }
         else
         {
@@ -425,11 +426,13 @@ void Menu::elementActif()
         {
             m_elementActif=FINPQ_ACTIF;
             gestTexture(B_FINPQ,2);
+            resetTextureB(B_FINPQ);
         }
         else if(collisionTS(m_sbRejouerFP.getGlobalBounds()))
         {
             m_elementActif=FINPR_ACTIF;
             gestTexture(B_FINPR,2);
+            resetTextureB(B_FINPR);
         }
         else
         {

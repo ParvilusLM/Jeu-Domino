@@ -6,13 +6,14 @@
 
 using namespace sf;
 
+//les variables globales
 bool jeuEnCours=false;
 bool jeuPause=false;
 bool jeuFinPartie=false;
 bool jeuDebut=false;
 bool jeuRejouer=false;
 bool boutonPresse=false;//pour savoir s'il y a clic
-bool laMain=false;
+bool laMain=false,laMainBot=false; //laMainBot pour le CPU
 int sourisX=0,sourisY=0;
 bool glisser=false,deposer=false; //autoriser l'action glisser ou deposer
 

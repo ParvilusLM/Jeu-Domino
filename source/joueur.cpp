@@ -183,8 +183,26 @@ bool Joueur::selectionDomino(int joueur)
         {
             if(collisionTS(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->sDomino.getGlobalBounds()))
             {
+                if(m_plateauJeu.typeJeu==D_CLASSIQUE) //Jeu Classique
+                {
+
+                }
+                else if(m_plateauJeu.typeJeu==D_5PARTOUT) //Jeu 5Partout
+                {
+
+                }
+                else if(m_plateauJeu.typeJeu==D_MATADOR) //Jeu Matador
+                {
+
+                }
+                else //Jeu Memory
+                {
+
+                }
+
                 m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->selectionne=true;
                 dominoSelect=true;
+
             }
             compt++;
         }
@@ -275,13 +293,29 @@ void Joueur::glisserDeposerD(int action)
     }
     else
     {
+        int indicEl=m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size()-1;
         int compt=0;
         while(compt<m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size())
         {
-            if(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->selectionne)
+            if(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->selectionne)
             {
-                m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->selectionne=false;
+                if(m_plateauJeu.vecDominosPoses.size()==0)
+                {
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->sDomino.setPosition(22.5f*20,17.5f*20);
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->selectionne=false;
+                    m_plateauJeu.vecDominosPoses.insert(m_plateauJeu.vecDominosPoses.end(),m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl));
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.erase(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.begin()+indicEl);
+                }
+                else
+                {
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->selectionne=false;
+                    m_plateauJeu.vecDominosPoses.insert(m_plateauJeu.vecDominosPoses.end(),m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl));
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.erase(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.begin()+indicEl);
+                }
+
+
             }
+            indicEl--;
             compt++;
         }
     }
@@ -387,9 +421,28 @@ void Joueur::affichePartie()
     //affiche bouton
     afficheBouton();
 
-    //on affiche les supports des dominos
+    //on affiche le support des dominos a piocher
     m_fenetre->draw(m_plateauJeu.sCadreDAP);
 
+    //on va afficher les dominos par categorie : DominosPoses ,DominosAPiocher, DominosJ1, DominosJ2
+
+    //DominosPoses
+    int comptt=0;
+    while(comptt<m_plateauJeu.vecDominosPoses.size())
+    {
+        m_fenetre->draw(m_plateauJeu.vecDominosPoses.at(comptt)->sDomino);
+        comptt++;
+    }
+
+    //DominosAPiocher
+    int compt=0;
+    while(compt<m_plateauJeu.vecDominosAP.size())
+    {
+        m_fenetre->draw(m_plateauJeu.vecDominosAP.at(compt)->sDomino);
+        compt++;
+    }
+
+    //affiche les supports de dominos des joueurs
     int comp=0;
     while(comp<m_plateauJeu.vecJoueurs.size())
     {
@@ -397,12 +450,20 @@ void Joueur::affichePartie()
         comp++;
     }
 
-    //on affiche les dominos
-    int compt=0;
-    while(compt<m_plateauJeu.vecDominos.size())
+    //DominosJ1
+    int compt1=0;
+    while(compt1<m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size())
     {
-        m_fenetre->draw(m_plateauJeu.vecDominos.at(compt).sDomino);
-        compt++;
+        m_fenetre->draw(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt1)->sDomino);
+        compt1++;
+    }
+
+    //DominosJ2
+    int compt2=0;
+    while(compt2<m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size())
+    {
+        m_fenetre->draw(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt2)->sDomino);
+        compt2++;
     }
 
 }
