@@ -32,6 +32,7 @@ void Joueur::initPlateauJeu()
         ElDomino nouvDomino;
         nouvDomino.angle=0;
         nouvDomino.etat=RETOURNE;
+        nouvDomino.auBord=false;
         nouvDomino.noDomino=compt;
         nouvDomino.selectionne=false;
         nouvDomino.sDomino.setTexture(m_tDominos);
@@ -183,15 +184,16 @@ bool Joueur::selectionDomino(int joueur)
         {
             if(collisionTS(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->sDomino.getGlobalBounds()))
             {
-                if(m_plateauJeu.typeJeu==D_CLASSIQUE) //Jeu Classique
+                if(m_plateauJeu.typeJeu==TJ_CLASSIQUE) //Jeu Classique
+                {
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->selectionne=true;
+                    dominoSelect=true;
+                }
+                else if(m_plateauJeu.typeJeu==TJ_5PARTOUT) //Jeu 5Partout
                 {
 
                 }
-                else if(m_plateauJeu.typeJeu==D_5PARTOUT) //Jeu 5Partout
-                {
-
-                }
-                else if(m_plateauJeu.typeJeu==D_MATADOR) //Jeu Matador
+                else if(m_plateauJeu.typeJeu==TJ_MATADOR) //Jeu Matador
                 {
 
                 }
@@ -199,9 +201,6 @@ bool Joueur::selectionDomino(int joueur)
                 {
 
                 }
-
-                m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->selectionne=true;
-                dominoSelect=true;
 
             }
             compt++;
@@ -303,6 +302,7 @@ void Joueur::glisserDeposerD(int action)
                 {
                     m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->sDomino.setPosition(22.5f*20,17.5f*20);
                     m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->selectionne=false;
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->auBord=true;
                     m_plateauJeu.vecDominosPoses.insert(m_plateauJeu.vecDominosPoses.end(),m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl));
                     m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.erase(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.begin()+indicEl);
                 }

@@ -124,6 +124,9 @@ Menu::Menu(sf::RenderWindow& fenetre):m_fenetre(0)
     musicOn=true;
     pageI=1;
 
+    m_TypeJeuChoisi=AUCUN_TJ;
+    m_NiveauChoisi=AUCUN_NIV;
+
     initMenuP();
     initMenuI();
     initMenuSelectP();
@@ -704,6 +707,44 @@ void Menu::resetBoutonPress()
 void Menu::quitterJeu()
 {
     m_fenetre->close();
+}
+
+int Menu::getDonnees(int donnees)
+{
+    if(donnees==0)
+    {
+        if(m_TypeJeuChoisi==TJ_CLASSIQUE)
+        {
+            return TJ_CLASSIQUE;
+        }
+        else if(m_TypeJeuChoisi==TJ_5PARTOUT)
+        {
+            return TJ_5PARTOUT;
+        }
+        else if(m_TypeJeuChoisi==TJ_MATADOR)
+        {
+            return TJ_MATADOR;
+        }
+        else
+        {
+            return TJ_MEMORY;
+        }
+    }
+    else
+    {
+        if(m_NiveauChoisi==NIV_FACILE)
+        {
+            return NIV_FACILE;
+        }
+        else if(m_NiveauChoisi==NIV_MOYEN)
+        {
+            return NIV_MOYEN;
+        }
+        else
+        {
+            return NIV_DIFFICILE;
+        }
+    }
 }
 
 void Menu::gestTexture(int bouton, int type)

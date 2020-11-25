@@ -8,7 +8,7 @@ struct ElDomino
     sf::Sprite sDomino;
     int cote1,cote2;
     int angle;
-    bool debord;
+    bool auBord;
     int etat;
     bool selectionne;
     sf::Vector2f scale;
@@ -31,6 +31,7 @@ struct PlateauJeu
     std::vector<ElDomino > vecDominos;
     std::vector<ElDomino* > vecDominosPoses;
     std::vector<ElDomino* > vecDominosAP; //vecteur dominos dans lequel piocher
+    std::vector<ElDomino* > vecDominosAuBord; //pour mettre les dominos auquels on peut greffer d'autre
     std::vector<sf::Sprite > vecIndicateurs;//pour montrer ou on peut placer le domino selectionne
     sf::Sprite sCadreDAP;//support dominos a piocher
     int typeJeu;

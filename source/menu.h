@@ -27,6 +27,8 @@ public:
     void resetBoutonPress();
     void quitterJeu();
 
+    int getDonnees(int donnees);
+
     void gestTexture(int bouton, int type);
     void resetTextureB(int sauf);
 

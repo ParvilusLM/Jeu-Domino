@@ -11,7 +11,7 @@
 1605730471 c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\animations.h
 	"decor.h"
 
-1606176174 source:c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\controleur.cpp
+1606261949 source:c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\controleur.cpp
 	"controleur.h"
 
 1606163934 c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\controleur.h
@@ -24,7 +24,7 @@
 	"son.h"
 	"joueur.h"
 
-1605242792 c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\menu.h
+1606247862 c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\menu.h
 	"enums.h"
 	"constantes.h"
 	"varG.h"
@@ -468,13 +468,13 @@
 1604971336 source:c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\info.cpp
 	"info.h"
 
-1606192691 source:c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\joueur.cpp
+1606246602 source:c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\joueur.cpp
 	"joueur.h"
 
 1605226292 source:c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\son.cpp
 	"son.h"
 
-1606193331 source:c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\menu.cpp
+1606263589 source:c:\users\my foe\documents\programmation projets\sfml\version 2.0\proj domino\domino 2.0\source\menu.cpp
 	"menu.h"
 
 1525812018 c:\program files (x86)\codeblocks\sfml-2.5.1\include\sfml\audio.hpp
