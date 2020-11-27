@@ -646,6 +646,8 @@ void Menu::selectionElActif()
             m_boutonPress=B_PAUSEQ;
             boutonPresse=true;
             gestTexture(B_PAUSEQ,1);
+            m_TypeJeuChoisi=AUCUN_TJ;
+            m_NiveauChoisi=AUCUN_NIV;
         }
         else
         {
@@ -659,6 +661,8 @@ void Menu::selectionElActif()
             m_boutonPress=B_FINPQ;
             boutonPresse=true;
             gestTexture(B_FINPQ,1);
+            m_TypeJeuChoisi=AUCUN_TJ;
+            m_NiveauChoisi=AUCUN_NIV;
         }
         else if(m_elementActif==FINPR_ACTIF)
         {
@@ -725,10 +729,15 @@ int Menu::getDonnees(int donnees)
         {
             return TJ_MATADOR;
         }
-        else
+        else if(m_TypeJeuChoisi==TJ_MEMORY)
         {
             return TJ_MEMORY;
         }
+        else
+        {
+            return AUCUN_TJ;
+        }
+
     }
     else
     {
@@ -740,9 +749,13 @@ int Menu::getDonnees(int donnees)
         {
             return NIV_MOYEN;
         }
-        else
+        else if(m_NiveauChoisi==NIV_DIFFICILE)
         {
             return NIV_DIFFICILE;
+        }
+        else
+        {
+            return AUCUN_NIV;
         }
     }
 }

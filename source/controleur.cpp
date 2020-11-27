@@ -127,8 +127,12 @@ void Controleur::gestionMaJ()
         }
         else if(m_decor->getMenu().getBoutonPress()==B_JOUER)
         {
-            jeuEnCours=true;
-            jeuDebut=true;
+            if(m_decor->getMenu().getDonnees(0) != AUCUN_TJ  && m_decor->getMenu().getDonnees(1) != AUCUN_NIV)
+            {
+                jeuEnCours=true;
+                jeuDebut=true;
+            }
+
         }
         else if(m_decor->getMenu().getBoutonPress()==B_PAUSER)
         {

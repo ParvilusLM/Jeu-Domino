@@ -17,7 +17,7 @@
 			<Cursor1 position="588" topLine="7" />
 		</Cursor>
 	</File>
-	<File name="source\joueur.cpp" open="1" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="source\joueur.cpp" open="1" top="1" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="11635" topLine="419" />
 		</Cursor>
@@ -80,7 +80,7 @@
 			<Cursor1 position="1367" topLine="286" />
 		</Cursor>
 	</File>
-	<File name="source\enums.h" open="1" top="1" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="source\enums.h" open="1" top="0" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="2411" topLine="19" />
 		</Cursor>

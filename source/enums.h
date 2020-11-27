@@ -21,8 +21,6 @@ struct ElJoueur
    std::vector<ElDomino* > vecDominos;
    sf::Sprite sCadreJoueur;
    int points;
-
-
 };
 
 struct PlateauJeu
@@ -31,12 +29,11 @@ struct PlateauJeu
     std::vector<ElDomino > vecDominos;
     std::vector<ElDomino* > vecDominosPoses;
     std::vector<ElDomino* > vecDominosAP; //vecteur dominos dans lequel piocher
-    std::vector<ElDomino* > vecDominosAuBord; //pour mettre les dominos auquels on peut greffer d'autre
+    std::vector<ElDomino* > vecDominosAuBord; //pour mettre les dominos auquels on peut greffer d'autres dominos
     std::vector<sf::Sprite > vecIndicateurs;//pour montrer ou on peut placer le domino selectionne
     sf::Sprite sCadreDAP;//support dominos a piocher
     int typeJeu;
     int niveauJeu;
-
 
 };
 
