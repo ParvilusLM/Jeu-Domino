@@ -276,23 +276,27 @@ void Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
             compt++;
         }
 
+        //on determine la taille du vecteur vecDominosPoses pour savoir si c'est le premier double pose
+        int tailleVecDomPoses=m_plateauJeu.vecDominosPoses.size();
+
+
         //on determine les cotes sur lesquels on peut greffer le nouveau domino
         int compt2=0;
         while(compt2<m_plateauJeu.vecDominosPoses.size())
         {
             if(m_plateauJeu.vecDominosPoses.at(compt2)->noDomino==noDominoP)
             {
-                if(rotation==0 && compt2==0)
+                if(rotation==0.f && tailleVecDomPoses==1)
                 {
                     coteG=true;
                     coteD=true;
                     coteH=true;
                     coteB=true;
                 }
-                else if(rotation==0 && compt2!=0)
+                else if(rotation==0.f && tailleVecDomPoses!=1)
                 {
-                    coteH=true;
-                    coteB=true;
+                    coteG=true;
+                    coteD=true;
                 }
                 else
                 {
@@ -305,19 +309,22 @@ void Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                 int compt3=0;
                 while(compt3<m_plateauJeu.vecDominosPoses.size())
                 {
-                    if(rotation==0 && compt2==0)
+                    if(rotation==0.f && tailleVecDomPoses==1)
                     {
+
                         //cote Gauche
-                        if(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x == m_plateauJeu.vecDominosPoses.at(compt3)->sDomino.getPosition().x + boiteEDomP.width &&
+                        if(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x == m_plateauJeu.vecDominosPoses.at(compt3)->sDomino.getPosition().x +(boiteEDomP.width/2)+(boiteEDomP.height/2) &&
                            m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y == m_plateauJeu.vecDominosPoses.at(compt3)->sDomino.getPosition().y)
                         {
+                            std::cout<<"coteG == false"<<std::endl;
                             coteG=false;
                         }
 
                         //cote Droit
-                        if(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x == m_plateauJeu.vecDominosPoses.at(compt3)->sDomino.getPosition().x - boiteEDomP.width &&
+                        if(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x == m_plateauJeu.vecDominosPoses.at(compt3)->sDomino.getPosition().x -(boiteEDomP.width/2)-(boiteEDomP.height/2) &&
                            m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y == m_plateauJeu.vecDominosPoses.at(compt3)->sDomino.getPosition().y)
                         {
+                            std::cout<<"coteD == false"<<std::endl;
                             coteD=false;
                         }
 
@@ -325,6 +332,7 @@ void Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                         if(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x == m_plateauJeu.vecDominosPoses.at(compt3)->sDomino.getPosition().x &&
                            m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y == m_plateauJeu.vecDominosPoses.at(compt3)->sDomino.getPosition().y + boiteEDomP.height)
                         {
+                            std::cout<<"coteH == false"<<std::endl;
                             coteH=false;
                         }
 
@@ -332,17 +340,46 @@ void Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                         if(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x == m_plateauJeu.vecDominosPoses.at(compt3)->sDomino.getPosition().x &&
                            m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y == m_plateauJeu.vecDominosPoses.at(compt3)->sDomino.getPosition().y - boiteEDomP.height)
                         {
+                            std::cout<<"coteB == false"<<std::endl;
                             coteB=false;
                         }
 
                     }
-                    else if(rotation==0 && compt2!=0)
+                    else if(rotation==0.f && tailleVecDomPoses!=1)
                     {
+                        //cote Gauche
+                        if(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x == m_plateauJeu.vecDominosPoses.at(compt3)->sDomino.getPosition().x +(boiteEDomP.width/2)+(boiteEDomP.height/2) &&
+                           m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y == m_plateauJeu.vecDominosPoses.at(compt3)->sDomino.getPosition().y)
+                        {
+                            std::cout<<"coteG == false"<<std::endl;
+                            coteG=false;
+                        }
 
+                        //cote Droit
+                        if(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x == m_plateauJeu.vecDominosPoses.at(compt3)->sDomino.getPosition().x -(boiteEDomP.width/2)-(boiteEDomP.height/2) &&
+                           m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y == m_plateauJeu.vecDominosPoses.at(compt3)->sDomino.getPosition().y)
+                        {
+                            std::cout<<"coteD == false"<<std::endl;
+                            coteD=false;
+                        }
                     }
                     else
                     {
+                        //cote Gauche
+                        if(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x == m_plateauJeu.vecDominosPoses.at(compt3)->sDomino.getPosition().x +boiteEDomP.width &&
+                           m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y == m_plateauJeu.vecDominosPoses.at(compt3)->sDomino.getPosition().y)
+                        {
+                            std::cout<<"coteG == false"<<std::endl;
+                            coteG=false;
+                        }
 
+                        //cote Droit
+                        if(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x == m_plateauJeu.vecDominosPoses.at(compt3)->sDomino.getPosition().x -boiteEDomP.width &&
+                           m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y == m_plateauJeu.vecDominosPoses.at(compt3)->sDomino.getPosition().y)
+                        {
+                            std::cout<<"coteD == false"<<std::endl;
+                            coteD=false;
+                        }
                     }
                     compt3++;
                 }
@@ -423,12 +460,14 @@ void Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                 //test pour savoir si on doit enlever le domino parent du vecteur vecDominosAuBord
                 if(!coteG && !coteD && !coteH && !coteB)
                 {
+
                     int indicDernEl=m_plateauJeu.vecDominosAuBord.size()-1;
                     int comp=0;
                     while(comp<m_plateauJeu.vecDominosAuBord.size())
                     {
                         if(m_plateauJeu.vecDominosAuBord.at(indicDernEl)->noDomino==noDominoP)
                         {
+                            std::cout<<"on enleve un domino dans le vecteur vecDominosAuBord"<<std::endl;
                             m_plateauJeu.vecDominosAuBord.erase(m_plateauJeu.vecDominosAuBord.begin()+indicDernEl);
                         }
                         indicDernEl--;
@@ -556,7 +595,11 @@ void Joueur::glisserDeposerD(int action)
                     int compt2=0;
                     while(compt2<m_plateauJeu.vecDominosAuBord.size())
                     {
-                        if(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->sDomino.getGlobalBounds().intersects(m_plateauJeu.vecDominosAuBord.at(compt2)->sDomino.getGlobalBounds()))
+                        if(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->sDomino.getGlobalBounds().intersects(m_plateauJeu.vecDominosAuBord.at(compt2)->sDomino.getGlobalBounds()) &&
+                           (m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->cote1==m_plateauJeu.vecDominosAuBord.at(compt2)->cote1 ||
+                            m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->cote1==m_plateauJeu.vecDominosAuBord.at(compt2)->cote2 ||
+                            m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->cote2==m_plateauJeu.vecDominosAuBord.at(compt2)->cote1 ||
+                            m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->cote2==m_plateauJeu.vecDominosAuBord.at(compt2)->cote2) )
                         {
                             placerDomino(HUMAIN,m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino,indicEl);
                             std::cout<<"Ouffff"<<std::endl;
