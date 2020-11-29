@@ -299,8 +299,12 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                 sf::FloatRect boiteEDomP=m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getGlobalBounds();
 
                 //on place le domino selon cote valide
-                if( (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90) ||
-                    (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->) ) )
+                if( (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90)) ||
+                    (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90)) ||
+                    (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2==m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
+                    (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2==m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
+                    (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)) ||
+                    (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)))
                 {
 
                     if(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->cote1 == m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->cote2) //si c'est un double
@@ -356,10 +360,17 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
 
                     coteG=false;
                     m_plateauJeu.vecDominosPoses.at(compt2)->attacheGP=false;
-                    m_plateauJeu.vecDominosPoses.at(compt2)->attacheHP=false;
-                    m_plateauJeu.vecDominosPoses.at(compt2)->attacheBP=false;
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->attacheDP=false;
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->attacheHP=false;
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->attacheBP=false;
+                    placerDPossible=true;
                 }
-                else if(coteD)
+                else if( (coteD && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
+                    (coteD && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
+                    (coteD && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2==m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90)) ||
+                    (coteD && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2==m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90)) ||
+                    (coteD && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)) ||
+                    (coteD && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0))  )
                 {
                     if(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->cote1 == m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->cote2) //si c'est un double
                     {
@@ -414,22 +425,28 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
 
                     coteD=false;
                     m_plateauJeu.vecDominosPoses.at(compt2)->attacheDP=false;
-                    m_plateauJeu.vecDominosPoses.at(compt2)->attacheHP=false;
-                    m_plateauJeu.vecDominosPoses.at(compt2)->attacheBP=false;
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->attacheGP=false;
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->attacheHP=false;
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->attacheBP=false;
+                    placerDPossible=true;
                 }
                 else if(coteH)
                 {
                     coteH=false;
                     m_plateauJeu.vecDominosPoses.at(compt2)->attacheHP=false;
-                    m_plateauJeu.vecDominosPoses.at(compt2)->attacheHP=false;
-                    m_plateauJeu.vecDominosPoses.at(compt2)->attacheBP=false;
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->attacheBP=false;
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->attacheGP=false;
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->attacheDP=false;
+                    placerDPossible=true;
                 }
                 else if(coteB)
                 {
                     coteB=false;
                     m_plateauJeu.vecDominosPoses.at(compt2)->attacheBP=false;
-                    m_plateauJeu.vecDominosPoses.at(compt2)->attacheHP=false;
-                    m_plateauJeu.vecDominosPoses.at(compt2)->attacheBP=false;
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->attacheHP=false;
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->attacheGP=false;
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(noDominoE)->attacheDP=false;
+                    placerDPossible=true;
                 }
                 else
                 {
@@ -462,6 +479,7 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
     {
 
     }
+    return placerDPossible;
 
     std::cout<<"Sortie fonction placerDomino"<<std::endl;
 }
@@ -575,7 +593,7 @@ void Joueur::glisserDeposerD(int action)
                 }
                 else
                 {
-                    std::cout<<"Debut action deposer domino"<<std::endl;
+                    //std::cout<<"Debut action deposer domino"<<std::endl;
                     int compt2=0;
                     while(compt2<m_plateauJeu.vecDominosAuBord.size())
                     {
@@ -585,22 +603,26 @@ void Joueur::glisserDeposerD(int action)
                             m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->cote2==m_plateauJeu.vecDominosAuBord.at(compt2)->cote1 ||
                             m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->cote2==m_plateauJeu.vecDominosAuBord.at(compt2)->cote2 ))
                         {
-                            placerDomino(HUMAIN,m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino,indicEl);
-                            std::cout<<"Ouffff"<<std::endl;
-                            m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->selectionne=false;
-                            m_plateauJeu.vecDominosPoses.insert(m_plateauJeu.vecDominosPoses.end(),m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl));
+                            if(placerDomino(HUMAIN,m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino,indicEl))
+                            {
+                                //std::cout<<"Ouffff"<<std::endl;
+                                m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->selectionne=false;
+                                m_plateauJeu.vecDominosPoses.insert(m_plateauJeu.vecDominosPoses.end(),m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl));
 
-                            int dernEl=m_plateauJeu.vecDominosPoses.size()-1;
-                            m_plateauJeu.vecDominosAuBord.insert(m_plateauJeu.vecDominosAuBord.end(),m_plateauJeu.vecDominosPoses.at(dernEl));
-                            m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.erase(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.begin()+indicEl);
+                                int dernEl=m_plateauJeu.vecDominosPoses.size()-1;
+                                m_plateauJeu.vecDominosAuBord.insert(m_plateauJeu.vecDominosAuBord.end(),m_plateauJeu.vecDominosPoses.at(dernEl));
+                                m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.erase(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.begin()+indicEl);
+
+
+                                glisser=false;
+                                deposer=false;
+                            }
 
                             compt2=100;//pour sortir de la boucle
-                            glisser=false;
-                            deposer=false;
                         }
                         compt2++;
                     }
-                    std::cout<<"Fin action deposer domino"<<std::endl;
+                    //std::cout<<"Fin action deposer domino"<<std::endl;
                     if(glisser)
                     {
                         deposer=false;
