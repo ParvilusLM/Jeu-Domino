@@ -7,10 +7,12 @@ struct ElDomino
 {
     sf::Sprite sDomino;
     int cote1,cote2;
+    bool attacheGP,attacheDP,attacheHP,attacheBP; //GDHB pour les directions et P pour possible
     int angle;
     bool auBord;
     int etat;
     bool selectionne;
+
     sf::Vector2f scale;
     int noDomino;
 
@@ -29,7 +31,7 @@ struct PlateauJeu
     std::vector<ElDomino > vecDominos;
     std::vector<ElDomino* > vecDominosPoses;
     std::vector<ElDomino* > vecDominosAP; //vecteur dominos dans lequel piocher
-    std::vector<ElDomino* > vecDominosAuBord; //pour mettre les dominos auquels on peut greffer d'autres dominos
+    std::vector<ElDomino* > vecDominosAuBord; //pour mettre les dominos auquels on peut attacher d'autres dominos
     std::vector<sf::Sprite > vecIndicateurs;//pour montrer ou on peut placer le domino selectionne
     sf::Sprite sCadreDAP;//support dominos a piocher
     int typeJeu;

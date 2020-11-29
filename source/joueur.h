@@ -19,7 +19,7 @@ public:
     void piocherDomino(int joueur);
     bool selectionDomino(int joueur);
     bool coupPossible(int joueur, int noDomino=-1);
-    void placerDomino(int joueur, int noDominoP,int noDominoE); //noDominoP represente le domino sur lequel on va greffer le nouveau
+    bool placerDomino(int joueur, int noDominoP,int noDominoE); //noDominoP represente le domino sur lequel on va attacher le nouveau
     void arrangerDomino(); //pour arranger les dominos du vecDomninosPoses dans le cadre
     void retourneDominos(int joueur,bool rendreVisible);
     void changementEchelleD(int categorie,sf::Vector2f facteur);
