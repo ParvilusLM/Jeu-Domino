@@ -10,7 +10,7 @@ En tant que debutant, mon intention n'est pas de le realiser a l'identique.
 
 ## Screenshots
 Dans le dossier screenshots vous trouverez des apercus du jeu
-
+![CaptureJDomino](/screenshots/CaptureJDomino.gif)
 
 
 ## Specifications
