@@ -18,7 +18,7 @@ public:
     void distribuerDomino();
     void piocherDomino(int joueur);
     bool selectionDomino(int joueur);
-    bool coupPossible(int joueur, int noDomino=-1);
+    bool coupPossible(int joueur, ElDomino& domino);
     bool placerDomino(int joueur, int noDominoP,int noDominoE); //noDominoP represente le domino sur lequel on va attacher le nouveau
     void arrangerDomino(); //pour arranger les dominos du vecDomninosPoses dans le cadre
     void retourneDominos(int joueur,bool rendreVisible);
