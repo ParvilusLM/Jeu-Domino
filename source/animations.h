@@ -17,7 +17,7 @@ public:
 
 private:
     Decor* m_pDecor;
-    bool m_animDistrib,m_animJoueur1C,m_animJoueur1V,m_animJoueur2C,m_animJoueur2V,m_animPiocheC,m_animPiocheV;
+    bool m_animDistrib,m_animJoueur1C,m_animJoueur1V,m_animJoueur2C,m_animJoueur2V,m_animPiocheC,m_animPiocheV,m_animJoueur2Coup;
     sf::Clock m_horlorge;
     float m_timer;
     float m_delai;

@@ -16,6 +16,7 @@ bool boutonPresse=false;//pour savoir s'il y a clic
 bool laMain=false,laMainBot=false; //laMainBot pour le CPU
 int sourisX=0,sourisY=0;
 bool glisser=false,deposer=false; //autoriser l'action glisser ou deposer
+sf::Vector2f posFinalD; //pour enregister la position finale ou on doit mettre le domino joue par le CPU
 
 int main()
 {
@@ -85,13 +86,16 @@ int main()
                         if (button == Mouse::Left) // Bouton gauche
                         {
                             controleurJ.gestBoutonsJeu();
-                            if(!glisser)
+                            if(laMain)
                             {
-                                controleurJ.glisserDeposer(GLISSER);
-                            }
-                            else
-                            {
-                                controleurJ.glisserDeposer(DEPOSER);
+                                if(!glisser)
+                                {
+                                    controleurJ.glisserDeposer(GLISSER);
+                                }
+                                else
+                                {
+                                    controleurJ.glisserDeposer(DEPOSER);
+                                }
                             }
                         }
 

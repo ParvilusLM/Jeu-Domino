@@ -10,6 +10,7 @@ Animations::Animations(Decor& decor):m_pDecor(0)
     m_animJoueur2V=false;
     m_animPiocheC=false;
     m_animPiocheV=false;
+    m_animJoueur2Coup=false;
 
     m_timer=0.f;
     m_delai=0.001f;
@@ -263,8 +264,18 @@ void Animations::gestionAnimation()
 
     }
 
+    if(m_animJoueur2Coup)
+    {
+        int compt=0;
+        while(compt<m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.size())
+        {
+            if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.at(compt)->selectionne)
+            {
 
-
+            }
+            compt++;
+        }
+    }
 }
 
 void Animations::debuterAnim(int typeAnim)
