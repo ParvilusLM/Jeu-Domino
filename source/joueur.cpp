@@ -90,7 +90,7 @@ void Joueur::initPlateauJeu()
         ElJoueur nouvJ;
         nouvJ.points=0;
         nouvJ.sCadreJoueur.setTexture(m_tElements);
-        if(compt3==noJoueur)
+        if(compt3==HUMAIN)
         {
             nouvJ.sCadreJoueur.setPosition(8*20,31*20);
             nouvJ.sCadreJoueur.setTextureRect(sf::IntRect(8*20,31*20,30*20,4*20));
@@ -170,7 +170,7 @@ void Joueur::distribuerDomino()
         compt++;
     }
 
-    std::cout<<"Pointeur reference :  "<<m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.size()<<std::endl;
+    std::cout<<"Pointeur reference :  "<<m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size()<<std::endl;
     std::cout<<"Pointeur reference :  "<<m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size()<<std::endl;
 }
 
@@ -182,38 +182,38 @@ void Joueur::piocherDomino(int joueur)
 bool Joueur::selectionDomino(int joueur)
 {
     bool dominoSelect=false;
-    if(joueur==noJoueur)
+    if(joueur==HUMAIN)
     {
         int compt=0;
-        while(compt<m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.size())
+        while(compt<m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size())
         {
-            if(collisionTS(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)->sDomino.getGlobalBounds()))
+            if(collisionTS(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->sDomino.getGlobalBounds()))
             {
                 if(m_plateauJeu.vecDominosPoses.size()==0)
                 {
                     if(m_plateauJeu.typeJeu==TJ_CLASSIQUE)
                     {
-                        if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)->cote1 == m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)->cote2 ||
-                           m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)->cote1 != m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)->cote2 )
+                        if(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->cote1 == m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->cote2 ||
+                           m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->cote1 != m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->cote2 )
                         {
-                            m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)->selectionne=true;
+                            m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->selectionne=true;
                             dominoSelect=true;
                         }
                     }
                     else if(m_plateauJeu.typeJeu==TJ_5PARTOUT)
                     {
-                        if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)->cote1 == m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)->cote2)
+                        if(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->cote1 == m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->cote2)
                         {
-                            m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)->selectionne=true;
+                            m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->selectionne=true;
                             dominoSelect=true;
                         }
                     }
                     else if(m_plateauJeu.typeJeu==TJ_MATADOR)
                     {
-                        if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)->cote1 + m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)->cote2==7 ||
-                           m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)->cote1 + m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)->cote2==0 )
+                        if(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->cote1 + m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->cote2==7 ||
+                           m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->cote1 + m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->cote2==0 )
                         {
-                            m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)->selectionne=true;
+                            m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->selectionne=true;
                             dominoSelect=true;
                         }
                     }
@@ -222,9 +222,9 @@ bool Joueur::selectionDomino(int joueur)
                 else
                 {
                     //on va tester les dominos du vecteur vecDominosAuBord avec celui pointe par le curseur
-                    if(coupPossible(noJoueur,*m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)))
+                    if(coupPossible(HUMAIN,*m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)))
                     {
-                        m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)->selectionne=true;
+                        m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->selectionne=true;
                         dominoSelect=true;
                     }
 
@@ -1100,12 +1100,12 @@ void Joueur::arrangerDomino()
 
 void Joueur::retourneDominos(int joueur,bool rendreVisible)
 {
-    if(joueur==noJoueur)
+    if(joueur==HUMAIN)
     {
         int compt=0;
-        while(compt<m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.size())
+        while(compt<m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size())
         {
-            m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)->etat=VISIBLE;
+            m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->etat=VISIBLE;
             compt++;
         }
     }
@@ -1135,10 +1135,10 @@ void Joueur::changementEchelleD(int categorie,sf::Vector2f facteur)
     else if(categorie==DOMINOS_JOUEUR1)
     {
         int compt=0;
-        while(compt<m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.size())
+        while(compt<m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size())
         {
-            m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)->scale=facteur;
-            m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)->sDomino.setScale(facteur);
+            m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->scale=facteur;
+            m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->sDomino.setScale(facteur);
             compt++;
         }
     }
@@ -1159,43 +1159,43 @@ void Joueur::glisserDeposerD(int action)
     if(action==GLISSER)
     {
         int compt=0;
-        while(compt<m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.size())
+        while(compt<m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size())
         {
-            if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)->selectionne)
+            if(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->selectionne)
             {
-                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt)->sDomino.setPosition(sourisX,sourisY);
+                m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->sDomino.setPosition(sourisX,sourisY);
             }
             compt++;
         }
     }
     else
     {
-        int indicEl=m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.size()-1;
+        int indicEl=m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size()-1;
         int compt=0;
-        while(compt<m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.size())
+        while(compt<m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size())
         {
-            if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(indicEl)->selectionne)
+            if(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->selectionne)
             {
                 if(m_plateauJeu.vecDominosPoses.size()==0)
                 {
-                    if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(indicEl)->cote1!=m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(indicEl)->cote2)
+                    if(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->cote1!=m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->cote2)
                     {
-                        m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(indicEl)->angle=90;
-                        m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(indicEl)->sDomino.setRotation(90.f);
+                        m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->angle=90;
+                        m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->sDomino.setRotation(90.f);
 
-                        m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(indicEl)->attacheHP=false;
-                        m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(indicEl)->attacheBP=false;
+                        m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->attacheHP=false;
+                        m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->attacheBP=false;
 
                     }
 
 
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(indicEl)->sDomino.setPosition(22.5f*20,17.5f*20);
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(indicEl)->selectionne=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(indicEl)->auBord=true;
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->sDomino.setPosition(22.5f*20,17.5f*20);
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->selectionne=false;
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->auBord=true;
 
-                    m_plateauJeu.vecDominosPoses.insert(m_plateauJeu.vecDominosPoses.end(),m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(indicEl));
+                    m_plateauJeu.vecDominosPoses.insert(m_plateauJeu.vecDominosPoses.end(),m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl));
                     m_plateauJeu.vecDominosAuBord.insert(m_plateauJeu.vecDominosAuBord.end(),m_plateauJeu.vecDominosPoses.at(0));
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.erase(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.begin()+indicEl);
+                    m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.erase(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.begin()+indicEl);
 
                     glisser=false;
                     deposer=false;
@@ -1206,17 +1206,17 @@ void Joueur::glisserDeposerD(int action)
                     int compt2=0;
                     while(compt2<m_plateauJeu.vecDominosAuBord.size())
                     {
-                        if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(indicEl)->sDomino.getGlobalBounds().intersects(m_plateauJeu.vecDominosAuBord.at(compt2)->sDomino.getGlobalBounds()) )
+                        if(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->sDomino.getGlobalBounds().intersects(m_plateauJeu.vecDominosAuBord.at(compt2)->sDomino.getGlobalBounds()) )
                         {
-                            if(placerDomino(noJoueur,m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino,indicEl))
+                            if(placerDomino(HUMAIN,m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino,indicEl))
                             {
                                 //std::cout<<"Ouffff"<<std::endl;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(indicEl)->selectionne=false;
-                                m_plateauJeu.vecDominosPoses.insert(m_plateauJeu.vecDominosPoses.end(),m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(indicEl));
+                                m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->selectionne=false;
+                                m_plateauJeu.vecDominosPoses.insert(m_plateauJeu.vecDominosPoses.end(),m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl));
 
                                 int dernEl=m_plateauJeu.vecDominosPoses.size()-1;
                                 m_plateauJeu.vecDominosAuBord.insert(m_plateauJeu.vecDominosAuBord.end(),m_plateauJeu.vecDominosPoses.at(dernEl));
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.erase(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.begin()+indicEl);
+                                m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.erase(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.begin()+indicEl);
 
 
                                 glisser=false;
@@ -1377,9 +1377,9 @@ void Joueur::affichePartie()
 
     //DominosJ1
     int compt1=0;
-    while(compt1<m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.size())
+    while(compt1<m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size())
     {
-        m_fenetre->draw(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(compt1)->sDomino);
+        m_fenetre->draw(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt1)->sDomino);
         compt1++;
     }
 
