@@ -11,6 +11,7 @@ Controleur::Controleur(sf::RenderWindow& fenetre):m_decor(0),m_animations(0)
 void Controleur::debutJeu()
 {
     laMain=true;
+    laMainBot=false;
     //init plateauJeu de la classe Joueur
     m_decor->getJoueur().initPlateauJeu();
     m_decor->getJoueur().getPlateauJeu().typeJeu=m_decor->getMenu().getDonnees(0);

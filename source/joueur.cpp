@@ -19,6 +19,7 @@ Joueur::Joueur(sf::RenderWindow& fenetre):m_fenetre(0)
 
 void Joueur::initPlateauJeu()
 {
+    m_dominoABouger.clear();
     m_plateauJeu.vecDominos.clear();
     m_plateauJeu.vecJoueurs.clear();
     m_plateauJeu.vecDominosPoses.clear();
@@ -89,6 +90,7 @@ void Joueur::initPlateauJeu()
     {
         ElJoueur nouvJ;
         nouvJ.points=0;
+        nouvJ.pass=false;
         nouvJ.sCadreJoueur.setTexture(m_tElements);
         if(compt3==HUMAIN)
         {
@@ -275,7 +277,6 @@ bool Joueur::selectionDomino(int joueur)
             {
                 if(coupPossible(CPU,*m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(comptt)))
                 {
-
                     m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(comptt)->selectionne=true;
                     dominoSelect=true;
                     comptt=100;
@@ -512,8 +513,6 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
     {
 
     }
-
-
 
     return possible;
 }
@@ -1360,13 +1359,17 @@ void Joueur::glisserDeposerD(int action)
                         compt2++;
                     }
                     //std::cout<<"Fin action deposer domino"<<std::endl;
-                    if(glisser)
-                    {
-                        deposer=false;
-                    }
+
 
                 }
 
+                if(glisser){
+                    deposer=false;
+                }
+                else{
+                    laMain=false;
+                    laMainBot=true;
+                }
 
             }
             indicEl--;
@@ -1383,7 +1386,41 @@ PlateauJeu& Joueur::getPlateauJeu()
 
 bool Joueur::finPartie()
 {
+    bool termine=false;
+    bool aucunDJ1=false,aucunDJ2=false,aucunDPioche=false;
 
+    //on teste si les joueurs n'ont plus de dominos
+    if(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size()==0)
+    {
+        aucunDJ1=true;
+    }
+
+    if(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size()==0)
+    {
+        aucunDJ2=true;
+    }
+
+    if(m_plateauJeu.vecDominosAP.size()==0)
+    {
+        aucunDPioche=true;
+    }
+
+    if(m_plateauJeu.typeJeu==TJ_CLASSIQUE || m_plateauJeu.typeJeu==TJ_5PARTOUT || m_plateauJeu.typeJeu==TJ_MATADOR)
+    {
+        if(aucunDJ1 || aucunDJ2)
+        {
+            termine=true;
+        }
+    }
+    else
+    {
+        if(aucunDPioche)
+        {
+            termine=true;
+        }
+    }
+
+    return termine;
 }
 
 void Joueur::gestTextureD()
@@ -1453,7 +1490,7 @@ void Joueur::gestMaj()
 {
     gestBouton();
 
-    if(!jeuPause && laMain)
+    if(!jeuPause && laMain && !laMainBot)
     {
         if(glisser)
         {
@@ -1463,6 +1500,31 @@ void Joueur::gestMaj()
         if(deposer)
         {
             glisserDeposerD(DEPOSER);
+        }
+    }
+    else if(!jeuPause && !laMain && laMainBot)
+    {
+        if(selectionDomino(CPU))
+        {
+            std::cout<<"Domino du Bot selection"<<std::endl;
+            int compt=0;
+            while(compt<m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size())
+            {
+                if(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->selectionne)
+                {
+                    if(placerDomino(CPU,m_dominoABouger.at(0),compt) )
+                    {
+                        laMain=true;
+                        laMainBot=false;
+                    }
+                }
+                compt++;
+            }
+        }
+        else
+        {
+            laMain=true;
+            laMainBot=false;
         }
     }
     else

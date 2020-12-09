@@ -12,16 +12,15 @@ struct ElDomino
     bool auBord;
     int etat;
     bool selectionne;
-
     sf::Vector2f scale;
     int noDomino;
-
 };
 
 struct ElJoueur
 {
    std::vector<ElDomino* > vecDominos;
    sf::Sprite sCadreJoueur;
+   bool pass;
    int points;
 };
 

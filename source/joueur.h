@@ -20,6 +20,7 @@ public:
     bool selectionDomino(int joueur);
     bool coupPossible(int joueur, ElDomino& domino);
     bool placerDomino(int joueur, int noDominoP,int noDominoE); //noDominoP represente le domino sur lequel on va attacher le nouveau
+    //noDominoE represente le position du domino dans le vecteurDominos du joueur correspondant non pas son noDomino
     void arrangerDomino(); //pour arranger les dominos du vecDomninosPoses dans le cadre
     void retourneDominos(int joueur,bool rendreVisible);
     void changementEchelleD(int categorie,sf::Vector2f facteur);
@@ -48,6 +49,10 @@ private:
 
     //bouton pause
     sf::Sprite m_sbPause;
+
+    //pour le bot
+    sf::Vector2f m_positionFinal;
+    std::vector<int > m_dominoABouger;
 
 
 };
