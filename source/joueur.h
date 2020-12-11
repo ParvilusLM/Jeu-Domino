@@ -52,7 +52,7 @@ private:
 
     //pour le bot
     sf::Vector2f m_positionFinal;
-    std::vector<int > m_dominoABouger;
+    std::vector<int > m_vecDominoABouger;
 
 
 };

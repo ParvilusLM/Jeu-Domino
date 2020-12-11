@@ -19,7 +19,7 @@ Joueur::Joueur(sf::RenderWindow& fenetre):m_fenetre(0)
 
 void Joueur::initPlateauJeu()
 {
-    m_dominoABouger.clear();
+    m_vecDominoABouger.clear();
     m_plateauJeu.vecDominos.clear();
     m_plateauJeu.vecJoueurs.clear();
     m_plateauJeu.vecDominosPoses.clear();
@@ -291,32 +291,40 @@ bool Joueur::selectionDomino(int joueur)
 bool Joueur::coupPossible(int joueur, ElDomino& domino)
 {
     bool possible=false;
-    std::vector<int > vecNumCoteValide;
+    m_vecDominoABouger.clear();
+    std::vector<sf::Vector2i > vecNumCoteValide;//x pour le numero du domino et y pour la valeur du cote
 
     //on va mettre tout les numeros des cotes valides du vecteur vecDominosAuBord dans le vecteur vecNumCoteValide
     int comp=0;
     while(comp<m_plateauJeu.vecDominosAuBord.size())
     {
+        sf::Vector2i nouvDonnees;
+        nouvDonnees.x=m_plateauJeu.vecDominosAuBord.at(comp)->noDomino;
+
         if(m_plateauJeu.vecDominosAuBord.at(comp)->angle==0)
         {
             if(m_plateauJeu.vecDominosAuBord.at(comp)->attacheGP)
             {
-                vecNumCoteValide.insert(vecNumCoteValide.end(),m_plateauJeu.vecDominosAuBord.at(comp)->cote1);
+                nouvDonnees.y=m_plateauJeu.vecDominosAuBord.at(comp)->cote1;
+                vecNumCoteValide.insert(vecNumCoteValide.end(),nouvDonnees);
             }
 
             if(m_plateauJeu.vecDominosAuBord.at(comp)->attacheDP)
             {
-                vecNumCoteValide.insert(vecNumCoteValide.end(),m_plateauJeu.vecDominosAuBord.at(comp)->cote2);
+                nouvDonnees.y=m_plateauJeu.vecDominosAuBord.at(comp)->cote2;
+                vecNumCoteValide.insert(vecNumCoteValide.end(),nouvDonnees);
             }
 
             if(m_plateauJeu.vecDominosAuBord.at(comp)->attacheHP)
             {
-                vecNumCoteValide.insert(vecNumCoteValide.end(),m_plateauJeu.vecDominosAuBord.at(comp)->cote1);
+                nouvDonnees.y=m_plateauJeu.vecDominosAuBord.at(comp)->cote1;
+                vecNumCoteValide.insert(vecNumCoteValide.end(),nouvDonnees);
             }
 
             if(m_plateauJeu.vecDominosAuBord.at(comp)->attacheBP)
             {
-                vecNumCoteValide.insert(vecNumCoteValide.end(),m_plateauJeu.vecDominosAuBord.at(comp)->cote2);
+                nouvDonnees.y=m_plateauJeu.vecDominosAuBord.at(comp)->cote2;
+                vecNumCoteValide.insert(vecNumCoteValide.end(),nouvDonnees);
             }
 
         }
@@ -324,12 +332,14 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
         {
             if(m_plateauJeu.vecDominosAuBord.at(comp)->attacheGP)
             {
-                vecNumCoteValide.insert(vecNumCoteValide.end(),m_plateauJeu.vecDominosAuBord.at(comp)->cote1);
+                nouvDonnees.y=m_plateauJeu.vecDominosAuBord.at(comp)->cote1;
+                vecNumCoteValide.insert(vecNumCoteValide.end(),nouvDonnees);
             }
 
             if(m_plateauJeu.vecDominosAuBord.at(comp)->attacheDP)
             {
-                vecNumCoteValide.insert(vecNumCoteValide.end(),m_plateauJeu.vecDominosAuBord.at(comp)->cote2);
+                nouvDonnees.y=m_plateauJeu.vecDominosAuBord.at(comp)->cote2;
+                vecNumCoteValide.insert(vecNumCoteValide.end(),nouvDonnees);
             }
 
         }
@@ -337,12 +347,14 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
         {
             if(m_plateauJeu.vecDominosAuBord.at(comp)->attacheGP)
             {
-                vecNumCoteValide.insert(vecNumCoteValide.end(),m_plateauJeu.vecDominosAuBord.at(comp)->cote2);
+                nouvDonnees.y=m_plateauJeu.vecDominosAuBord.at(comp)->cote2;
+                vecNumCoteValide.insert(vecNumCoteValide.end(),nouvDonnees);
             }
 
             if(m_plateauJeu.vecDominosAuBord.at(comp)->attacheDP)
             {
-                vecNumCoteValide.insert(vecNumCoteValide.end(),m_plateauJeu.vecDominosAuBord.at(comp)->cote1);
+                nouvDonnees.y=m_plateauJeu.vecDominosAuBord.at(comp)->cote1;
+                vecNumCoteValide.insert(vecNumCoteValide.end(),nouvDonnees);
             }
 
         }
@@ -350,12 +362,14 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
         {
             if(m_plateauJeu.vecDominosAuBord.at(comp)->attacheHP)
             {
-                vecNumCoteValide.insert(vecNumCoteValide.end(),m_plateauJeu.vecDominosAuBord.at(comp)->cote2);
+                nouvDonnees.y=m_plateauJeu.vecDominosAuBord.at(comp)->cote2;
+                vecNumCoteValide.insert(vecNumCoteValide.end(),nouvDonnees);
             }
 
             if(m_plateauJeu.vecDominosAuBord.at(comp)->attacheBP)
             {
-                vecNumCoteValide.insert(vecNumCoteValide.end(),m_plateauJeu.vecDominosAuBord.at(comp)->cote1);
+                nouvDonnees.y=m_plateauJeu.vecDominosAuBord.at(comp)->cote1;
+                vecNumCoteValide.insert(vecNumCoteValide.end(),nouvDonnees);
             }
         }
         else
@@ -374,8 +388,9 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
         int comptt=0;
         while(comptt<vecNumCoteValide.size())
         {
-            if(domino.cote1==vecNumCoteValide.at(comptt) || domino.cote2==vecNumCoteValide.at(comptt))
+            if(domino.cote1==vecNumCoteValide.at(comptt).y || domino.cote2==vecNumCoteValide.at(comptt).y)
             {
+                m_vecDominoABouger.insert(m_vecDominoABouger.end(),vecNumCoteValide.at(comptt).x);
                 possible=true;
             }
             comptt++;
@@ -392,6 +407,7 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
             {
                 if(domino.cote1==0 || domino.cote2==0)
                 {
+                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
                     possible=true;
                 }
             }
@@ -400,6 +416,7 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
             {
                 if(domino.cote1==0 || domino.cote2==0)
                 {
+                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
                     possible=true;
                 }
             }
@@ -411,6 +428,7 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==0)
                 {
+                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
                     possible=true;
                 }
             }
@@ -422,6 +440,7 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==0)
                 {
+                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
                     possible=true;
                 }
             }
@@ -436,6 +455,7 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==0)
                 {
+                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
                     possible=true;
                 }
             }
@@ -447,6 +467,7 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==0)
                 {
+                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
                     possible=true;
                 }
             }
@@ -461,6 +482,7 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==0)
                 {
+                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
                     possible=true;
                 }
             }
@@ -472,6 +494,7 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==0)
                 {
+                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
                     possible=true;
                 }
             }
@@ -486,6 +509,7 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==0)
                 {
+                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
                     possible=true;
                 }
             }
@@ -497,6 +521,7 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==0)
                 {
+                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
                     possible=true;
                 }
             }
@@ -1243,7 +1268,12 @@ void Joueur::retourneDominos(int joueur,bool rendreVisible)
     }
     else if(joueur==CPU)
     {
-
+        int compt=0;
+        while(compt<m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size())
+        {
+            m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->etat=VISIBLE;
+            compt++;
+        }
     }
     else
     {
@@ -1512,11 +1542,19 @@ void Joueur::gestMaj()
             {
                 if(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->selectionne)
                 {
-                    if(placerDomino(CPU,m_dominoABouger.at(0),compt) )
+                    if(placerDomino(CPU,m_vecDominoABouger.at(0),compt) )
                     {
+                        m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->selectionne=false;
+                        m_plateauJeu.vecDominosPoses.push_back(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt));
+
+                        int dernEl=m_plateauJeu.vecDominosPoses.size()-1;
+                        m_plateauJeu.vecDominosAuBord.push_back(m_plateauJeu.vecDominosPoses.at(dernEl));
+                        m_plateauJeu.vecJoueurs.at(CPU).vecDominos.erase(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.begin()+compt);
+
                         laMain=true;
                         laMainBot=false;
                     }
+                    compt+=100;
                 }
                 compt++;
             }

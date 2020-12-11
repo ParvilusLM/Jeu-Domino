@@ -118,6 +118,7 @@ void Animations::gestionAnimation()
         {
             m_animDistrib=false;
             m_pDecor->getJoueur().retourneDominos(HUMAIN,true);
+            m_pDecor->getJoueur().retourneDominos(CPU,true);
             sf::Vector2f augmenteScale;
             augmenteScale.x=0.4;
             augmenteScale.y=0.4;
