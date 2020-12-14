@@ -12,6 +12,7 @@ void Controleur::debutJeu()
 {
     laMain=true;
     laMainBot=false;
+    animAActiver=AUCUNE_ANIMATION;
     //init plateauJeu de la classe Joueur
     m_decor->getJoueur().initPlateauJeu();
     m_decor->getJoueur().getPlateauJeu().typeJeu=m_decor->getMenu().getDonnees(0);
@@ -52,11 +53,40 @@ void Controleur::glisserDeposer(int action)
         {
             glisser=true;
         }
+
     }
-    else
+    else if(action==DEPOSER)
     {
         deposer=true;
     }
+    else
+    {
+
+    }
+}
+
+bool Controleur::coupPossibHumain()
+{
+    //on teste s'il peut y avoir de coup possible
+    bool selectPossible=false;
+    if(m_decor->getJoueur().getPlateauJeu().vecDominosPoses.size()==0)
+    {
+        selectPossible=true;
+    }
+    else
+    {
+        int compt=0;
+        while(compt<m_decor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).vecDominos.size())
+        {
+            if(m_decor->getJoueur().coupPossible(HUMAIN,*m_decor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).vecDominos.at(compt)))
+            {
+                selectPossible=true;
+            }
+            compt++;
+        }
+    }
+
+    return selectPossible;
 }
 
 void Controleur::gestionMaJ()
@@ -172,17 +202,37 @@ void Controleur::gestionMaJ()
         boutonPresse=false;
     }
 
+    //debut jeu
     if(jeuDebut)
     {
         debutJeu();
         jeuDebut=false;
     }
 
-    m_decor->getJoueur().gestMaj();
+    //gestion mise a jour donnees joueur
+    if(jeuEnCours)
+    {
+        m_decor->getJoueur().gestMaj();
+    }
+
+    //gestion animation
+    if(animAActiver!=AUCUNE_ANIMATION)
+    {
+        m_animations->debuterAnim(animAActiver);
+        animAActiver=AUCUNE_ANIMATION;
+    }
 
     if(jeuEnCours)
     {
         m_animations->gestMaJ();
+    }
+
+    //gestion fin Partie
+    if(jeuFinPartie)
+    {
+        jeuPause=true;
+        jeuFinPartie=false;
+        m_decor->getMenu().setTypeMenu(MenuFinPartie);
     }
 
 }

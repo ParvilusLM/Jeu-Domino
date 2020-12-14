@@ -164,7 +164,7 @@ void Joueur::distribuerDomino()
     }
 }
 
-void Joueur::piocherDomino(int joueur)
+void Joueur::piocherDomino(int joueur,int nombreD)
 {
 
 }
@@ -544,19 +544,18 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
 
 bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
 {
+    std::cout<<"Fonction PlacerDomino"<<std::endl;
     bool placerDPossible=false;
     int noJoueur=joueur;
 
-    int rotation=0;
     bool coteG,coteD,coteH,coteB;
 
-    //on determine la rotation du domino sur lequel on doit attacher
+    //on determine les cotes valides du domino sur lequel on doit attacher le nouveau
     int compt=0;
     while(compt<m_plateauJeu.vecDominosPoses.size())
     {
         if(m_plateauJeu.vecDominosPoses.at(compt)->noDomino==noDominoP)
         {
-            rotation=m_plateauJeu.vecDominosPoses.at(compt)->angle;
             coteG=m_plateauJeu.vecDominosPoses.at(compt)->attacheGP;
             coteD=m_plateauJeu.vecDominosPoses.at(compt)->attacheDP;
             coteH=m_plateauJeu.vecDominosPoses.at(compt)->attacheHP;
@@ -566,6 +565,7 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
         compt++;
     }
 
+
     if(m_plateauJeu.typeJeu==TJ_CLASSIQUE || m_plateauJeu.typeJeu==TJ_5PARTOUT)
     {
         //on determine les cotes sur lesquels on peut attacher le nouveau domino
@@ -574,288 +574,283 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
         {
             if(m_plateauJeu.vecDominosPoses.at(compt2)->noDomino==noDominoP)
             {
+                //pointeur sur le domino Enfant et Parent
+                ElDomino* pDominoEnfant=m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE);
+                ElDomino* pDominoParent=m_plateauJeu.vecDominosPoses.at(compt2);
+
+
                 sf::FloatRect boiteEDomP=m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getGlobalBounds();
 
                 //on place le domino selon cote valide
-                if( (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90)) ||
-                    (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90)) ||
-                    (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
-                    (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
-                    (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)) ||
-                    (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)))
+                if( (coteG && (pDominoParent->cote1==pDominoEnfant->cote1 && pDominoParent->angle==-90)) ||
+                    (coteG && (pDominoParent->cote1==pDominoEnfant->cote2 && pDominoParent->angle==-90)) ||
+                    (coteG && (pDominoParent->cote2==pDominoEnfant->cote1 && pDominoParent->angle==90)) ||
+                    (coteG && (pDominoParent->cote2==pDominoEnfant->cote2 && pDominoParent->angle==90)) ||
+                    (coteG && (pDominoParent->cote1==pDominoEnfant->cote1 && pDominoParent->angle==0)) ||
+                    (coteG && (pDominoParent->cote1==pDominoEnfant->cote2 && pDominoParent->angle==0)))
                 {
 
-                    if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 == m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2) //si c'est un double
+                    if(pDominoEnfant->cote1 == pDominoEnfant->cote2) //si c'est un double
                     {
-                        m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x-boiteEDomP.width+(boiteEDomP.height/2),
-                                                                                                         m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y);
+                        pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x-boiteEDomP.width+(boiteEDomP.height/2),
+                                                                                                         pDominoParent->sDomino.getPosition().y);
                     }
                     else
                     {
-                        if(m_plateauJeu.vecDominosPoses.at(compt2)->cote1 == m_plateauJeu.vecDominosPoses.at(compt2)->cote2)
+                        if(pDominoParent->cote1 == pDominoParent->cote2)
                         {
-                            if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==m_plateauJeu.vecDominosPoses.at(compt2)->cote1)
+                            if(pDominoEnfant->cote1==pDominoParent->cote1)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(90.f);
+                                pDominoEnfant->angle=90.f;
+                                pDominoEnfant->sDomino.setRotation(90.f);
                             }
                             else
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=-90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(-90.f);
+                                pDominoEnfant->angle=-90.f;
+                                pDominoEnfant->sDomino.setRotation(-90.f);
                             }
 
-                            m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x-(boiteEDomP.width/2)-(boiteEDomP.height/2),
-                                                                                                             m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y);
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x-(boiteEDomP.width/2)-(boiteEDomP.height/2),
+                                                                                                             pDominoParent->sDomino.getPosition().y);
                         }
                         else
                         {
-                            if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==m_plateauJeu.vecDominosPoses.at(compt2)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90.f)
+                            if(pDominoEnfant->cote1==pDominoParent->cote1 && pDominoParent->angle==-90.f)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(90.f);
+                                pDominoEnfant->angle=90.f;
+                                pDominoEnfant->sDomino.setRotation(90.f);
                             }
-                            else if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==m_plateauJeu.vecDominosPoses.at(compt2)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90.f)
+                            else if(pDominoEnfant->cote1==pDominoParent->cote2 && pDominoParent->angle==90.f)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(90.f);
+                                pDominoEnfant->angle=90.f;
+                                pDominoEnfant->sDomino.setRotation(90.f);
                             }
-                            else if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==m_plateauJeu.vecDominosPoses.at(compt2)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90.f)
+                            else if(pDominoEnfant->cote2==pDominoParent->cote1 && pDominoParent->angle==-90.f)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=-90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(-90.f);
+                                pDominoEnfant->angle=-90.f;
+                                pDominoEnfant->sDomino.setRotation(-90.f);
                             }
                             else
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=-90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(-90.f);
+                                pDominoEnfant->angle=-90.f;
+                                pDominoEnfant->sDomino.setRotation(-90.f);
                             }
 
-                            m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x-boiteEDomP.width,
-                                                                                                             m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y);
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x-boiteEDomP.width,
+                                                                                                             pDominoParent->sDomino.getPosition().y);
                         }
                     }
 
                     coteG=false;
-                    m_plateauJeu.vecDominosPoses.at(compt2)->attacheGP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheDP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheHP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheBP=false;
+                    pDominoParent->attacheGP=false;
+                    pDominoEnfant->attacheDP=false;
+                    pDominoEnfant->attacheHP=false;
+                    pDominoEnfant->attacheBP=false;
                     placerDPossible=true;
                 }
-                else if( (coteD && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
-                    (coteD && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
-                    (coteD && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90)) ||
-                    (coteD && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90)) ||
-                    (coteD && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)) ||
-                    (coteD && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0))  )
+                else if( (coteD && (pDominoParent->cote1==pDominoEnfant->cote1 && pDominoParent->angle==90)) ||
+                    (coteD && (pDominoParent->cote1==pDominoEnfant->cote2 && pDominoParent->angle==90)) ||
+                    (coteD && (pDominoParent->cote2==pDominoEnfant->cote1 && pDominoParent->angle==-90)) ||
+                    (coteD && (pDominoParent->cote2==pDominoEnfant->cote2 && pDominoParent->angle==-90)) ||
+                    (coteD && (pDominoParent->cote1==pDominoEnfant->cote1 && pDominoParent->angle==0)) ||
+                    (coteD && (pDominoParent->cote1==pDominoEnfant->cote2 && pDominoParent->angle==0))  )
                 {
-                    if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 == m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2) //si c'est un double
+                    if(pDominoEnfant->cote1 == pDominoEnfant->cote2) //si c'est un double
                     {
-                        m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x+boiteEDomP.width-(boiteEDomP.height/2),
-                                                                                                         m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y);
+                        pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x+boiteEDomP.width-(boiteEDomP.height/2),
+                                                                                                         pDominoParent->sDomino.getPosition().y);
                     }
                     else
                     {
-                        if(m_plateauJeu.vecDominosPoses.at(compt2)->cote1 == m_plateauJeu.vecDominosPoses.at(compt2)->cote2)
+                        if(pDominoParent->cote1 == pDominoParent->cote2)
                         {
-                            if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==m_plateauJeu.vecDominosPoses.at(compt2)->cote1)
+                            if(pDominoEnfant->cote1==pDominoParent->cote1)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=-90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(-90.f);
+                                pDominoEnfant->angle=-90.f;
+                                pDominoEnfant->sDomino.setRotation(-90.f);
                             }
                             else
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(90.f);
+                                pDominoEnfant->angle=90.f;
+                                pDominoEnfant->sDomino.setRotation(90.f);
                             }
 
-                            m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x+(boiteEDomP.width/2)+(boiteEDomP.height/2),
-                                                                                                             m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y);
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x+(boiteEDomP.width/2)+(boiteEDomP.height/2),
+                                                                                                             pDominoParent->sDomino.getPosition().y);
                         }
                         else
                         {
-                            if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==m_plateauJeu.vecDominosPoses.at(compt2)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90.f)
+                            if(pDominoEnfant->cote1==pDominoParent->cote1 && pDominoParent->angle==90.f)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=-90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(-90.f);
+                                pDominoEnfant->angle=-90.f;
+                                pDominoEnfant->sDomino.setRotation(-90.f);
                             }
-                            else if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==m_plateauJeu.vecDominosPoses.at(compt2)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90.f)
+                            else if(pDominoEnfant->cote1==pDominoParent->cote2 && pDominoParent->angle==-90.f)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(90.f);
+                                pDominoEnfant->angle=-90.f;
+                                pDominoEnfant->sDomino.setRotation(-90.f);
                             }
-                            else if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==m_plateauJeu.vecDominosPoses.at(compt2)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90.f)
+                            else if(pDominoEnfant->cote2==pDominoParent->cote1 && pDominoParent->angle==90.f)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=-90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(-90.f);
+                                pDominoEnfant->angle=90.f;
+                                pDominoEnfant->sDomino.setRotation(90.f);
                             }
                             else
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(90.f);
+                                pDominoEnfant->angle=90.f;
+                                pDominoEnfant->sDomino.setRotation(90.f);
                             }
 
-                            m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x+boiteEDomP.width,
-                                                                                                             m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y);
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x+boiteEDomP.width,
+                                                                                                             pDominoParent->sDomino.getPosition().y);
                         }
                     }
 
                     coteD=false;
-                    m_plateauJeu.vecDominosPoses.at(compt2)->attacheDP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheGP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheHP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheBP=false;
+                    pDominoParent->attacheDP=false;
+                    pDominoEnfant->attacheGP=false;
+                    pDominoEnfant->attacheHP=false;
+                    pDominoEnfant->attacheBP=false;
                     placerDPossible=true;
                 }
-                else if((coteH && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==180)) ||
-                    (coteH && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==180)) ||
-                    (coteH && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
-                    (coteH && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
-                    (coteH && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)) ||
-                    (coteH && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)))
+                else if((coteH && (pDominoParent->cote2==pDominoEnfant->cote1 && pDominoParent->angle==180)) ||
+                    (coteH && (pDominoParent->cote2==pDominoEnfant->cote2 && pDominoParent->angle==180)) ||
+                    (coteH && (pDominoParent->cote2==pDominoEnfant->cote1 && pDominoParent->angle==90)) ||
+                    (coteH && (pDominoParent->cote2==pDominoEnfant->cote2 && pDominoParent->angle==90)) ||
+                    (coteH && (pDominoParent->cote1==pDominoEnfant->cote1 && pDominoParent->angle==0)) ||
+                    (coteH && (pDominoParent->cote1==pDominoEnfant->cote2 && pDominoParent->angle==0)))
                 {
-                    if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 == m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2) //si c'est un double
+                    if(pDominoEnfant->cote1 == pDominoEnfant->cote2) //si c'est un double
                     {
-                        m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=90.f;
-                        m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(90.f);
+                        pDominoEnfant->angle=90.f;
+                        pDominoEnfant->sDomino.setRotation(90.f);
 
-                        m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x,
-                                                                                                         m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y -(boiteEDomP.height/2)-(boiteEDomP.width/2));
+                        pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                                                         pDominoParent->sDomino.getPosition().y -(boiteEDomP.height/2)-(boiteEDomP.width/2));
                     }
                     else
                     {
-                        if(m_plateauJeu.vecDominosPoses.at(compt2)->cote1 == m_plateauJeu.vecDominosPoses.at(compt2)->cote2)
+                        if(pDominoParent->cote1 == pDominoParent->cote2)
                         {
-                            if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==m_plateauJeu.vecDominosPoses.at(compt2)->cote1)
+                            if(pDominoEnfant->cote1==pDominoParent->cote1)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=180.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(180.f);
+                                pDominoEnfant->angle=180.f;
+                                pDominoEnfant->sDomino.setRotation(180.f);
                             }
 
-                            if(m_plateauJeu.vecDominosPoses.at(compt2)->angle==0.f)
+                            if(pDominoParent->angle==0.f)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x,
-                                                                                                             m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y-boiteEDomP.height);
+                                pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                                                             pDominoParent->sDomino.getPosition().y-boiteEDomP.height);
                             }
                             else
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x,
-                                                                                                             m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y-(boiteEDomP.height/2)-(boiteEDomP.width/2) );
+                                pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                                                             pDominoParent->sDomino.getPosition().y-(boiteEDomP.height/2)-(boiteEDomP.width/2) );
                             }
 
                         }
                         else
                         {
-                            if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==m_plateauJeu.vecDominosPoses.at(compt2)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0.f)
+                            if(pDominoEnfant->cote1==pDominoParent->cote1 && pDominoParent->angle==0.f)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=180.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(180.f);
+                                pDominoEnfant->angle=180.f;
+                                pDominoEnfant->sDomino.setRotation(180.f);
                             }
-                            else if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==m_plateauJeu.vecDominosPoses.at(compt2)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0.f)
+                            else if(pDominoEnfant->cote2==pDominoParent->cote1 && pDominoParent->angle==0.f)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=0.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(0.f);
+                                pDominoEnfant->angle=0.f;
+                                pDominoEnfant->sDomino.setRotation(0.f);
                             }
-                            else if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==m_plateauJeu.vecDominosPoses.at(compt2)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==180.f)
+                            else if(pDominoEnfant->cote1==pDominoParent->cote2 && pDominoParent->angle==180.f)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=180.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(180.f);
+                                pDominoEnfant->angle=180.f;
+                                pDominoEnfant->sDomino.setRotation(180.f);
                             }
                             else
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=0.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(0.f);
+                                pDominoEnfant->angle=0.f;
+                                pDominoEnfant->sDomino.setRotation(0.f);
                             }
 
-                            m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x,
-                                                                                                             m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y-boiteEDomP.height);
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                                                             pDominoParent->sDomino.getPosition().y-boiteEDomP.height);
                         }
                     }
                     coteH=false;
-                    m_plateauJeu.vecDominosPoses.at(compt2)->attacheHP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheBP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheGP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheDP=false;
+                    pDominoParent->attacheHP=false;
+                    pDominoEnfant->attacheBP=false;
+                    pDominoEnfant->attacheGP=false;
+                    pDominoEnfant->attacheDP=false;
                     placerDPossible=true;
                 }
-                else if((coteB && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==180)) ||
-                    (coteB && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==180)) ||
-                    (coteB && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
-                    (coteB && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
-                    (coteB && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)) ||
-                    (coteB && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1==m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)))
+                else if((coteB && (pDominoParent->cote2==pDominoEnfant->cote1 && pDominoParent->angle==180)) ||
+                    (coteB && (pDominoParent->cote2==pDominoEnfant->cote2 && pDominoParent->angle==180)) ||
+                    (coteB && (pDominoParent->cote2==pDominoEnfant->cote1 && pDominoParent->angle==90)) ||
+                    (coteB && (pDominoParent->cote2==pDominoEnfant->cote2 && pDominoParent->angle==90)) ||
+                    (coteB && (pDominoParent->cote1==pDominoEnfant->cote1 && pDominoParent->angle==0)) ||
+                    (coteB && (pDominoParent->cote1==pDominoEnfant->cote2 && pDominoParent->angle==0)))
                 {
-                    if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 == m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2) //si c'est un double
+                    if(pDominoEnfant->cote1 == pDominoEnfant->cote2) //si c'est un double
                     {
-                        m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=90.f;
-                        m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(90.f);
+                        pDominoEnfant->angle=90.f;
+                        pDominoEnfant->sDomino.setRotation(90.f);
 
-                        m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x,
-                                                                                                         m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y +(boiteEDomP.height/2)+(boiteEDomP.width/2));
+                        pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                                                         pDominoParent->sDomino.getPosition().y +(boiteEDomP.height/2)+(boiteEDomP.width/2));
                     }
                     else
                     {
-                        if(m_plateauJeu.vecDominosPoses.at(compt2)->cote1 == m_plateauJeu.vecDominosPoses.at(compt2)->cote2)
+                        if(pDominoParent->cote1 == pDominoParent->cote2)
                         {
-                            if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==m_plateauJeu.vecDominosPoses.at(compt2)->cote1)
+                            if(pDominoEnfant->cote1==pDominoParent->cote1)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=0.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(0.f);
+                                pDominoEnfant->angle=0.f;
+                                pDominoEnfant->sDomino.setRotation(0.f);
                             }
                             else
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=180.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(180.f);
+                                pDominoEnfant->angle=180.f;
+                                pDominoEnfant->sDomino.setRotation(180.f);
                             }
 
-                            if(m_plateauJeu.vecDominosPoses.at(compt2)->angle==0.f)
-                            {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x,
-                                                                                                             m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y+boiteEDomP.height);
-                            }
-                            else
-                            {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x,
-                                                                                                             m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y+(boiteEDomP.width/2)+(boiteEDomP.height/2));
-                            }
-
-
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                                                             pDominoParent->sDomino.getPosition().y+(boiteEDomP.width/2)+(boiteEDomP.height/2));
                         }
                         else
                         {
-                            if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==m_plateauJeu.vecDominosPoses.at(compt2)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0.f)
+                            if(pDominoEnfant->cote1==pDominoParent->cote2 && pDominoParent->angle==0.f)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=0.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(0.f);
+                                pDominoEnfant->angle=0.f;
+                                pDominoEnfant->sDomino.setRotation(0.f);
                             }
-                            else if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==m_plateauJeu.vecDominosPoses.at(compt2)->cote2 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0.f)
+                            else if(pDominoEnfant->cote2==pDominoParent->cote2 && pDominoParent->angle==0.f)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=180.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(180.f);
+                                pDominoEnfant->angle=180.f;
+                                pDominoEnfant->sDomino.setRotation(180.f);
                             }
-                            else if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==m_plateauJeu.vecDominosPoses.at(compt2)->cote1 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==180.f)
+                            else if(pDominoEnfant->cote1==pDominoParent->cote1 && pDominoParent->angle==180.f)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=0.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(0.f);
+                                pDominoEnfant->angle=0.f;
+                                pDominoEnfant->sDomino.setRotation(0.f);
                             }
                             else
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=180.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(180.f);
+                                pDominoEnfant->angle=180.f;
+                                pDominoEnfant->sDomino.setRotation(180.f);
                             }
 
-                            m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x,
-                                                                                                             m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y+boiteEDomP.height);
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                                                             pDominoParent->sDomino.getPosition().y+boiteEDomP.height);
                         }
                     }
 
 
                     coteB=false;
-                    m_plateauJeu.vecDominosPoses.at(compt2)->attacheBP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheHP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheGP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheDP=false;
+                    pDominoParent->attacheBP=false;
+                    pDominoEnfant->attacheHP=false;
+                    pDominoEnfant->attacheGP=false;
+                    pDominoEnfant->attacheDP=false;
                     placerDPossible=true;
                 }
                 else
@@ -895,309 +890,319 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
         {
             if(m_plateauJeu.vecDominosPoses.at(compt2)->noDomino==noDominoP)
             {
+                //pointeur sur le domino Enfant et Parent
+                ElDomino* pDominoEnfant=m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE);
+                ElDomino* pDominoParent=m_plateauJeu.vecDominosPoses.at(compt2);
+
                 sf::FloatRect boiteEDomP=m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getGlobalBounds();
 
                 //on place le domino selon cote valide
-                if( (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90)) ||
-                    (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90)) ||
-                    (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
-                    (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
-                    (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90)) ||
-                    (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90)) ||
-                    (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
-                    (coteG && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
-                    (coteG && (m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)) ||
-                    (coteG && (m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)) ||
-                    (coteG && (m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==7 && (m_plateauJeu.vecDominosPoses.at(compt2)->angle==90 || m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90) )) ||
-                    (coteG && (m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==0 && (m_plateauJeu.vecDominosPoses.at(compt2)->angle==90 || m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90) )) )
+                if( (coteG && (pDominoParent->cote1+pDominoEnfant->cote1==7 && pDominoParent->angle==-90)) ||
+                    (coteG && (pDominoParent->cote1+pDominoEnfant->cote2==7 && pDominoParent->angle==-90)) ||
+                    (coteG && (pDominoParent->cote2+pDominoEnfant->cote1==7 && pDominoParent->angle==90)) ||
+                    (coteG && (pDominoParent->cote2+pDominoEnfant->cote2==7 && pDominoParent->angle==90)) ||
+                    (coteG && (pDominoParent->cote1+pDominoEnfant->cote1==0 && pDominoParent->angle==-90)) ||
+                    (coteG && (pDominoParent->cote1+pDominoEnfant->cote2==0 && pDominoParent->angle==-90)) ||
+                    (coteG && (pDominoParent->cote2+pDominoEnfant->cote1==0 && pDominoParent->angle==90)) ||
+                    (coteG && (pDominoParent->cote2+pDominoEnfant->cote2==0 && pDominoParent->angle==90)) ||
+                    (coteG && (pDominoEnfant->cote1==0 && pDominoParent->angle==0)) ||
+                    (coteG && (pDominoEnfant->cote2==0 && pDominoParent->angle==0)) ||
+                    (coteG && (pDominoEnfant->cote1+pDominoEnfant->cote2==7 && (pDominoParent->angle==90 || pDominoParent->angle==-90) )) ||
+                    (coteG && (pDominoEnfant->cote1+pDominoEnfant->cote2==0 && (pDominoParent->angle==90 || pDominoParent->angle==-90) )) )
                 {
 
-                    if( (m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 + m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2 ==7  ||
-                       m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 + m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2 ==0) &&
-                       (m_plateauJeu.vecDominosPoses.at(compt2)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote2!=7 && m_plateauJeu.vecDominosPoses.at(compt2)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote2!=0)  )
+                    if( (pDominoEnfant->cote1 + pDominoEnfant->cote2 ==7  ||
+                       pDominoEnfant->cote1 + pDominoEnfant->cote2 ==0) &&
+                       (pDominoParent->cote1+pDominoParent->cote2!=7 && pDominoParent->cote1+pDominoParent->cote2!=0)  )
                     {
-                        m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x-boiteEDomP.width+(boiteEDomP.height/2),
-                                                                                                         m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y);
+                        pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x-boiteEDomP.width+(boiteEDomP.height/2),
+                                                                                                         pDominoParent->sDomino.getPosition().y);
                     }
                     else
                     {
-                        if(m_plateauJeu.vecDominosPoses.at(compt2)->cote1 + m_plateauJeu.vecDominosPoses.at(compt2)->cote2==7 ||
-                           m_plateauJeu.vecDominosPoses.at(compt2)->cote1 + m_plateauJeu.vecDominosPoses.at(compt2)->cote2==0)
+                        if(pDominoParent->cote1 + pDominoParent->cote2==7 ||
+                           pDominoParent->cote1 + pDominoParent->cote2==0)
                         {
-                            if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==0)
+                            if(pDominoEnfant->cote1==0)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(90.f);
+                                pDominoEnfant->angle=90.f;
+                                pDominoEnfant->sDomino.setRotation(90.f);
                             }
                             else
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=-90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(-90.f);
+                                pDominoEnfant->angle=-90.f;
+                                pDominoEnfant->sDomino.setRotation(-90.f);
                             }
 
-                            m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x-(boiteEDomP.width/2)-(boiteEDomP.height/2),
-                                                                                                             m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y);
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x-(boiteEDomP.width/2)-(boiteEDomP.height/2),
+                                                                                                             pDominoParent->sDomino.getPosition().y);
                         }
                         else
                         {
-                            if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote1==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90.f ||
-                               m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote1==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90.f)
+                            if( (pDominoEnfant->cote1+pDominoParent->cote1==7 && pDominoParent->angle==-90.f) ||
+                               (pDominoEnfant->cote1+pDominoParent->cote1==0 && pDominoParent->angle==-90.f) )
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(90.f);
+                                pDominoEnfant->angle=90.f;
+                                pDominoEnfant->sDomino.setRotation(90.f);
                             }
-                            else if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote2==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90.f ||
-                                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote2==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90.f)
+                            else if( (pDominoEnfant->cote1+pDominoParent->cote2==7 && pDominoParent->angle==90.f) ||
+                                    (pDominoEnfant->cote1+pDominoParent->cote2==0 && pDominoParent->angle==90.f) )
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(90.f);
+                                pDominoEnfant->angle=90.f;
+                                pDominoEnfant->sDomino.setRotation(90.f);
                             }
-                            else if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2+m_plateauJeu.vecDominosPoses.at(compt2)->cote1==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90.f ||
-                                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2+m_plateauJeu.vecDominosPoses.at(compt2)->cote1==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90.f)
+                            else if( (pDominoEnfant->cote2+pDominoParent->cote1==7 && pDominoParent->angle==-90.f) ||
+                                    (pDominoEnfant->cote2+pDominoParent->cote1==0 && pDominoParent->angle==-90.f) )
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=-90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(-90.f);
+                                pDominoEnfant->angle=-90.f;
+                                pDominoEnfant->sDomino.setRotation(-90.f);
                             }
                             else
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=-90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(-90.f);
+                                pDominoEnfant->angle=-90.f;
+                                pDominoEnfant->sDomino.setRotation(-90.f);
                             }
 
-                            m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x-boiteEDomP.width,
-                                                                                                             m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y);
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x-boiteEDomP.width,
+                                                                                                             pDominoParent->sDomino.getPosition().y);
                         }
                     }
 
                     coteG=false;
-                    m_plateauJeu.vecDominosPoses.at(compt2)->attacheGP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheDP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheHP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheBP=false;
+                    pDominoParent->attacheGP=false;
+                    pDominoEnfant->attacheDP=false;
+                    pDominoEnfant->attacheHP=false;
+                    pDominoEnfant->attacheBP=false;
                     placerDPossible=true;
                 }
-                else if( (coteD && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
-                    (coteD && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
-                    (coteD && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90)) ||
-                    (coteD && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90)) ||
-                    (coteD && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
-                    (coteD && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
-                    (coteD && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90)) ||
-                    (coteD && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90)) ||
-                    (coteD && (m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)) ||
-                    (coteD && (m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)) ||
-                    (coteD && (m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==7 && (m_plateauJeu.vecDominosPoses.at(compt2)->angle==90 || m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90) )) ||
-                    (coteD && (m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==0 && (m_plateauJeu.vecDominosPoses.at(compt2)->angle==90 || m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90) ))   )
+                else if( (coteD && (pDominoParent->cote1+pDominoEnfant->cote1==7 && pDominoParent->angle==90)) ||
+                    (coteD && (pDominoParent->cote1+pDominoEnfant->cote2==7 && pDominoParent->angle==90)) ||
+                    (coteD && (pDominoParent->cote2+pDominoEnfant->cote1==7 && pDominoParent->angle==-90)) ||
+                    (coteD && (pDominoParent->cote2+pDominoEnfant->cote2==7 && pDominoParent->angle==-90)) ||
+                    (coteD && (pDominoParent->cote1+pDominoEnfant->cote1==0 && pDominoParent->angle==90)) ||
+                    (coteD && (pDominoParent->cote1+pDominoEnfant->cote2==0 && pDominoParent->angle==90)) ||
+                    (coteD && (pDominoParent->cote2+pDominoEnfant->cote1==0 && pDominoParent->angle==-90)) ||
+                    (coteD && (pDominoParent->cote2+pDominoEnfant->cote2==0 && pDominoParent->angle==-90)) ||
+                    (coteD && (pDominoEnfant->cote1==0 && pDominoParent->angle==0)) ||
+                    (coteD && (pDominoEnfant->cote2==0 && pDominoParent->angle==0)) ||
+                    (coteD && (pDominoEnfant->cote1+pDominoEnfant->cote2==7 && (pDominoParent->angle==90 || pDominoParent->angle==-90) )) ||
+                    (coteD && (pDominoEnfant->cote1+pDominoEnfant->cote2==0 && (pDominoParent->angle==90 || pDominoParent->angle==-90) ))   )
                 {
-                    if((m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 + m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2 ==7  ||
-                       m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 + m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2 ==0) &&
-                       (m_plateauJeu.vecDominosPoses.at(compt2)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote2!=7 && m_plateauJeu.vecDominosPoses.at(compt2)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote2!=0))
+                    if((pDominoEnfant->cote1 + pDominoEnfant->cote2 ==7  ||
+                       pDominoEnfant->cote1 + pDominoEnfant->cote2 ==0) &&
+                       (pDominoParent->cote1+pDominoParent->cote2!=7 && pDominoParent->cote1+pDominoParent->cote2!=0))
                     {
-                        m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x+boiteEDomP.width-(boiteEDomP.height/2),
-                                                                                                         m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y);
+                        pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x+boiteEDomP.width-(boiteEDomP.height/2),
+                                                                                                         pDominoParent->sDomino.getPosition().y);
                     }
                     else
                     {
-                        if(m_plateauJeu.vecDominosPoses.at(compt2)->cote1 + m_plateauJeu.vecDominosPoses.at(compt2)->cote2==7 ||
-                           m_plateauJeu.vecDominosPoses.at(compt2)->cote1 + m_plateauJeu.vecDominosPoses.at(compt2)->cote2==0)
+                        if(pDominoParent->cote1 + pDominoParent->cote2==7 ||
+                           pDominoParent->cote1 + pDominoParent->cote2==0)
                         {
-                            if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==0)
+                            if(pDominoEnfant->cote1==0)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=-90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(-90.f);
+                                pDominoEnfant->angle=-90.f;
+                                pDominoEnfant->sDomino.setRotation(-90.f);
                             }
                             else
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(90.f);
+                                pDominoEnfant->angle=90.f;
+                                pDominoEnfant->sDomino.setRotation(90.f);
                             }
 
-                            m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x+(boiteEDomP.width/2)+(boiteEDomP.height/2),
-                                                                                                             m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y);
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x+(boiteEDomP.width/2)+(boiteEDomP.height/2),
+                                                                                                             pDominoParent->sDomino.getPosition().y);
                         }
                         else
                         {
-                            if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote1==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90.f ||
-                               m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote1==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90.f)
+                            if( (pDominoEnfant->cote1+pDominoParent->cote1==7 && pDominoParent->angle==90.f) ||
+                               (pDominoEnfant->cote1+pDominoParent->cote1==0 && pDominoParent->angle==90.f) )
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=-90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(-90.f);
+                                pDominoEnfant->angle=-90.f;
+                                pDominoEnfant->sDomino.setRotation(-90.f);
                             }
-                            else if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2+m_plateauJeu.vecDominosPoses.at(compt2)->cote2==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90.f ||
-                                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2+m_plateauJeu.vecDominosPoses.at(compt2)->cote2==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90.f)
+                            else if( (pDominoEnfant->cote2+pDominoParent->cote2==7 && pDominoParent->angle==90.f) ||
+                                    (pDominoEnfant->cote2+pDominoParent->cote2==0 && pDominoParent->angle==90.f) )
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(90.f);
+                                pDominoEnfant->angle=90.f;
+                                pDominoEnfant->sDomino.setRotation(90.f);
                             }
-                            else if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote2==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90.f ||
-                                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote2==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==-90.f)
+                            else if( (pDominoEnfant->cote1+pDominoParent->cote2==7 && pDominoParent->angle==-90.f) ||
+                                    (pDominoEnfant->cote1+pDominoParent->cote2==0 && pDominoParent->angle==-90.f) )
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=-90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(-90.f);
+                                pDominoEnfant->angle=-90.f;
+                                pDominoEnfant->sDomino.setRotation(-90.f);
                             }
                             else
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=90.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(90.f);
+                                pDominoEnfant->angle=90.f;
+                                pDominoEnfant->sDomino.setRotation(90.f);
                             }
 
-                            m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x+boiteEDomP.width,
-                                                                                                             m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y);
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x+boiteEDomP.width,
+                                                                                                             pDominoParent->sDomino.getPosition().y);
                         }
                     }
 
                     coteD=false;
-                    m_plateauJeu.vecDominosPoses.at(compt2)->attacheDP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheGP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheHP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheBP=false;
+                    pDominoParent->attacheDP=false;
+                    pDominoEnfant->attacheGP=false;
+                    pDominoEnfant->attacheHP=false;
+                    pDominoEnfant->attacheBP=false;
                     placerDPossible=true;
                 }
-                else if((coteH && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==180)) ||
-                    (coteH && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==180)) ||
-                    (coteH && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)) ||
-                    (coteH && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)) ||
-                    (coteH && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==180)) ||
-                    (coteH && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==180)) ||
-                    (coteH && (m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
-                    (coteH && (m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
-                    (coteH && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)) ||
-                    (coteH && (m_plateauJeu.vecDominosPoses.at(compt2)->cote1+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)) ||
-                    (coteH && (m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==7 && (m_plateauJeu.vecDominosPoses.at(compt2)->angle==0 || m_plateauJeu.vecDominosPoses.at(compt2)->angle==180) )) ||
-                    (coteH && (m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==0 && (m_plateauJeu.vecDominosPoses.at(compt2)->angle==0 || m_plateauJeu.vecDominosPoses.at(compt2)->angle==180) )) )
+                else if((coteH && (pDominoParent->cote2+pDominoEnfant->cote1==7 && pDominoParent->angle==180)) ||
+                    (coteH && (pDominoParent->cote2+pDominoEnfant->cote2==7 && pDominoParent->angle==180)) ||
+                    (coteH && (pDominoParent->cote1+pDominoEnfant->cote1==7 && pDominoParent->angle==0)) ||
+                    (coteH && (pDominoParent->cote1+pDominoEnfant->cote2==7 && pDominoParent->angle==0)) ||
+                    (coteH && (pDominoParent->cote2+pDominoEnfant->cote1==0 && pDominoParent->angle==180)) ||
+                    (coteH && (pDominoParent->cote2+pDominoEnfant->cote2==0 && pDominoParent->angle==180)) ||
+                    (coteH && (pDominoParent->cote1+pDominoEnfant->cote1==0 && pDominoParent->angle==0)) ||
+                    (coteH && (pDominoParent->cote1+pDominoEnfant->cote2==0 && pDominoParent->angle==0)) ||
+                    (coteH && (pDominoEnfant->cote1==0 && pDominoParent->angle==90)) ||
+                    (coteH && (pDominoEnfant->cote2==0 && pDominoParent->angle==90)) ||
+                    (coteH && (pDominoParent->cote1+pDominoEnfant->cote1==0 && pDominoParent->angle==0)) ||
+                    (coteH && (pDominoParent->cote1+pDominoEnfant->cote2==0 && pDominoParent->angle==0)) ||
+                    (coteH && (pDominoEnfant->cote1+pDominoEnfant->cote2==7 && (pDominoParent->angle==0 || pDominoParent->angle==180) )) ||
+                    (coteH && (pDominoEnfant->cote1+pDominoEnfant->cote2==0 && (pDominoParent->angle==0 || pDominoParent->angle==180) )) )
                 {
-                    if((m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 + m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2 ==7  ||
-                       m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 + m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2 ==0) &&
-                       (m_plateauJeu.vecDominosPoses.at(compt2)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->angle==0.f || m_plateauJeu.vecDominosPoses.at(compt2)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->angle==180.f))
+                    if((pDominoEnfant->cote1 + pDominoEnfant->cote2 ==7  ||
+                       pDominoEnfant->cote1 + pDominoEnfant->cote2 ==0) &&
+                       (pDominoParent->cote1+pDominoParent->angle==0.f || pDominoParent->cote1+pDominoParent->angle==180.f))
                     {
-                        m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=90.f;
-                        m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(90.f);
-                        m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x,
-                                                                                                         m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y - boiteEDomP.height - (boiteEDomP.width/2) );
+                        pDominoEnfant->angle=90.f;
+                        pDominoEnfant->sDomino.setRotation(90.f);
+                        pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                                                         pDominoParent->sDomino.getPosition().y - boiteEDomP.height - (boiteEDomP.width/2) );
                     }
                     else
                     {
-                        if((m_plateauJeu.vecDominosPoses.at(compt2)->cote1 + m_plateauJeu.vecDominosPoses.at(compt2)->cote2==7 ||
-                           m_plateauJeu.vecDominosPoses.at(compt2)->cote1 + m_plateauJeu.vecDominosPoses.at(compt2)->cote2==0) &&
-                           m_plateauJeu.vecDominosPoses.at(compt2)->cote1 + m_plateauJeu.vecDominosPoses.at(compt2)->angle==90.f)
+                        if((pDominoParent->cote1 + pDominoParent->cote2==7 ||
+                           pDominoParent->cote1 + pDominoParent->cote2==0) &&
+                           pDominoParent->cote1 + pDominoParent->angle==90.f)
                         {
-                            if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==0)
+                            if(pDominoEnfant->cote1==0)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=180.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(180.f);
+                                pDominoEnfant->angle=180.f;
+                                pDominoEnfant->sDomino.setRotation(180.f);
                             }
 
-                            m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x,
-                                                                                                             m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y -(boiteEDomP.width/2)-(boiteEDomP.height/2));
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                                                             pDominoParent->sDomino.getPosition().y -(boiteEDomP.width/2)-(boiteEDomP.height/2));
                         }
                         else
                         {
-                            if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote1==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0.f ||
-                               m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote1==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0.f)
+                            if( (pDominoEnfant->cote1+pDominoParent->cote1==7 && pDominoParent->angle==0.f) ||
+                               (pDominoEnfant->cote1+pDominoParent->cote1==0 && pDominoParent->angle==0.f) )
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=180.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(180.f);
+                                pDominoEnfant->angle=180.f;
+                                pDominoEnfant->sDomino.setRotation(180.f);
                             }
-                            else if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2+m_plateauJeu.vecDominosPoses.at(compt2)->cote2==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==180.f ||
-                                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2+m_plateauJeu.vecDominosPoses.at(compt2)->cote2==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==180.f)
+                            else if( (pDominoEnfant->cote2+pDominoParent->cote2==7 && pDominoParent->angle==180.f) ||
+                                    (pDominoEnfant->cote2+pDominoParent->cote2==0 && pDominoParent->angle==180.f) )
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=0.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(0.f);
+                                pDominoEnfant->angle=0.f;
+                                pDominoEnfant->sDomino.setRotation(0.f);
                             }
-                            else if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote2==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==180.f ||
-                                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote2==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==180.f)
+                            else if( (pDominoEnfant->cote1+pDominoParent->cote2==7 && pDominoParent->angle==180.f) ||
+                                    (pDominoEnfant->cote1+pDominoParent->cote2==0 && pDominoParent->angle==180.f) )
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=180.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(180.f);
+                                pDominoEnfant->angle=180.f;
+                                pDominoEnfant->sDomino.setRotation(180.f);
                             }
                             else
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=0.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(0.f);
+                                pDominoEnfant->angle=0.f;
+                                pDominoEnfant->sDomino.setRotation(0.f);
                             }
 
-                            m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x,
-                                                                                                             m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y-boiteEDomP.height);
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                                                             pDominoParent->sDomino.getPosition().y-boiteEDomP.height);
                         }
                     }
                     coteH=false;
-                    m_plateauJeu.vecDominosPoses.at(compt2)->attacheHP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheBP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheGP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheDP=false;
+                    pDominoParent->attacheHP=false;
+                    pDominoEnfant->attacheBP=false;
+                    pDominoEnfant->attacheGP=false;
+                    pDominoEnfant->attacheDP=false;
                     placerDPossible=true;
                 }
-                else if((coteB && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==180)) ||
-                    (coteB && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==180)) ||
-                    (coteB && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)) ||
-                    (coteB && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)) ||
-                    (coteB && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==180)) ||
-                    (coteB && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==180)) ||
-                    (coteB && (m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
-                    (coteB && (m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==90)) ||
-                    (coteB && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)) ||
-                    (coteB && (m_plateauJeu.vecDominosPoses.at(compt2)->cote2+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0)) ||
-                    (coteB && (m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==7 && (m_plateauJeu.vecDominosPoses.at(compt2)->angle==0 || m_plateauJeu.vecDominosPoses.at(compt2)->angle==180) )) ||
-                    (coteB && (m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==0 && (m_plateauJeu.vecDominosPoses.at(compt2)->angle==0 || m_plateauJeu.vecDominosPoses.at(compt2)->angle==180) )) )
+                else if((coteB && (pDominoParent->cote2+pDominoEnfant->cote1==7 && pDominoParent->angle==180)) ||
+                    (coteB && (pDominoParent->cote2+pDominoEnfant->cote2==7 && pDominoParent->angle==180)) ||
+                    (coteB && (pDominoParent->cote2+pDominoEnfant->cote1==7 && pDominoParent->angle==0)) ||
+                    (coteB && (pDominoParent->cote2+pDominoEnfant->cote2==7 && pDominoParent->angle==0)) ||
+                    (coteB && (pDominoParent->cote2+pDominoEnfant->cote1==0 && pDominoParent->angle==180)) ||
+                    (coteB && (pDominoParent->cote2+pDominoEnfant->cote2==0 && pDominoParent->angle==180)) ||
+                    (coteH && (pDominoParent->cote1+pDominoEnfant->cote1==0 && pDominoParent->angle==0)) ||
+                    (coteH && (pDominoParent->cote1+pDominoEnfant->cote2==0 && pDominoParent->angle==0)) ||
+                    (coteB && (pDominoEnfant->cote1==0 && pDominoParent->angle==90)) ||
+                    (coteB && (pDominoEnfant->cote2==0 && pDominoParent->angle==90)) ||
+                    (coteB && (pDominoParent->cote2+pDominoEnfant->cote1==0 && pDominoParent->angle==0)) ||
+                    (coteB && (pDominoParent->cote2+pDominoEnfant->cote2==0 && pDominoParent->angle==0)) ||
+                    (coteB && (pDominoEnfant->cote1+pDominoEnfant->cote2==7 && (pDominoParent->angle==0 || pDominoParent->angle==180) )) ||
+                    (coteB && (pDominoEnfant->cote1+pDominoEnfant->cote2==0 && (pDominoParent->angle==0 || pDominoParent->angle==180) )) )
                 {
-                    if((m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 + m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2 ==7  ||
-                       m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1 + m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2 ==0) &&
-                       (m_plateauJeu.vecDominosPoses.at(compt2)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote2!=7 && m_plateauJeu.vecDominosPoses.at(compt2)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote2!=0))
+                    if((pDominoEnfant->cote1 + pDominoEnfant->cote2 ==7  ||
+                       pDominoEnfant->cote1 + pDominoEnfant->cote2 ==0) &&
+                       (pDominoParent->cote1+pDominoParent->angle==0.f || pDominoParent->cote1+pDominoParent->angle==180.f))
                     {
-                        m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x,
-                                                                                                         m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y + boiteEDomP.height + (boiteEDomP.width/2) );
+                        pDominoEnfant->angle=90.f;
+                        pDominoEnfant->sDomino.setRotation(90.f);
+                        pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                                                         pDominoParent->sDomino.getPosition().y + boiteEDomP.height + (boiteEDomP.width/2) );
                     }
                     else
                     {
-                        if( (m_plateauJeu.vecDominosPoses.at(compt2)->cote1 + m_plateauJeu.vecDominosPoses.at(compt2)->cote2==7 ||
-                           m_plateauJeu.vecDominosPoses.at(compt2)->cote1 + m_plateauJeu.vecDominosPoses.at(compt2)->cote2==0) &&
-                           (m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==0 || m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2==0) )
+                        if((pDominoParent->cote1 + pDominoParent->cote2==7 ||
+                           pDominoParent->cote1 + pDominoParent->cote2==0) &&
+                           pDominoParent->cote1 + pDominoParent->angle==90.f)
                         {
-                            if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1==0)
+                            if(pDominoEnfant->cote1==0)
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=180.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(180.f);
+                                pDominoEnfant->angle=180.f;
+                                pDominoEnfant->sDomino.setRotation(180.f);
                             }
 
-                            m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x,
-                                                                                                             m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y +(boiteEDomP.width/2)+(boiteEDomP.height/2));
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                                                             pDominoParent->sDomino.getPosition().y +(boiteEDomP.width/2)+(boiteEDomP.height/2));
                         }
                         else
                         {
-                            if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote1==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==180.f ||
-                               m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote1==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==180.f)
+                            if( (pDominoEnfant->cote1+pDominoParent->cote1==7 && pDominoParent->angle==180.f) ||
+                               (pDominoEnfant->cote1+pDominoParent->cote1==0 && pDominoParent->angle==180.f) )
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=0.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(0.f);
+                                pDominoEnfant->angle=0.f;
+                                pDominoEnfant->sDomino.setRotation(0.f);
                             }
-                            else if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2+m_plateauJeu.vecDominosPoses.at(compt2)->cote2==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0.f ||
-                                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote2+m_plateauJeu.vecDominosPoses.at(compt2)->cote2==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0.f)
+                            else if( (pDominoEnfant->cote2+pDominoParent->cote2==7 && pDominoParent->angle==0.f) ||
+                                    (pDominoEnfant->cote2+pDominoParent->cote2==0 && pDominoParent->angle==0.f) )
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=180.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(180.f);
+                                pDominoEnfant->angle=180.f;
+                                pDominoEnfant->sDomino.setRotation(180.f);
                             }
-                            else if(m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote2==7 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0.f ||
-                                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->cote1+m_plateauJeu.vecDominosPoses.at(compt2)->cote2==0 && m_plateauJeu.vecDominosPoses.at(compt2)->angle==0.f)
+                            else if( (pDominoEnfant->cote1+pDominoParent->cote2==7 && pDominoParent->angle==0.f) ||
+                                    (pDominoEnfant->cote1+pDominoParent->cote2==0 && pDominoParent->angle==0.f) )
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=0.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(0.f);
+                                pDominoEnfant->angle=0.f;
+                                pDominoEnfant->sDomino.setRotation(0.f);
                             }
                             else
                             {
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->angle=180.f;
-                                m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setRotation(180.f);
+                                pDominoEnfant->angle=180.f;
+                                pDominoEnfant->sDomino.setRotation(180.f);
                             }
 
-                            m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->sDomino.setPosition(m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().x,
-                                                                                                             m_plateauJeu.vecDominosPoses.at(compt2)->sDomino.getPosition().y + boiteEDomP.height);
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                                                             pDominoParent->sDomino.getPosition().y + boiteEDomP.height);
                         }
                     }
 
                     coteB=false;
-                    m_plateauJeu.vecDominosPoses.at(compt2)->attacheBP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheHP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheGP=false;
-                    m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE)->attacheDP=false;
+                    pDominoParent->attacheBP=false;
+                    pDominoEnfant->attacheHP=false;
+                    pDominoEnfant->attacheGP=false;
+                    pDominoEnfant->attacheDP=false;
                     placerDPossible=true;
                 }
                 else
@@ -1454,9 +1459,6 @@ void Joueur::gestTextureD()
         }
         else
         {
-            int pX=comptt%8;
-            int pY=comptt/8;
-
             m_plateauJeu.vecDominos.at(comptt).sDomino.setTextureRect(sf::IntRect(22*20,27*20,80,160));
         }
         comptt++;
@@ -1518,43 +1520,66 @@ void Joueur::gestMaj()
         {
             glisserDeposerD(DEPOSER);
         }
+
     }
     else if(!jeuPause && !laMain && laMainBot)
     {
-        if(selectionDomino(CPU))
+        if(m_plateauJeu.typeJeu!=TJ_MEMORY)
         {
-            std::cout<<"Domino du Bot selection"<<std::endl;
-            int compt=0;
-            while(compt<m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size())
+            if(selectionDomino(CPU))
             {
-                if(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->selectionne)
+                std::cout<<"Domino du Bot selection"<<std::endl;
+                int compt=0;
+                while(compt<m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size())
                 {
-                    if(placerDomino(CPU,m_vecDominoABouger.at(0),compt) )
+                    if(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->selectionne)
                     {
-                        m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->selectionne=false;
-                        m_plateauJeu.vecDominosPoses.push_back(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt));
+                        if(placerDomino(CPU,m_vecDominoABouger.at(0),compt) )
+                        {
+                            m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->selectionne=false;
+                            m_plateauJeu.vecDominosPoses.push_back(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt));
 
-                        int dernEl=m_plateauJeu.vecDominosPoses.size()-1;
-                        m_plateauJeu.vecDominosAuBord.push_back(m_plateauJeu.vecDominosPoses.at(dernEl));
-                        m_plateauJeu.vecJoueurs.at(CPU).vecDominos.erase(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.begin()+compt);
+                            int dernEl=m_plateauJeu.vecDominosPoses.size()-1;
+                            m_plateauJeu.vecDominosAuBord.push_back(m_plateauJeu.vecDominosPoses.at(dernEl));
+                            m_plateauJeu.vecJoueurs.at(CPU).vecDominos.erase(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.begin()+compt);
 
-                        laMain=true;
-                        laMainBot=false;
+                            laMain=true;
+                            laMainBot=false;
+                        }
+                        compt+=100;
                     }
-                    compt+=100;
+                    compt++;
                 }
-                compt++;
+            }
+            else
+            {
+                if(m_plateauJeu.typeJeu==TJ_CLASSIQUE)
+                {
+                    laMain=true;
+                    laMainBot=false;
+                }
+                else
+                {
+                    animAActiver=ANIM_PIOCHE_V;
+                }
+
             }
         }
         else
         {
-            laMain=true;
-            laMainBot=false;
+
         }
+
     }
     else
     {
 
+    }
+
+    //...
+    if(finPartie())
+    {
+        jeuFinPartie=true;
     }
 }
 

@@ -127,6 +127,7 @@ void Animations::gestionAnimation()
             m_animPiocheC=true;
             m_animJoueur1C=true;
             m_animJoueur2C=true;
+            attente=false;
             std::cout<<"Fin animDistribution"<<std::endl;
         }
     }
