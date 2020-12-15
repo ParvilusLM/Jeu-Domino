@@ -16,13 +16,13 @@ public:
     void initPlateauJeu();
     void melangeDomino();
     void distribuerDomino();
-    void piocherDomino(int joueur,int nombreD);
+    void piocherDomino(int joueur);
     bool selectionDomino(int joueur);
     bool coupPossible(int joueur, ElDomino& domino);
     bool placerDomino(int joueur, int noDominoP,int noDominoE); //noDominoP represente le domino sur lequel on va attacher le nouveau
     //noDominoE represente le position du domino dans le vecteurDominos du joueur correspondant non pas son noDomino
 
-    void arrangerDomino(); //pour arranger les dominos du vecDomninosPoses dans le cadre
+    void arrangerDomino(int noCadre); //pour arranger les dominos dans les cadres
     void retourneDominos(int joueur,bool rendreVisible);
     void changementEchelleD(int categorie,sf::Vector2f facteur);
     void glisserDeposerD(int action);

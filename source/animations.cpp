@@ -11,6 +11,8 @@ Animations::Animations(Decor& decor):m_pDecor(0)
     m_animPiocheC=false;
     m_animPiocheV=false;
     m_animJoueur2Coup=false;
+    m_animJoueur1P=false;
+    m_animJoueur2P=false;
 
     m_timer=0.f;
     m_delai=0.001f;
@@ -176,8 +178,6 @@ void Animations::gestionAnimation()
         }
     }
 
-    //std::cout<<"Taille Vecteur vecJoueurs: "<<m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.size()<<std::endl;
-
     if(m_animPiocheC)
     {
         //deplacer le support et les dominos du vector vecDominosAP vers le bas
@@ -217,6 +217,7 @@ void Animations::gestionAnimation()
         else
         {
             m_animPiocheV=false;
+            attente=false;
             std::cout<<"Fin animPiocheV"<<std::endl;
         }
     }
@@ -278,6 +279,116 @@ void Animations::gestionAnimation()
             compt++;
         }
     }
+
+    if(m_animJoueur1P)
+    {
+        int commpt=0;
+        while(commpt<m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.size())
+        {
+            bool xFinal=false,yFinal=false;
+            if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->selectionne)
+            {
+                if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x<posFinalD.x)
+                {
+                    m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.move(3.f,0);
+                    if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x>posFinalD.x)
+                    {
+                        m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.setPosition(posFinalD.x,m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().y);
+                    }
+                }
+                else if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x>posFinalD.x)
+                {
+                    m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.move(-3.f,0);
+                    if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x<posFinalD.x)
+                    {
+                        m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.setPosition(posFinalD.x,m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().y);
+                    }
+                }
+                else
+                    xFinal=true;
+
+                if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().y<posFinalD.y)
+                {
+                    m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.move(0.f,3.f);
+                    if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().y>posFinalD.y)
+                    {
+                        m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.setPosition(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x,posFinalD.y);
+                    }
+                }
+                else
+                    yFinal=true;
+
+            }
+            if(xFinal && yFinal)
+            {
+                m_animJoueur1P=false;
+                m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->selectionne=false;
+
+                //on met le domino dans le vecteur du vecJoueurs correspondant
+                m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).vecDominos.push_back(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt));
+                m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.erase(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.begin()+commpt);
+                m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).piocherD=false;
+                commpt+=100;
+            }
+            commpt++;
+        }
+    }
+
+    if(m_animJoueur2P)
+    {
+        int commpt=0;
+        while(commpt<m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.size())
+        {
+            bool xFinal=false,yFinal=false;
+            if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->selectionne)
+            {
+                if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x<posFinalD.x)
+                {
+                    m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.move(3.f,0);
+                    if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x>posFinalD.x)
+                    {
+                        m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.setPosition(posFinalD.x,m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().y);
+                    }
+                }
+                else if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x>posFinalD.x)
+                {
+                    m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.move(-3.f,0);
+                    if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x<posFinalD.x)
+                    {
+                        m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.setPosition(posFinalD.x,m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().y);
+                    }
+                }
+                else
+                    xFinal=true;
+
+                if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().y>posFinalD.y)
+                {
+                    m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.move(0.f,3.f);
+                    if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().y<posFinalD.y)
+                    {
+                        m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.setPosition(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x,posFinalD.y);
+                    }
+                }
+                else
+                    yFinal=true;
+
+            }
+            if(xFinal && yFinal)
+            {
+                m_animJoueur2P=false;
+                m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->selectionne=false;
+
+                //on met le domino dans le vecteur du vecJoueurs correspondant
+                m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.push_back(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt));
+                m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.erase(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.begin()+commpt);
+                m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).piocherD=false;
+                commpt+=100;
+            }
+            commpt++;
+        }
+
+    }
+
 }
 
 void Animations::debuterAnim(int typeAnim)

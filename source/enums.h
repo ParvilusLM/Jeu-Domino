@@ -21,6 +21,7 @@ struct ElJoueur
    std::vector<ElDomino* > vecDominos;
    sf::Sprite sCadreJoueur;
    bool pass;
+   bool piocherD;
    int points;
 };
 
@@ -153,7 +154,9 @@ enum
     ANIM_JOUEUR2_V,
     ANIM_PIOCHE_C,
     ANIM_PIOCHE_V,
-    ANIM_JOUEUR2_COUP
+    ANIM_JOUEUR2_COUP,
+    ANIM_JOUEUR1_P,
+    ANIM_JOUEUR2_P
 
 };
 
@@ -168,6 +171,13 @@ enum
 {
     GLISSER,
     DEPOSER
+};
+
+enum
+{
+    CADRE_G,
+    CADRE_J1,
+    CADRE_J2
 };
 
 #endif // DEF_ENUMS

@@ -15,7 +15,7 @@ bool jeuRejouer=false;
 bool boutonPresse=false;//pour savoir s'il y a clic
 bool laMain=false,laMainBot=false; //laMainBot pour le CPU
 int sourisX=0,sourisY=0;
-bool glisser=false,deposer=false; //autoriser l'action glisser ou deposer
+bool glisser=false,deposer=false,piocher=false; //pour autoriser les actions glisser, deposer ou piocher
 sf::Vector2f posFinalD; //pour enregister la position finale ou on doit mettre le domino joue par le CPU
 int animAActiver=0;
 bool attente=true; //pour eviter les joueurs d'effectuer des actions pendant les transitions
@@ -90,13 +90,21 @@ int main()
                             controleurJ.gestBoutonsJeu();
                             if(laMain && !attente)
                             {
-                                if(!glisser)
+                                if(!glisser && !piocher)
                                 {
                                     controleurJ.glisserDeposer(GLISSER);
                                 }
-                                else
+                                else if(glisser && !deposer)
                                 {
                                     controleurJ.glisserDeposer(DEPOSER);
+                                }
+                                else if(piocher)
+                                {
+
+                                }
+                                else
+                                {
+
                                 }
                             }
                         }

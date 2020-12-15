@@ -210,9 +210,39 @@ void Controleur::gestionMaJ()
     }
 
     //gestion mise a jour donnees joueur
-    if(jeuEnCours)
+    if(jeuEnCours && !jeuPause && !jeuFinPartie)
     {
+
         m_decor->getJoueur().gestMaj();
+        if(laMain && m_decor->getJoueur().getPlateauJeu().typeJeu!=TJ_MEMORY)
+        {
+            if(!coupPossibHumain())
+            {
+                if(m_decor->getJoueur().getPlateauJeu().typeJeu==TJ_CLASSIQUE)
+                {
+                    laMain=false;
+                    laMainBot=true;
+                    m_decor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).pass=true;
+                }
+                else
+                {
+                    if(m_decor->getJoueur().getPlateauJeu().vecDominosAP.size()==0)
+                    {
+                        m_decor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).pass=true;
+                    }
+                    else
+                    {
+                        piocher=true;
+                        m_decor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).piocherD=true;
+                        attente=true;
+                        animAActiver=ANIM_PIOCHE_V;
+                    }
+
+                }
+
+
+            }
+        }
     }
 
     //gestion animation
