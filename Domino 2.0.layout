@@ -2,37 +2,23 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="source\constantes.h" open="1" top="0" tabpos="17" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="0" />
-		</Cursor>
-	</File>
 	<File name="source\controleur.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1358" topLine="66" />
+			<Cursor1 position="655" topLine="99" />
 		</Cursor>
 		<Folding>
-			<Collapse line="95" />
+			<Collapse line="25" />
+			<Collapse line="31" />
+			<Collapse line="36" />
+			<Collapse line="41" />
+			<Collapse line="49" />
+			<Collapse line="69" />
+			<Collapse line="96" />
 		</Folding>
 	</File>
-	<File name="source\varG.h" open="1" top="0" tabpos="18" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="source\enums.h" open="1" top="0" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="387" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="source\son.h" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="61" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="source\controleur.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="510" topLine="6" />
-		</Cursor>
-	</File>
-	<File name="source\decor.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="238" topLine="18" />
+			<Cursor1 position="2796" topLine="19" />
 		</Cursor>
 	</File>
 	<File name="source\decor.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -40,83 +26,9 @@
 			<Cursor1 position="500" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="source\enums.h" open="1" top="0" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2796" topLine="19" />
-		</Cursor>
-	</File>
-	<File name="source\son.cpp" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="588" topLine="7" />
-		</Cursor>
-	</File>
-	<File name="source\info.cpp" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="367" topLine="16" />
-		</Cursor>
-	</File>
-	<File name="source\animations.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="680" topLine="14" />
-		</Cursor>
-		<Folding>
-			<Collapse line="138" />
-			<Collapse line="161" />
-			<Collapse line="181" />
-			<Collapse line="204" />
-			<Collapse line="225" />
-			<Collapse line="248" />
-			<Collapse line="269" />
-			<Collapse line="282" />
-			<Collapse line="288" />
-			<Collapse line="336" />
-			<Collapse line="342" />
-		</Folding>
-	</File>
-	<File name="source\main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2644" topLine="1" />
-		</Cursor>
-	</File>
-	<File name="source\info.h" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="453" topLine="4" />
-		</Cursor>
-	</File>
-	<File name="source\joueur.cpp" open="1" top="1" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="64709" topLine="153" />
-		</Cursor>
-		<Folding>
-			<Collapse line="3" />
-			<Collapse line="136" />
-			<Collapse line="148" />
-			<Collapse line="173" />
-			<Collapse line="178" />
-			<Collapse line="263" />
-			<Collapse line="323" />
-			<Collapse line="336" />
-			<Collapse line="363" />
-			<Collapse line="577" />
-			<Collapse line="894" />
-			<Collapse line="1320" />
-			<Collapse line="1347" />
-			<Collapse line="1381" />
-			<Collapse line="1383" />
-			<Collapse line="1395" />
-			<Collapse line="1479" />
-			<Collapse line="1518" />
-			<Collapse line="1540" />
-			<Collapse line="1551" />
-			<Collapse line="1563" />
-			<Collapse line="1599" />
-			<Collapse line="1663" />
-			<Collapse line="1717" />
-		</Folding>
-	</File>
 	<File name="source\joueur.h" open="1" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="715" topLine="13" />
+			<Cursor1 position="320" topLine="13" />
 		</Cursor>
 	</File>
 	<File name="source\menu.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -132,9 +44,90 @@
 			<Cursor1 position="574" topLine="52" />
 		</Cursor>
 	</File>
+	<File name="source\animations.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="7645" topLine="9" />
+		</Cursor>
+		<Folding>
+			<Collapse line="180" />
+			<Collapse line="232" />
+			<Collapse line="256" />
+			<Collapse line="278" />
+			<Collapse line="291" />
+			<Collapse line="346" />
+		</Folding>
+	</File>
+	<File name="source\son.h" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="61" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="source\varG.h" open="1" top="0" tabpos="18" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="314" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="source\main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3201" topLine="87" />
+		</Cursor>
+	</File>
+	<File name="source\son.cpp" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="588" topLine="7" />
+		</Cursor>
+	</File>
 	<File name="source\animations.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="247" topLine="0" />
 		</Cursor>
+	</File>
+	<File name="source\controleur.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="510" topLine="6" />
+		</Cursor>
+	</File>
+	<File name="source\decor.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="238" topLine="18" />
+		</Cursor>
+	</File>
+	<File name="source\info.cpp" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="367" topLine="16" />
+		</Cursor>
+	</File>
+	<File name="source\constantes.h" open="1" top="0" tabpos="17" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="source\info.h" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="453" topLine="4" />
+		</Cursor>
+	</File>
+	<File name="source\joueur.cpp" open="1" top="1" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="65603" topLine="285" />
+		</Cursor>
+		<Folding>
+			<Collapse line="3" />
+			<Collapse line="136" />
+			<Collapse line="148" />
+			<Collapse line="176" />
+			<Collapse line="181" />
+			<Collapse line="266" />
+			<Collapse line="326" />
+			<Collapse line="580" />
+			<Collapse line="1345" />
+			<Collapse line="1372" />
+			<Collapse line="1406" />
+			<Collapse line="1504" />
+			<Collapse line="1543" />
+			<Collapse line="1565" />
+			<Collapse line="1576" />
+			<Collapse line="1588" />
+		</Folding>
 	</File>
 </CodeBlocks_layout_file>

@@ -169,6 +169,53 @@ void Joueur::piocherDomino(int joueur)
 {
     if(joueur==HUMAIN)
     {
+        int compt=0;
+        while(compt<m_plateauJeu.vecDominosAP.size())
+        {
+            if(collisionTS(m_plateauJeu.vecDominosAP.at(compt)->sDomino.getGlobalBounds()))
+            {
+                m_plateauJeu.vecDominosAP.at(compt)->selectionne=true;
+                m_plateauJeu.vecDominosAP.at(compt)->etat=VISIBLE;
+
+                //on determine la position que doit prendre le domino dans le cadre du joueur
+                int indicDernEl=m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size()-1;
+
+                m_positionFinal.x=m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicDernEl)->sDomino.getPosition().x +
+                                (m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicDernEl)->sDomino.getGlobalBounds().width +30.f);
+                m_positionFinal.y=m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicDernEl)->sDomino.getPosition().y;
+                posFinalD=m_positionFinal;
+
+                m_plateauJeu.vecDominosAP.at(compt)->scale=m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicDernEl)->scale;
+                m_plateauJeu.vecDominosAP.at(compt)->sDomino.setScale(m_plateauJeu.vecDominosAP.at(compt)->scale);
+
+                animAActiver=ANIM_JOUEUR1_P;
+
+            }
+            compt++;
+        }
+
+    }
+    else
+    {
+        //on  choisit un domino au hasard dans le vecteur vecDominosAP
+        int tailleVec=m_plateauJeu.vecDominosAP.size();
+        int dominoChoisit=rand()%tailleVec;
+
+        m_plateauJeu.vecDominosAP.at(dominoChoisit)->selectionne=true;
+        m_plateauJeu.vecDominosAP.at(dominoChoisit)->etat=VISIBLE;
+
+        //on determine la position que doit prendre le domino dans le cadre du joueur
+        int indicDernEl=m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size()-1;
+
+        m_positionFinal.x=m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(indicDernEl)->sDomino.getPosition().x +
+                        (m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(indicDernEl)->sDomino.getGlobalBounds().width +30.f);
+        m_positionFinal.y=m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(indicDernEl)->sDomino.getPosition().y;
+        posFinalD=m_positionFinal;
+
+        m_plateauJeu.vecDominosAP.at(dominoChoisit)->scale=m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(indicDernEl)->scale;
+        m_plateauJeu.vecDominosAP.at(dominoChoisit)->sDomino.setScale(m_plateauJeu.vecDominosAP.at(dominoChoisit)->scale);
+
+        animAActiver=ANIM_JOUEUR2_P;
 
     }
 }
@@ -233,92 +280,79 @@ bool Joueur::selectionDomino(int joueur)
         }
         else
         {
-            int compt=0;
-            while(compt<m_plateauJeu.vecDominosAP.size())
-            {
-                if(collisionTS(m_plateauJeu.vecDominosAP.at(compt)->sDomino.getGlobalBounds()))
-                {
-                    m_plateauJeu.vecDominosAP.at(compt)->selectionne=true;
-                    m_plateauJeu.vecDominosAP.at(compt)->etat=VISIBLE;
-
-                    //on determine la position que doit prendre le domino dans le cadre du joueur
-                    int indicDernEl=m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size()-1;
-
-                    m_positionFinal.x=m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicDernEl)->sDomino.getPosition().x +
-                                    (m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicDernEl)->sDomino.getGlobalBounds().width +30.f);
-                    m_positionFinal.y=m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicDernEl)->sDomino.getPosition().y;
-                    posFinalD=m_positionFinal;
-
-                    m_plateauJeu.vecDominosAP.at(compt)->scale=m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicDernEl)->scale;
-                    m_plateauJeu.vecDominosAP.at(compt)->sDomino.setScale(m_plateauJeu.vecDominosAP.at(compt)->scale);
-
-                    animAActiver=ANIM_JOUEUR1_P;
-
-                }
-                compt++;
-            }
+            piocherDomino(HUMAIN);
         }
 
     }
     else
     {
         //on va tester chaque domino du vecteur vecJoueur(CPU) pour trouver un coup possible
-        if(m_plateauJeu.vecDominosPoses.size()==0)
+        if(!m_plateauJeu.vecJoueurs.at(CPU).piocherD)
         {
-            int compt=0;
-            while(compt<m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size())
+            if(m_plateauJeu.vecDominosPoses.size()==0)
             {
-                if(m_plateauJeu.typeJeu==TJ_CLASSIQUE)
+                int compt=0;
+                while(compt<m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size())
                 {
-                    if(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->cote1 == m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->cote2 ||
-                       m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->cote1 != m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->cote2 )
+                    if(m_plateauJeu.typeJeu==TJ_CLASSIQUE)
                     {
-                        m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->selectionne=true;
-                        dominoSelect=true;
-                        compt=100;
+                        if(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->cote1 == m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->cote2 ||
+                           m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->cote1 != m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->cote2 )
+                        {
+                            m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->selectionne=true;
+                            dominoSelect=true;
+                            compt=100;
+                        }
                     }
-                }
-                else if(m_plateauJeu.typeJeu==TJ_5PARTOUT)
-                {
-                    if(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->cote1 == m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->cote2 )
+                    else if(m_plateauJeu.typeJeu==TJ_5PARTOUT)
                     {
-                        m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->selectionne=true;
-                        dominoSelect=true;
-                        compt=100;
+                        if(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->cote1 == m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->cote2 )
+                        {
+                            m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->selectionne=true;
+                            dominoSelect=true;
+                            compt=100;
+                        }
                     }
-                }
-                else if(m_plateauJeu.typeJeu==TJ_MATADOR)
-                {
-                    if(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->cote1+m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->cote2==7 ||
-                       m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->cote1+m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->cote2==0 )
+                    else if(m_plateauJeu.typeJeu==TJ_MATADOR)
                     {
-                        m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->selectionne=true;
-                        dominoSelect=true;
-                        compt=100;
+                        if(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->cote1+m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->cote2==7 ||
+                           m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->cote1+m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->cote2==0 )
+                        {
+                            m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->selectionne=true;
+                            dominoSelect=true;
+                            compt=100;
+                        }
                     }
-                }
-                else
-                {
+                    else
+                    {
 
-                }
+                    }
 
-                compt++;
+                    compt++;
+                }
             }
+            else
+            {
+                int comptt=0;
+                while(comptt<m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size())
+                {
+                    if(coupPossible(CPU,*m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(comptt)))
+                    {
+                        m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(comptt)->selectionne=true;
+                        dominoSelect=true;
+                        comptt=100;
+                    }
+                    comptt++;
+                }
+            }
+
         }
         else
         {
-            int comptt=0;
-            while(comptt<m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size())
-            {
-                if(coupPossible(CPU,*m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(comptt)))
-                {
-                    m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(comptt)->selectionne=true;
-                    dominoSelect=true;
-                    comptt=100;
-                }
-                comptt++;
-            }
+            piocherDomino(CPU);
         }
+
+
     }
     return dominoSelect;
 }
@@ -579,7 +613,7 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
 
 bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
 {
-    std::cout<<"Fonction PlacerDomino"<<std::endl;
+    //std::cout<<"Fonction PlacerDomino"<<std::endl;
     bool placerDPossible=false;
     int noJoueur=joueur;
 
@@ -1097,8 +1131,6 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                     (coteH && (pDominoParent->cote1+pDominoEnfant->cote2==0 && pDominoParent->angle==0)) ||
                     (coteH && (pDominoEnfant->cote1==0 && pDominoParent->angle==90)) ||
                     (coteH && (pDominoEnfant->cote2==0 && pDominoParent->angle==90)) ||
-                    (coteH && (pDominoParent->cote1+pDominoEnfant->cote1==0 && pDominoParent->angle==0)) ||
-                    (coteH && (pDominoParent->cote1+pDominoEnfant->cote2==0 && pDominoParent->angle==0)) ||
                     (coteH && (pDominoEnfant->cote1+pDominoEnfant->cote2==7 && (pDominoParent->angle==0 || pDominoParent->angle==180) )) ||
                     (coteH && (pDominoEnfant->cote1+pDominoEnfant->cote2==0 && (pDominoParent->angle==0 || pDominoParent->angle==180) )) )
                 {
@@ -1163,21 +1195,20 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                     pDominoEnfant->attacheDP=false;
                     placerDPossible=true;
                 }
-                else if((coteB && (pDominoParent->cote2+pDominoEnfant->cote1==7 && pDominoParent->angle==180)) ||
-                    (coteB && (pDominoParent->cote2+pDominoEnfant->cote2==7 && pDominoParent->angle==180)) ||
+                else if((coteB && (pDominoParent->cote1+pDominoEnfant->cote1==7 && pDominoParent->angle==180)) ||
+                    (coteB && (pDominoParent->cote1+pDominoEnfant->cote2==7 && pDominoParent->angle==180)) ||
                     (coteB && (pDominoParent->cote2+pDominoEnfant->cote1==7 && pDominoParent->angle==0)) ||
                     (coteB && (pDominoParent->cote2+pDominoEnfant->cote2==7 && pDominoParent->angle==0)) ||
-                    (coteB && (pDominoParent->cote2+pDominoEnfant->cote1==0 && pDominoParent->angle==180)) ||
-                    (coteB && (pDominoParent->cote2+pDominoEnfant->cote2==0 && pDominoParent->angle==180)) ||
-                    (coteH && (pDominoParent->cote1+pDominoEnfant->cote1==0 && pDominoParent->angle==0)) ||
-                    (coteH && (pDominoParent->cote1+pDominoEnfant->cote2==0 && pDominoParent->angle==0)) ||
+                    (coteB && (pDominoParent->cote1+pDominoEnfant->cote1==0 && pDominoParent->angle==180)) ||
+                    (coteB && (pDominoParent->cote1+pDominoEnfant->cote2==0 && pDominoParent->angle==180)) ||
+                    (coteH && (pDominoParent->cote2+pDominoEnfant->cote1==0 && pDominoParent->angle==0)) ||
+                    (coteH && (pDominoParent->cote2+pDominoEnfant->cote2==0 && pDominoParent->angle==0)) ||
                     (coteB && (pDominoEnfant->cote1==0 && pDominoParent->angle==90)) ||
                     (coteB && (pDominoEnfant->cote2==0 && pDominoParent->angle==90)) ||
-                    (coteB && (pDominoParent->cote2+pDominoEnfant->cote1==0 && pDominoParent->angle==0)) ||
-                    (coteB && (pDominoParent->cote2+pDominoEnfant->cote2==0 && pDominoParent->angle==0)) ||
                     (coteB && (pDominoEnfant->cote1+pDominoEnfant->cote2==7 && (pDominoParent->angle==0 || pDominoParent->angle==180) )) ||
                     (coteB && (pDominoEnfant->cote1+pDominoEnfant->cote2==0 && (pDominoParent->angle==0 || pDominoParent->angle==180) )) )
                 {
+                    std::cout<<"Boom boom"<<std::endl;
                     if((pDominoEnfant->cote1 + pDominoEnfant->cote2 ==7  ||
                        pDominoEnfant->cote1 + pDominoEnfant->cote2 ==0) &&
                        (pDominoParent->cote1+pDominoParent->angle==0.f || pDominoParent->cote1+pDominoParent->angle==180.f))
@@ -1194,6 +1225,11 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                            pDominoParent->cote1 + pDominoParent->angle==90.f)
                         {
                             if(pDominoEnfant->cote1==0)
+                            {
+                                pDominoEnfant->angle=0.f;
+                                pDominoEnfant->sDomino.setRotation(0.f);
+                            }
+                            else
                             {
                                 pDominoEnfant->angle=180.f;
                                 pDominoEnfant->sDomino.setRotation(180.f);
@@ -1537,6 +1573,12 @@ bool Joueur::finPartie()
         }
     }
 
+    //on teste si les deux joueurs ont passe leur tour
+    if(m_plateauJeu.vecJoueurs.at(HUMAIN).pass && m_plateauJeu.vecJoueurs.at(CPU).pass)
+    {
+        termine=true;
+    }
+
     return termine;
 }
 
@@ -1617,7 +1659,7 @@ void Joueur::gestMaj()
         }
 
     }
-    else if(!jeuPause && !laMain && laMainBot && !attente)
+    else if(!jeuPause && !laMain && laMainBot && !attente && !piocher)
     {
         if(m_plateauJeu.typeJeu!=TJ_MEMORY)
         {
@@ -1658,12 +1700,15 @@ void Joueur::gestMaj()
                 {
                     if(m_plateauJeu.vecDominosAP.size()==0)
                     {
+                        laMain=true;
+                        laMainBot=false;
                         m_plateauJeu.vecJoueurs.at(CPU).pass=true;
                     }
                     else
                     {
                         animAActiver=ANIM_PIOCHE_V;
                         m_plateauJeu.vecJoueurs.at(CPU).piocherD=true;
+                        selectionDomino(CPU);
                         attente=true;
                     }
 

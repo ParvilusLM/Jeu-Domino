@@ -127,9 +127,6 @@ void Animations::gestionAnimation()
             m_pDecor->getJoueur().changementEchelleD(DOMINOS_JOUEUR1,augmenteScale);
             m_pDecor->getJoueur().changementEchelleD(DOMINOS_JOUEUR2,augmenteScale);
             m_animPiocheC=true;
-            m_animJoueur1C=true;
-            m_animJoueur2C=true;
-            attente=false;
             std::cout<<"Fin animDistribution"<<std::endl;
         }
     }
@@ -151,6 +148,7 @@ void Animations::gestionAnimation()
         }
         else
         {
+            attente=false;
             m_animJoueur1C=false;
             std::cout<<"Fin animJoueur1C"<<std::endl;
         }
@@ -173,6 +171,7 @@ void Animations::gestionAnimation()
         }
         else
         {
+            attente=false;
             m_animJoueur1V=false;
             std::cout<<"Fin animJoueur1V"<<std::endl;
         }
@@ -194,6 +193,7 @@ void Animations::gestionAnimation()
         }
         else
         {
+            attente=false;
             m_animPiocheC=false;
             std::cout<<"Fin animPiocheC"<<std::endl;
         }
@@ -218,6 +218,13 @@ void Animations::gestionAnimation()
         {
             m_animPiocheV=false;
             attente=false;
+            if(piocher && m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).piocherD)
+            {
+                m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).piocherD=false;
+                m_animJoueur2P=true;
+                attente=true;
+            }
+
             std::cout<<"Fin animPiocheV"<<std::endl;
         }
     }
@@ -239,6 +246,7 @@ void Animations::gestionAnimation()
         }
         else
         {
+            attente=false;
             m_animJoueur2C=false;
             std::cout<<"Fin animJoueur2C"<<std::endl;
         }
@@ -261,6 +269,7 @@ void Animations::gestionAnimation()
         }
         else
         {
+            attente=false;
             m_animJoueur2V=false;
             std::cout<<"Fin animJoueur2V"<<std::endl;
         }
@@ -321,6 +330,7 @@ void Animations::gestionAnimation()
             }
             if(xFinal && yFinal)
             {
+                attente=false;
                 m_animJoueur1P=false;
                 m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->selectionne=false;
 
@@ -375,6 +385,9 @@ void Animations::gestionAnimation()
             }
             if(xFinal && yFinal)
             {
+                attente=false;
+                laMain=true;
+                laMainBot=false;
                 m_animJoueur2P=false;
                 m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->selectionne=false;
 

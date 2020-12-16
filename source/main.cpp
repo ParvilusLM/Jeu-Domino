@@ -100,7 +100,7 @@ int main()
                                 }
                                 else if(piocher)
                                 {
-
+                                    controleurJ.piocherD();
                                 }
                                 else
                                 {

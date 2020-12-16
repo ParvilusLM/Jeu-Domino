@@ -19,6 +19,7 @@ void Controleur::debutJeu()
     m_decor->getJoueur().getPlateauJeu().niveauJeu=m_decor->getMenu().getDonnees(1);
 
     m_animations->debuterAnim(ANIM_DISTRIBUTION);
+    attente=true;
 }
 
 void Controleur::pauseJeu()
@@ -214,7 +215,7 @@ void Controleur::gestionMaJ()
     {
 
         m_decor->getJoueur().gestMaj();
-        if(laMain && m_decor->getJoueur().getPlateauJeu().typeJeu!=TJ_MEMORY)
+        if(laMain && !attente && m_decor->getJoueur().getPlateauJeu().typeJeu!=TJ_MEMORY && !piocher)
         {
             if(!coupPossibHumain())
             {
@@ -229,6 +230,8 @@ void Controleur::gestionMaJ()
                     if(m_decor->getJoueur().getPlateauJeu().vecDominosAP.size()==0)
                     {
                         m_decor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).pass=true;
+                        laMain=false;
+                        laMainBot=true;
                     }
                     else
                     {
@@ -265,6 +268,11 @@ void Controleur::gestionMaJ()
         m_decor->getMenu().setTypeMenu(MenuFinPartie);
     }
 
+}
+
+void Controleur::piocherD()
+{
+    m_decor->getJoueur().piocherDomino(HUMAIN);
 }
 
 void Controleur::afficheMenu()

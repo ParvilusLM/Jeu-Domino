@@ -19,6 +19,7 @@ public:
     //gestion jeu en cours
     void gestBoutonsJeu(); //gestion boutons autres que ceux du menu
     void glisserDeposer(int action); //pour bouger le domino avec le curseur
+    void piocherD();
     bool coupPossibHumain();
     void afficheMenu();
     void afficheFondEc();
