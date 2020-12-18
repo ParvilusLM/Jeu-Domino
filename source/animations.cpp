@@ -218,6 +218,7 @@ void Animations::gestionAnimation()
         {
             m_animPiocheV=false;
             attente=false;
+
             if(piocher && m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).piocherD)
             {
                 m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).piocherD=false;
@@ -291,6 +292,7 @@ void Animations::gestionAnimation()
 
     if(m_animJoueur1P)
     {
+        std::cout<<"animation Pioche Joueur1"<<std::endl;
         int commpt=0;
         while(commpt<m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.size())
         {
@@ -314,7 +316,10 @@ void Animations::gestionAnimation()
                     }
                 }
                 else
+                {
                     xFinal=true;
+                }
+
 
                 if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().y<posFinalD.y)
                 {
@@ -325,11 +330,15 @@ void Animations::gestionAnimation()
                     }
                 }
                 else
+                {
                     yFinal=true;
+                }
 
             }
+
             if(xFinal && yFinal)
             {
+                piocher=false;
                 attente=false;
                 m_animJoueur1P=false;
                 m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->selectionne=false;
@@ -346,6 +355,7 @@ void Animations::gestionAnimation()
 
     if(m_animJoueur2P)
     {
+        std::cout<<"animation Pioche Joueur2"<<std::endl;
         int commpt=0;
         while(commpt<m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.size())
         {
@@ -369,25 +379,31 @@ void Animations::gestionAnimation()
                     }
                 }
                 else
+                {
                     xFinal=true;
+                }
 
                 if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().y>posFinalD.y)
                 {
-                    m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.move(0.f,3.f);
+                    m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.move(0.f,-3.f);
                     if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().y<posFinalD.y)
                     {
                         m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.setPosition(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x,posFinalD.y);
                     }
                 }
                 else
+                {
                     yFinal=true;
+                }
 
             }
+
             if(xFinal && yFinal)
             {
+                piocher=false;
                 attente=false;
-                laMain=true;
-                laMainBot=false;
+                //laMain=true;
+                //laMainBot=false;
                 m_animJoueur2P=false;
                 m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->selectionne=false;
 
@@ -434,6 +450,18 @@ void Animations::debuterAnim(int typeAnim)
     {
         m_animPiocheV=true;
     }
+    else if(typeAnim==ANIM_JOUEUR2_COUP)
+    {
+        m_animJoueur2Coup=true;
+    }
+    else if(typeAnim==ANIM_JOUEUR1_P)
+    {
+        m_animJoueur1P=true;
+    }
+    else if(typeAnim==ANIM_JOUEUR2_P)
+    {
+        m_animJoueur2P=true;
+    }
     else
     {
 
@@ -446,7 +474,8 @@ void Animations::gestMaJ()
     m_horlorge.restart();
     m_timer+=tempsEcoule;
 
-    if(m_animDistrib || m_animJoueur1C || m_animJoueur1V || m_animJoueur2C || m_animJoueur2V || m_animPiocheC || m_animPiocheV)
+    if(m_animDistrib || m_animJoueur1C || m_animJoueur1V || m_animJoueur2C || m_animJoueur2V || m_animPiocheC ||
+       m_animPiocheV || m_animJoueur2Coup || m_animJoueur1P || m_animJoueur2P)
     {
         if(m_timer>=m_delai)
         {
