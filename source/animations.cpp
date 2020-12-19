@@ -426,8 +426,7 @@ void Animations::gestionAnimation()
                 if(m_pDecor->getJoueur().coupPossible(CPU,*m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.at(dernEl)))
                 {
                     m_animPiocheC=true;
-                    laMain=true;
-                    laMainBot=false;
+                    attente=true;
                 }
             }
             commpt++;

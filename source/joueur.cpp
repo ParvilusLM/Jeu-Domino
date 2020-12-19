@@ -1047,10 +1047,6 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                     (coteD && (pDominoParent->cote1+pDominoEnfant->cote2==7 && pDominoParent->angle==90)) ||
                     (coteD && (pDominoParent->cote2+pDominoEnfant->cote1==7 && pDominoParent->angle==-90)) ||
                     (coteD && (pDominoParent->cote2+pDominoEnfant->cote2==7 && pDominoParent->angle==-90)) ||
-                    (coteD && (pDominoParent->cote1+pDominoEnfant->cote1==0 && pDominoParent->angle==90)) ||
-                    (coteD && (pDominoParent->cote1+pDominoEnfant->cote2==0 && pDominoParent->angle==90)) ||
-                    (coteD && (pDominoParent->cote2+pDominoEnfant->cote1==0 && pDominoParent->angle==-90)) ||
-                    (coteD && (pDominoParent->cote2+pDominoEnfant->cote2==0 && pDominoParent->angle==-90)) ||
                     (coteD && (pDominoEnfant->cote1==0 && pDominoParent->angle==0)) ||
                     (coteD && (pDominoEnfant->cote2==0 && pDominoParent->angle==0)) ||
                     (coteD && (pDominoEnfant->cote1+pDominoEnfant->cote2==7 && (pDominoParent->angle==90 || pDominoParent->angle==-90) )) ||
@@ -1121,10 +1117,6 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                     (coteH && (pDominoParent->cote2+pDominoEnfant->cote2==7 && pDominoParent->angle==180)) ||
                     (coteH && (pDominoParent->cote1+pDominoEnfant->cote1==7 && pDominoParent->angle==0)) ||
                     (coteH && (pDominoParent->cote1+pDominoEnfant->cote2==7 && pDominoParent->angle==0)) ||
-                    (coteH && (pDominoParent->cote2+pDominoEnfant->cote1==0 && pDominoParent->angle==180)) ||
-                    (coteH && (pDominoParent->cote2+pDominoEnfant->cote2==0 && pDominoParent->angle==180)) ||
-                    (coteH && (pDominoParent->cote1+pDominoEnfant->cote1==0 && pDominoParent->angle==0)) ||
-                    (coteH && (pDominoParent->cote1+pDominoEnfant->cote2==0 && pDominoParent->angle==0)) ||
                     (coteH && (pDominoEnfant->cote1==0 && pDominoParent->angle==90)) ||
                     (coteH && (pDominoEnfant->cote2==0 && pDominoParent->angle==90)) ||
                     (coteH && (pDominoEnfant->cote1+pDominoEnfant->cote2==7 && (pDominoParent->angle==0 || pDominoParent->angle==180) )) ||
@@ -1191,10 +1183,6 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                     (coteB && (pDominoParent->cote1+pDominoEnfant->cote2==7 && pDominoParent->angle==180)) ||
                     (coteB && (pDominoParent->cote2+pDominoEnfant->cote1==7 && pDominoParent->angle==0)) ||
                     (coteB && (pDominoParent->cote2+pDominoEnfant->cote2==7 && pDominoParent->angle==0)) ||
-                    (coteB && (pDominoParent->cote1+pDominoEnfant->cote1==0 && pDominoParent->angle==180)) ||
-                    (coteB && (pDominoParent->cote1+pDominoEnfant->cote2==0 && pDominoParent->angle==180)) ||
-                    (coteB && (pDominoParent->cote2+pDominoEnfant->cote1==0 && pDominoParent->angle==0)) ||
-                    (coteB && (pDominoParent->cote2+pDominoEnfant->cote2==0 && pDominoParent->angle==0)) ||
                     (coteB && (pDominoEnfant->cote1==0 && pDominoParent->angle==90)) ||
                     (coteB && (pDominoEnfant->cote2==0 && pDominoParent->angle==90)) ||
                     (coteB && (pDominoEnfant->cote1+pDominoEnfant->cote2==7 && (pDominoParent->angle==0 || pDominoParent->angle==180) )) ||
@@ -1643,6 +1631,7 @@ void Joueur::gestMaj()
         if(deposer)
         {
             glisserDeposerD(DEPOSER);
+            arrangerDomino(CADRE_J1);
         }
 
     }
