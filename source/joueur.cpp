@@ -481,9 +481,9 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
             if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheHP)
             {
                 if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
-                   domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==0 ||
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
-                   domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==0)
+                   domino.cote1+domino.cote2==7 ||
+                   domino.cote1+domino.cote2==0)
                 {
                     m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
                     possible=true;
@@ -493,9 +493,9 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
             if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheBP)
             {
                 if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
-                   domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==0 ||
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
-                   domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==0)
+                   domino.cote1+domino.cote2==7 ||
+                   domino.cote1+domino.cote2==0)
                 {
                     m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
                     possible=true;
@@ -508,9 +508,9 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
             if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheGP)
             {
                 if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
-                   domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==0 ||
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
-                   domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==0)
+                   domino.cote1+domino.cote2==7 ||
+                   domino.cote1+domino.cote2==0)
                 {
                     m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
                     possible=true;
@@ -520,9 +520,9 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
             if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheDP)
             {
                 if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
-                   domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==0 ||
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
-                   domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==0)
+                   domino.cote1+domino.cote2==7 ||
+                   domino.cote1+domino.cote2==0)
                 {
                     m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
                     possible=true;
@@ -535,9 +535,9 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
             if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheGP)
             {
                 if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
-                   domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==0 ||
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
-                   domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==0)
+                   domino.cote1+domino.cote2==7 ||
+                   domino.cote1+domino.cote2==0)
                 {
                     m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
                     possible=true;
@@ -547,9 +547,27 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
             if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheDP)
             {
                 if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
-                   domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==0 ||
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
-                   domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==0)
+                   domino.cote1+domino.cote2==7 ||
+                   domino.cote1+domino.cote2==0)
+                {
+                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
+                    possible=true;
+                }
+            }
+
+            if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheHP)
+            {
+                if(domino.cote1==0 || domino.cote2==0)
+                {
+                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
+                    possible=true;
+                }
+            }
+
+            if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheBP)
+            {
+                if(domino.cote1==0 || domino.cote2==0)
                 {
                     m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
                     possible=true;
@@ -562,9 +580,9 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
             if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheHP)
             {
                 if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
-                   domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==0 ||
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
-                   domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==0)
+                   domino.cote1+domino.cote2==7 ||
+                   domino.cote1+domino.cote2==0)
                 {
                     m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
                     possible=true;
@@ -574,9 +592,9 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
             if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheBP)
             {
                 if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
-                   domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==0 ||
                    domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
-                   domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==0)
+                   domino.cote1+domino.cote2==7 ||
+                   domino.cote1+domino.cote2==0)
                 {
                     m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
                     possible=true;
@@ -958,10 +976,6 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                     (coteG && (pDominoParent->cote1+pDominoEnfant->cote2==7 && pDominoParent->angle==-90)) ||
                     (coteG && (pDominoParent->cote2+pDominoEnfant->cote1==7 && pDominoParent->angle==90)) ||
                     (coteG && (pDominoParent->cote2+pDominoEnfant->cote2==7 && pDominoParent->angle==90)) ||
-                    (coteG && (pDominoParent->cote1+pDominoEnfant->cote1==0 && pDominoParent->angle==-90)) ||
-                    (coteG && (pDominoParent->cote1+pDominoEnfant->cote2==0 && pDominoParent->angle==-90)) ||
-                    (coteG && (pDominoParent->cote2+pDominoEnfant->cote1==0 && pDominoParent->angle==90)) ||
-                    (coteG && (pDominoParent->cote2+pDominoEnfant->cote2==0 && pDominoParent->angle==90)) ||
                     (coteG && (pDominoEnfant->cote1==0 && pDominoParent->angle==0)) ||
                     (coteG && (pDominoEnfant->cote2==0 && pDominoParent->angle==0)) ||
                     (coteG && (pDominoEnfant->cote1+pDominoEnfant->cote2==7 && (pDominoParent->angle==90 || pDominoParent->angle==-90) )) ||
@@ -996,20 +1010,17 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                         }
                         else
                         {
-                            if( (pDominoEnfant->cote1+pDominoParent->cote1==7 && pDominoParent->angle==-90.f) ||
-                               (pDominoEnfant->cote1+pDominoParent->cote1==0 && pDominoParent->angle==-90.f) )
+                            if( (pDominoEnfant->cote1+pDominoParent->cote1==7 && pDominoParent->angle==-90.f) )
                             {
                                 pDominoEnfant->angle=90.f;
                                 pDominoEnfant->sDomino.setRotation(90.f);
                             }
-                            else if( (pDominoEnfant->cote1+pDominoParent->cote2==7 && pDominoParent->angle==90.f) ||
-                                    (pDominoEnfant->cote1+pDominoParent->cote2==0 && pDominoParent->angle==90.f) )
+                            else if( (pDominoEnfant->cote1+pDominoParent->cote2==7 && pDominoParent->angle==90.f) )
                             {
                                 pDominoEnfant->angle=90.f;
                                 pDominoEnfant->sDomino.setRotation(90.f);
                             }
-                            else if( (pDominoEnfant->cote2+pDominoParent->cote1==7 && pDominoParent->angle==-90.f) ||
-                                    (pDominoEnfant->cote2+pDominoParent->cote1==0 && pDominoParent->angle==-90.f) )
+                            else if( (pDominoEnfant->cote2+pDominoParent->cote1==7 && pDominoParent->angle==-90.f) )
                             {
                                 pDominoEnfant->angle=-90.f;
                                 pDominoEnfant->sDomino.setRotation(-90.f);
@@ -1073,20 +1084,17 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                         }
                         else
                         {
-                            if( (pDominoEnfant->cote1+pDominoParent->cote1==7 && pDominoParent->angle==90.f) ||
-                               (pDominoEnfant->cote1+pDominoParent->cote1==0 && pDominoParent->angle==90.f) )
+                            if( (pDominoEnfant->cote1+pDominoParent->cote1==7 && pDominoParent->angle==90.f) )
                             {
                                 pDominoEnfant->angle=-90.f;
                                 pDominoEnfant->sDomino.setRotation(-90.f);
                             }
-                            else if( (pDominoEnfant->cote2+pDominoParent->cote2==7 && pDominoParent->angle==90.f) ||
-                                    (pDominoEnfant->cote2+pDominoParent->cote2==0 && pDominoParent->angle==90.f) )
+                            else if( (pDominoEnfant->cote2+pDominoParent->cote2==7 && pDominoParent->angle==90.f) )
                             {
                                 pDominoEnfant->angle=90.f;
                                 pDominoEnfant->sDomino.setRotation(90.f);
                             }
-                            else if( (pDominoEnfant->cote1+pDominoParent->cote2==7 && pDominoParent->angle==-90.f) ||
-                                    (pDominoEnfant->cote1+pDominoParent->cote2==0 && pDominoParent->angle==-90.f) )
+                            else if( (pDominoEnfant->cote1+pDominoParent->cote2==7 && pDominoParent->angle==-90.f) )
                             {
                                 pDominoEnfant->angle=-90.f;
                                 pDominoEnfant->sDomino.setRotation(-90.f);
@@ -1134,8 +1142,7 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                     else
                     {
                         if((pDominoParent->cote1 + pDominoParent->cote2==7 ||
-                           pDominoParent->cote1 + pDominoParent->cote2==0) &&
-                           pDominoParent->cote1 + pDominoParent->angle==90.f)
+                           pDominoParent->cote1 + pDominoParent->cote2==0) && pDominoParent->angle==90.f)
                         {
                             if(pDominoEnfant->cote1==0)
                             {
@@ -1148,20 +1155,17 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                         }
                         else
                         {
-                            if( (pDominoEnfant->cote1+pDominoParent->cote1==7 && pDominoParent->angle==0.f) ||
-                               (pDominoEnfant->cote1+pDominoParent->cote1==0 && pDominoParent->angle==0.f) )
+                            if( (pDominoEnfant->cote1+pDominoParent->cote1==7 && pDominoParent->angle==0.f) )
                             {
                                 pDominoEnfant->angle=180.f;
                                 pDominoEnfant->sDomino.setRotation(180.f);
                             }
-                            else if( (pDominoEnfant->cote2+pDominoParent->cote2==7 && pDominoParent->angle==180.f) ||
-                                    (pDominoEnfant->cote2+pDominoParent->cote2==0 && pDominoParent->angle==180.f) )
+                            else if( (pDominoEnfant->cote2+pDominoParent->cote2==7 && pDominoParent->angle==180.f) )
                             {
                                 pDominoEnfant->angle=0.f;
                                 pDominoEnfant->sDomino.setRotation(0.f);
                             }
-                            else if( (pDominoEnfant->cote1+pDominoParent->cote2==7 && pDominoParent->angle==180.f) ||
-                                    (pDominoEnfant->cote1+pDominoParent->cote2==0 && pDominoParent->angle==180.f) )
+                            else if( (pDominoEnfant->cote1+pDominoParent->cote2==7 && pDominoParent->angle==180.f) )
                             {
                                 pDominoEnfant->angle=180.f;
                                 pDominoEnfant->sDomino.setRotation(180.f);
@@ -1196,7 +1200,7 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                     (coteB && (pDominoEnfant->cote1+pDominoEnfant->cote2==7 && (pDominoParent->angle==0 || pDominoParent->angle==180) )) ||
                     (coteB && (pDominoEnfant->cote1+pDominoEnfant->cote2==0 && (pDominoParent->angle==0 || pDominoParent->angle==180) )) )
                 {
-                    std::cout<<"Boom boom"<<std::endl;
+
                     if((pDominoEnfant->cote1 + pDominoEnfant->cote2 ==7  ||
                        pDominoEnfant->cote1 + pDominoEnfant->cote2 ==0) &&
                        (pDominoParent->cote1+pDominoParent->angle==0.f || pDominoParent->cote1+pDominoParent->angle==180.f))
@@ -1209,8 +1213,7 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                     else
                     {
                         if((pDominoParent->cote1 + pDominoParent->cote2==7 ||
-                           pDominoParent->cote1 + pDominoParent->cote2==0) &&
-                           pDominoParent->cote1 + pDominoParent->angle==90.f)
+                           pDominoParent->cote1 + pDominoParent->cote2==0) && pDominoParent->angle==90.f)
                         {
                             if(pDominoEnfant->cote1==0)
                             {
@@ -1228,20 +1231,17 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                         }
                         else
                         {
-                            if( (pDominoEnfant->cote1+pDominoParent->cote1==7 && pDominoParent->angle==180.f) ||
-                               (pDominoEnfant->cote1+pDominoParent->cote1==0 && pDominoParent->angle==180.f) )
+                            if( (pDominoEnfant->cote1+pDominoParent->cote1==7 && pDominoParent->angle==180.f) )
                             {
                                 pDominoEnfant->angle=0.f;
                                 pDominoEnfant->sDomino.setRotation(0.f);
                             }
-                            else if( (pDominoEnfant->cote2+pDominoParent->cote2==7 && pDominoParent->angle==0.f) ||
-                                    (pDominoEnfant->cote2+pDominoParent->cote2==0 && pDominoParent->angle==0.f) )
+                            else if( (pDominoEnfant->cote2+pDominoParent->cote2==7 && pDominoParent->angle==0.f) )
                             {
                                 pDominoEnfant->angle=180.f;
                                 pDominoEnfant->sDomino.setRotation(180.f);
                             }
-                            else if( (pDominoEnfant->cote1+pDominoParent->cote2==7 && pDominoParent->angle==0.f) ||
-                                    (pDominoEnfant->cote1+pDominoParent->cote2==0 && pDominoParent->angle==0.f) )
+                            else if( (pDominoEnfant->cote1+pDominoParent->cote2==7 && pDominoParent->angle==0.f) )
                             {
                                 pDominoEnfant->angle=0.f;
                                 pDominoEnfant->sDomino.setRotation(0.f);
@@ -1296,7 +1296,6 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
     {
 
     }
-
 
     return placerDPossible;
 }

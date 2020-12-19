@@ -348,6 +348,14 @@ void Animations::gestionAnimation()
                 m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.erase(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.begin()+commpt);
                 m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).piocherD=false;
                 commpt+=100;
+
+
+                //tester si on pourra jouer le domino piocher
+                int dernEl=m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).vecDominos.size()-1;
+                if(m_pDecor->getJoueur().coupPossible(HUMAIN,*m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).vecDominos.at(dernEl)))
+                {
+                    m_animPiocheC=true;
+                }
             }
             commpt++;
         }
@@ -402,16 +410,25 @@ void Animations::gestionAnimation()
             {
                 piocher=false;
                 attente=false;
-                //laMain=true;
-                //laMainBot=false;
+
                 m_animJoueur2P=false;
                 m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->selectionne=false;
+                m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).piocherD=false;
 
                 //on met le domino dans le vecteur du vecJoueurs correspondant
                 m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.push_back(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt));
                 m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.erase(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.begin()+commpt);
-                m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).piocherD=false;
+
                 commpt+=100;
+
+                //tester si on pourra jouer le domino piocher
+                int dernEl=m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.size()-1;
+                if(m_pDecor->getJoueur().coupPossible(CPU,*m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.at(dernEl)))
+                {
+                    m_animPiocheC=true;
+                    laMain=true;
+                    laMainBot=false;
+                }
             }
             commpt++;
         }
