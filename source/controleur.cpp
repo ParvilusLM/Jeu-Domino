@@ -11,7 +11,7 @@ Controleur::Controleur(sf::RenderWindow& fenetre):m_decor(0),m_animations(0)
 void Controleur::debutJeu()
 {
     //reinit les variables globales correspondantes
-    laMain=true;
+    laMain=false;
     laMainBot=false;
     animAActiver=AUCUNE_ANIMATION;
     piocher=false;

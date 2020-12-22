@@ -127,6 +127,8 @@ void Animations::gestionAnimation()
             m_pDecor->getJoueur().changementEchelleD(DOMINOS_JOUEUR1,augmenteScale);
             m_pDecor->getJoueur().changementEchelleD(DOMINOS_JOUEUR2,augmenteScale);
             m_animPiocheC=true;
+            m_animJoueur1C=true;
+            m_animJoueur2C=true;
             std::cout<<"Fin animDistribution"<<std::endl;
         }
     }
@@ -150,6 +152,11 @@ void Animations::gestionAnimation()
         {
             attente=false;
             m_animJoueur1C=false;
+            if(!laMain && laMainBot)
+            {
+                attente=true;
+                m_animJoueur2V=true;
+            }
             std::cout<<"Fin animJoueur1C"<<std::endl;
         }
 
@@ -173,6 +180,11 @@ void Animations::gestionAnimation()
         {
             attente=false;
             m_animJoueur1V=false;
+            if(laMain && !laMainBot)
+            {
+                attente=true;
+                m_animJoueur2C=true;
+            }
             std::cout<<"Fin animJoueur1V"<<std::endl;
         }
     }
@@ -249,6 +261,11 @@ void Animations::gestionAnimation()
         {
             attente=false;
             m_animJoueur2C=false;
+            if(laMain && !laMainBot)
+            {
+                attente=true;
+                m_animJoueur1V=true;
+            }
             std::cout<<"Fin animJoueur2C"<<std::endl;
         }
 
@@ -272,6 +289,11 @@ void Animations::gestionAnimation()
         {
             attente=false;
             m_animJoueur2V=false;
+            if(!laMain && laMainBot)
+            {
+                attente=true;
+                m_animJoueur1C=true;
+            }
             std::cout<<"Fin animJoueur2V"<<std::endl;
         }
 
@@ -292,7 +314,6 @@ void Animations::gestionAnimation()
 
     if(m_animJoueur1P)
     {
-        std::cout<<"animation Pioche Joueur1"<<std::endl;
         int commpt=0;
         while(commpt<m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.size())
         {
@@ -355,6 +376,7 @@ void Animations::gestionAnimation()
                 if(m_pDecor->getJoueur().coupPossible(HUMAIN,*m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).vecDominos.at(dernEl)))
                 {
                     m_animPiocheC=true;
+                    attente=true;
                 }
             }
             commpt++;
@@ -363,7 +385,6 @@ void Animations::gestionAnimation()
 
     if(m_animJoueur2P)
     {
-        std::cout<<"animation Pioche Joueur2"<<std::endl;
         int commpt=0;
         while(commpt<m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.size())
         {

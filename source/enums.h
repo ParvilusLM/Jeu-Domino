@@ -37,6 +37,8 @@ struct PlateauJeu
     int typeJeu;
     int niveauJeu;
 
+    //detecteurs de collisions bords
+    sf::FloatRect detecteurG,detecteurD,detecteurH,detecteurB;
 };
 
 enum
