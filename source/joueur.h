@@ -37,6 +37,11 @@ public:
 
     void gestMaj();
 
+    //gestion type de jeu Memory
+    void selectionDominoTMem(int joueur);
+    void gestionSelectionDom();
+
+
     void affichePartie();
     void afficheBouton();
 

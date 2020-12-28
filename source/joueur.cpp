@@ -210,7 +210,7 @@ void Joueur::piocherDomino(int joueur)
                 m_plateauJeu.vecDominosAP.at(compt)->scale=m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicDernEl)->scale;
                 m_plateauJeu.vecDominosAP.at(compt)->sDomino.setScale(m_plateauJeu.vecDominosAP.at(compt)->scale);
 
-                animAActiver=ANIM_JOUEUR1_P;
+                animAActiver.push_back(ANIM_JOUEUR1_P);
                 attente=true;
 
             }
@@ -478,156 +478,156 @@ bool Joueur::coupPossible(int joueur, ElDomino& domino)
         int compt2=0;
         while(compt2<m_plateauJeu.vecDominosAuBord.size())
         {
-        if(m_plateauJeu.vecDominosAuBord.at(compt2)->angle==0)
-        {
-            if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheGP)
+            if(m_plateauJeu.vecDominosAuBord.at(compt2)->angle==0)
             {
-                if(domino.cote1==0 || domino.cote2==0)
+                if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheGP)
                 {
-                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
-                    possible=true;
+                    if(domino.cote1==0 || domino.cote2==0)
+                    {
+                        m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
+                        possible=true;
+                    }
+                }
+
+                if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheDP)
+                {
+                    if(domino.cote1==0 || domino.cote2==0)
+                    {
+                        m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
+                        possible=true;
+                    }
+                }
+
+                if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheHP)
+                {
+                    if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
+                       domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
+                       domino.cote1+domino.cote2==7 ||
+                       domino.cote1+domino.cote2==0)
+                    {
+                        m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
+                        possible=true;
+                    }
+                }
+
+                if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheBP)
+                {
+                    if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
+                       domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
+                       domino.cote1+domino.cote2==7 ||
+                       domino.cote1+domino.cote2==0)
+                    {
+                        m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
+                        possible=true;
+                    }
+                }
+
+            }
+            else if(m_plateauJeu.vecDominosAuBord.at(compt2)->angle==-90)
+            {
+                if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheGP)
+                {
+                    if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
+                       domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
+                       domino.cote1+domino.cote2==7 ||
+                       domino.cote1+domino.cote2==0)
+                    {
+                        m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
+                        possible=true;
+                    }
+                }
+
+                if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheDP)
+                {
+                    if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
+                       domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
+                       domino.cote1+domino.cote2==7 ||
+                       domino.cote1+domino.cote2==0)
+                    {
+                        m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
+                        possible=true;
+                    }
+                }
+
+            }
+            else if(m_plateauJeu.vecDominosAuBord.at(compt2)->angle==90)
+            {
+                if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheGP)
+                {
+                    if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
+                       domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
+                       domino.cote1+domino.cote2==7 ||
+                       domino.cote1+domino.cote2==0)
+                    {
+                        m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
+                        possible=true;
+                    }
+                }
+
+                if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheDP)
+                {
+                    if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
+                       domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
+                       domino.cote1+domino.cote2==7 ||
+                       domino.cote1+domino.cote2==0)
+                    {
+                        m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
+                        possible=true;
+                    }
+                }
+
+                if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheHP)
+                {
+                    if(domino.cote1==0 || domino.cote2==0)
+                    {
+                        m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
+                        possible=true;
+                    }
+                }
+
+                if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheBP)
+                {
+                    if(domino.cote1==0 || domino.cote2==0)
+                    {
+                        m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
+                        possible=true;
+                    }
+                }
+
+            }
+            else if(m_plateauJeu.vecDominosAuBord.at(compt2)->angle==180)
+            {
+                if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheHP)
+                {
+                    if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
+                       domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
+                       domino.cote1+domino.cote2==7 ||
+                       domino.cote1+domino.cote2==0)
+                    {
+                        m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
+                        possible=true;
+                    }
+                }
+
+                if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheBP)
+                {
+                    if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
+                       domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
+                       domino.cote1+domino.cote2==7 ||
+                       domino.cote1+domino.cote2==0)
+                    {
+                        m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
+                        possible=true;
+                    }
                 }
             }
-
-            if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheDP)
+            else
             {
-                if(domino.cote1==0 || domino.cote2==0)
-                {
-                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
-                    possible=true;
-                }
+
             }
 
-            if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheHP)
-            {
-                if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
-                   domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
-                   domino.cote1+domino.cote2==7 ||
-                   domino.cote1+domino.cote2==0)
-                {
-                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
-                    possible=true;
-                }
-            }
-
-            if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheBP)
-            {
-                if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
-                   domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
-                   domino.cote1+domino.cote2==7 ||
-                   domino.cote1+domino.cote2==0)
-                {
-                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
-                    possible=true;
-                }
-            }
-
+            compt2++;
         }
-        else if(m_plateauJeu.vecDominosAuBord.at(compt2)->angle==-90)
-        {
-            if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheGP)
-            {
-                if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
-                   domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
-                   domino.cote1+domino.cote2==7 ||
-                   domino.cote1+domino.cote2==0)
-                {
-                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
-                    possible=true;
-                }
-            }
-
-            if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheDP)
-            {
-                if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
-                   domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
-                   domino.cote1+domino.cote2==7 ||
-                   domino.cote1+domino.cote2==0)
-                {
-                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
-                    possible=true;
-                }
-            }
-
-        }
-        else if(m_plateauJeu.vecDominosAuBord.at(compt2)->angle==90)
-        {
-            if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheGP)
-            {
-                if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
-                   domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
-                   domino.cote1+domino.cote2==7 ||
-                   domino.cote1+domino.cote2==0)
-                {
-                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
-                    possible=true;
-                }
-            }
-
-            if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheDP)
-            {
-                if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
-                   domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
-                   domino.cote1+domino.cote2==7 ||
-                   domino.cote1+domino.cote2==0)
-                {
-                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
-                    possible=true;
-                }
-            }
-
-            if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheHP)
-            {
-                if(domino.cote1==0 || domino.cote2==0)
-                {
-                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
-                    possible=true;
-                }
-            }
-
-            if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheBP)
-            {
-                if(domino.cote1==0 || domino.cote2==0)
-                {
-                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
-                    possible=true;
-                }
-            }
-
-        }
-        else if(m_plateauJeu.vecDominosAuBord.at(compt2)->angle==180)
-        {
-            if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheHP)
-            {
-                if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
-                   domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote2==7 ||
-                   domino.cote1+domino.cote2==7 ||
-                   domino.cote1+domino.cote2==0)
-                {
-                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
-                    possible=true;
-                }
-            }
-
-            if(m_plateauJeu.vecDominosAuBord.at(compt2)->attacheBP)
-            {
-                if(domino.cote1+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
-                   domino.cote2+m_plateauJeu.vecDominosAuBord.at(compt2)->cote1==7 ||
-                   domino.cote1+domino.cote2==7 ||
-                   domino.cote1+domino.cote2==0)
-                {
-                    m_vecDominoABouger.insert(m_vecDominoABouger.end(),m_plateauJeu.vecDominosAuBord.at(compt2)->noDomino);
-                    possible=true;
-                }
-            }
-        }
-        else
-        {
-
-        }
-
-        compt2++;
-    }
     }
     else
     {
@@ -1523,13 +1523,17 @@ void Joueur::glisserDeposerD(int action)
 
                 }
 
-                if(glisser){
-                    deposer=false;
-                }
-                else{
+
+                if(!glisser && !deposer)
+                {
                     laMain=false;
                     laMainBot=true;
                 }
+                else
+                {
+                    deposer=false;
+                }
+
 
             }
             indicEl--;
@@ -1653,36 +1657,79 @@ void Joueur::gestMaj()
 {
     gestBouton();
 
+
     //determiner qui doit jouer avant
-    if(!laMain && !laMainBot && !attente)
+    if(!laMain && !laMainBot && !attente && m_plateauJeu.typeJeu!=TJ_MEMORY)
     {
+        std::cout<<"Entree zone de determination qui va jouer avant"<<std::endl;
         bool aucun=true;
 
         int compt=0;
-        while(compt<2)
+        while(compt<2 && aucun)
         {
             int compt2=0;
-            while(compt2<m_plateauJeu.vecJoueurs.at(compt).vecDominos.size())
+            while(compt2<m_plateauJeu.vecJoueurs.at(compt).vecDominos.size() && aucun)
             {
-                if(coupPossible(compt,*m_plateauJeu.vecJoueurs.at(compt).vecDominos.at(compt2)))
+                if(m_plateauJeu.typeJeu==TJ_CLASSIQUE)
                 {
                     aucun=false;
-                    if(compt==HUMAIN)
+                    laMain=true;
+                    attente=true;
+                    animAActiver.push_back(ANIM_JOUEUR1_V);
+                    animAActiver.push_back(ANIM_JOUEUR2_C);
+                }
+                else if(m_plateauJeu.typeJeu==TJ_5PARTOUT)
+                {
+                    if(m_plateauJeu.vecJoueurs.at(compt).vecDominos.at(compt2)->cote1==
+                       m_plateauJeu.vecJoueurs.at(compt).vecDominos.at(compt2)->cote2)
                     {
-                        laMain=true;
-                        attente=true;
-                        animAActiver=ANIM_JOUEUR1_V;
-                    }
-                    else
-                    {
-                        laMainBot=true;
-                        attente=true;
-                        animAActiver=ANIM_JOUEUR2_V;
+                        aucun=false;
+                        if(compt==HUMAIN)
+                        {
+                            laMain=true;
+                            attente=true;
+                            animAActiver.push_back(ANIM_JOUEUR1_V);
+                            animAActiver.push_back(ANIM_JOUEUR2_C);
+                        }
+                        else
+                        {
+                            laMainBot=true;
+                            attente=true;
+                            animAActiver.push_back(ANIM_JOUEUR2_V);
+                            animAActiver.push_back(ANIM_JOUEUR1_C);
+                        }
                     }
 
-                    compt2=100;
-                    compt=100;
                 }
+                else if(m_plateauJeu.typeJeu==TJ_MATADOR)
+                {
+                    if(m_plateauJeu.vecJoueurs.at(compt).vecDominos.at(compt2)->cote1+m_plateauJeu.vecJoueurs.at(compt).vecDominos.at(compt2)->cote2==0 ||
+                       m_plateauJeu.vecJoueurs.at(compt).vecDominos.at(compt2)->cote1+m_plateauJeu.vecJoueurs.at(compt).vecDominos.at(compt2)->cote2==7)
+                    {
+                        aucun=false;
+                        attente=true;
+                        if(compt==HUMAIN)
+                        {
+                            laMain=true;
+
+                            animAActiver.push_back(ANIM_JOUEUR1_V);
+                            animAActiver.push_back(ANIM_JOUEUR2_C);
+                        }
+                        else
+                        {
+                            laMainBot=true;
+                            animAActiver.push_back(ANIM_JOUEUR2_V);
+                            animAActiver.push_back(ANIM_JOUEUR1_C);
+                        }
+
+                    }
+
+                }
+                else
+                {
+
+                }
+
                 compt2++;
             }
             compt++;
@@ -1690,12 +1737,16 @@ void Joueur::gestMaj()
 
         if(aucun)
         {
+            std::cout<<"Bow bow"<<std::endl;
             laMain=true;
             attente=true;
-            animAActiver=ANIM_JOUEUR1_V;
+            animAActiver.push_back(ANIM_JOUEUR1_V);
+            animAActiver.push_back(ANIM_JOUEUR2_C);
         }
+        std::cout<<"Sortie zone de determination qui va jouer avant"<<std::endl;
 
     }
+
 
     //
     if(!jeuPause && laMain && !laMainBot && !attente && !piocher)
@@ -1710,7 +1761,12 @@ void Joueur::gestMaj()
             glisserDeposerD(DEPOSER);
             arrangerDomino(CADRE_J1);
             attente=true;
-            animAActiver=ANIM_JOUEUR1_C;
+            if(laMainBot)
+            {
+                animAActiver.push_back(ANIM_JOUEUR1_C);
+                animAActiver.push_back(ANIM_JOUEUR2_V);
+            }
+
         }
 
     }
@@ -1745,7 +1801,8 @@ void Joueur::gestMaj()
 
                 arrangerDomino(CADRE_J2);
                 attente=true;
-                animAActiver=ANIM_JOUEUR2_C;
+                animAActiver.push_back(ANIM_JOUEUR2_C);
+                animAActiver.push_back(ANIM_JOUEUR1_V);
             }
             else
             {
@@ -1766,7 +1823,7 @@ void Joueur::gestMaj()
                     else
                     {
                         piocher=true;
-                        animAActiver=ANIM_PIOCHE_V;
+                        animAActiver.push_back(ANIM_PIOCHE_V);
                         m_plateauJeu.vecJoueurs.at(CPU).piocherD=true;
                         piocherDomino(CPU);
                         attente=true;

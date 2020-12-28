@@ -13,18 +13,24 @@ void Controleur::debutJeu()
     //reinit les variables globales correspondantes
     laMain=false;
     laMainBot=false;
-    animAActiver=AUCUNE_ANIMATION;
+    animAActiver.clear();
     piocher=false;
     glisser=false;
     deposer=false;
+
+    m_animations->miseEnArretAnim();
 
     //init plateauJeu de la classe Joueur
     m_decor->getJoueur().initPlateauJeu();
     m_decor->getJoueur().getPlateauJeu().typeJeu=m_decor->getMenu().getDonnees(0);
     m_decor->getJoueur().getPlateauJeu().niveauJeu=m_decor->getMenu().getDonnees(1);
 
-    m_animations->debuterAnim(ANIM_DISTRIBUTION);
-    attente=true;
+    if(m_decor->getMenu().getDonnees(0)!=TJ_MEMORY)
+    {
+        m_animations->debuterAnim(ANIM_DISTRIBUTION);
+        attente=true;
+    }
+
 }
 
 void Controleur::pauseJeu()
@@ -243,7 +249,7 @@ void Controleur::gestionMaJ()
                         piocher=true;
                         m_decor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).piocherD=true;
                         attente=true;
-                        animAActiver=ANIM_PIOCHE_V;
+                        animAActiver.push_back(ANIM_PIOCHE_V);
                     }
 
                 }
@@ -254,13 +260,20 @@ void Controleur::gestionMaJ()
     }
 
     //gestion animation
-    if(animAActiver!=AUCUNE_ANIMATION)
+    int commpt=0;
+    while(commpt<animAActiver.size())
     {
-        m_animations->debuterAnim(animAActiver);
-        animAActiver=AUCUNE_ANIMATION;
+        if(animAActiver.at(commpt)!=AUCUNE_ANIMATION)
+        {
+            m_animations->debuterAnim(animAActiver.at(commpt));
+
+        }
+        commpt++;
     }
 
-    if(jeuEnCours)
+    animAActiver.clear();
+
+    if(jeuEnCours && !jeuPause && !jeuFinPartie)
     {
         m_animations->gestMaJ();
     }

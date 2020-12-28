@@ -12,6 +12,6 @@ extern bool laMain, laMainBot;
 extern int sourisX,sourisY;
 extern bool glisser,deposer,piocher;
 extern sf::Vector2f posFinalD;
-extern int animAActiver;
+extern std::vector<int > animAActiver;
 extern bool attente;
 #endif // DEF_VARG

@@ -8,8 +8,8 @@ class Animations
 public:
     Animations(Decor& decor);
     void gestionAnimation();
-
     void debuterAnim(int typeAnim);
+    void miseEnArretAnim();
     void gestMaJ();
 
     ~Animations();
