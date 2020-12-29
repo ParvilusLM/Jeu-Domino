@@ -1462,6 +1462,7 @@ void Joueur::glisserDeposerD(int action)
     }
     else
     {
+
         int indicEl=m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size()-1;
         int compt=0;
         while(compt<m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size())
@@ -1539,6 +1540,8 @@ void Joueur::glisserDeposerD(int action)
             indicEl--;
             compt++;
         }
+
+
     }
 
 }
@@ -1653,6 +1656,45 @@ void Joueur::gestBouton()
     }
 }
 
+//gestion type de jeu Memory
+void Joueur::selectionDominoTMem(int joueur)
+{
+    if(joueur==HUMAIN)
+    {
+        int compt=0;
+        while(compt<m_plateauJeu.vecDominosAP.size())
+        {
+            if(collisionTS(m_plateauJeu.vecDominosAP.at(compt)->sDomino.getGlobalBounds()))
+            {
+                m_plateauJeu.vecDominosAP.at(compt)->selectionne=true;
+                m_plateauJeu.vecDominosAP.at(compt)->etat=VISIBLE;
+            }
+            compt++;
+        }
+    }
+    else
+    {
+        //selection
+        int compt=0;
+        int choix=rand()%m_plateauJeu.vecDominosAP.size();
+        m_plateauJeu.vecDominosAP.at(choix)->selectionne=true;
+        m_plateauJeu.vecDominosAP.at(choix)->etat=VISIBLE;
+    }
+}
+
+void Joueur::gestionSelectionDom()
+{
+    if(laMain)
+    {
+
+    }
+    else
+    {
+
+    }
+}
+
+//
 void Joueur::gestMaj()
 {
     gestBouton();
@@ -1746,75 +1788,122 @@ void Joueur::gestMaj()
         std::cout<<"Sortie zone de determination qui va jouer avant"<<std::endl;
 
     }
+    else if(!laMain && !laMainBot && !attente && m_plateauJeu.typeJeu==TJ_MEMORY)
+    {
+        laMain=true;
+        attente=true;
+        animAActiver.push_back(ANIM_JOUEUR1_V);
+        animAActiver.push_back(ANIM_JOUEUR2_C);
+    }
+    else
+    {
+
+    }
 
 
     //
-    if(!jeuPause && laMain && !laMainBot && !attente && !piocher)
+    if(m_plateauJeu.typeJeu!=TJ_MEMORY)
     {
-        if(glisser)
+        if(!jeuPause && laMain && !laMainBot && !attente && !piocher)
         {
-            glisserDeposerD(GLISSER);
-        }
-
-        if(deposer)
-        {
-            glisserDeposerD(DEPOSER);
-            arrangerDomino(CADRE_J1);
-            attente=true;
-            if(laMainBot)
+            if(glisser)
             {
-                animAActiver.push_back(ANIM_JOUEUR1_C);
-                animAActiver.push_back(ANIM_JOUEUR2_V);
+                glisserDeposerD(GLISSER);
             }
 
-        }
-
-    }
-    else if(!jeuPause && !laMain && laMainBot && !attente && !piocher)
-    {
-        if(m_plateauJeu.typeJeu!=TJ_MEMORY)
-        {
-            if(selectionDomino(CPU))
+            if(deposer)
             {
-                std::cout<<"Domino du Bot selection"<<std::endl;
-                int compt=0;
-                while(compt<m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size())
+                glisserDeposerD(DEPOSER);
+                arrangerDomino(CADRE_J1);
+                attente=true;
+                if(laMainBot)
                 {
-                    if(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->selectionne)
-                    {
-                        if(placerDomino(CPU,m_vecDominoABouger.at(0),compt) )
-                        {
-                            m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->selectionne=false;
-                            m_plateauJeu.vecDominosPoses.push_back(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt));
-
-                            int dernEl=m_plateauJeu.vecDominosPoses.size()-1;
-                            m_plateauJeu.vecDominosAuBord.push_back(m_plateauJeu.vecDominosPoses.at(dernEl));
-                            m_plateauJeu.vecJoueurs.at(CPU).vecDominos.erase(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.begin()+compt);
-
-                            laMain=true;
-                            laMainBot=false;
-                        }
-                        compt+=100;
-                    }
-                    compt++;
+                    animAActiver.push_back(ANIM_JOUEUR1_C);
+                    animAActiver.push_back(ANIM_JOUEUR2_V);
                 }
 
-                arrangerDomino(CADRE_J2);
-                attente=true;
-                animAActiver.push_back(ANIM_JOUEUR2_C);
-                animAActiver.push_back(ANIM_JOUEUR1_V);
             }
-            else
+
+        }
+        else if(!jeuPause && !laMain && laMainBot && !attente && !piocher)
+        {
+            if(m_plateauJeu.typeJeu!=TJ_MEMORY)
             {
-                if(m_plateauJeu.typeJeu==TJ_CLASSIQUE)
+                if(selectionDomino(CPU))
                 {
+                    std::cout<<"Domino du Bot selection"<<std::endl;
+                    if(m_plateauJeu.vecDominosPoses.size()!=0)
+                    {
+                        int compt=0;
+                        while(compt<m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size())
+                        {
+                            if(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->selectionne)
+                            {
+                                if(placerDomino(CPU,m_vecDominoABouger.at(0),compt) )
+                                {
+                                    m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->selectionne=false;
+                                    m_plateauJeu.vecDominosPoses.push_back(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt));
+
+                                    int dernEl=m_plateauJeu.vecDominosPoses.size()-1;
+                                    m_plateauJeu.vecDominosAuBord.push_back(m_plateauJeu.vecDominosPoses.at(dernEl));
+                                    m_plateauJeu.vecJoueurs.at(CPU).vecDominos.erase(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.begin()+compt);
+
+                                    laMain=true;
+                                    laMainBot=false;
+                                }
+                                compt+=100;
+                            }
+                            compt++;
+                        }
+
+                    }
+                    else
+                    {
+                        int indicEl=0;
+                        int comppt=0;
+                        while(comppt<m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size())
+                        {
+                            if(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(comppt)->selectionne)
+                            {
+                                indicEl=comppt;
+                            }
+
+                            comppt++;
+                        }
+
+
+                        if(m_plateauJeu.typeJeu==TJ_CLASSIQUE || m_plateauJeu.typeJeu==TJ_5PARTOUT)
+                        {
+                            if(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->cote1!=m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->cote2)
+                            {
+                                m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->angle=90;
+                                m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->sDomino.setRotation(90.f);
+                                m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->attacheHP=false;
+                                m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(indicEl)->attacheBP=false;
+                            }
+                        }
+
+                        m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(indicEl)->sDomino.setPosition(22.5f*20,17.5f*20);
+                        m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(indicEl)->selectionne=false;
+                        m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(indicEl)->auBord=true;
+
+                        m_plateauJeu.vecDominosPoses.insert(m_plateauJeu.vecDominosPoses.end(),m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(indicEl));
+                        m_plateauJeu.vecDominosAuBord.insert(m_plateauJeu.vecDominosAuBord.end(),m_plateauJeu.vecDominosPoses.at(0));
+                        m_plateauJeu.vecJoueurs.at(CPU).vecDominos.erase(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.begin()+indicEl);
+
+                    }
+
+                    arrangerDomino(CADRE_J2);
+                    attente=true;
+                    animAActiver.push_back(ANIM_JOUEUR2_C);
+                    animAActiver.push_back(ANIM_JOUEUR1_V);
+
                     laMain=true;
                     laMainBot=false;
-                    m_plateauJeu.vecJoueurs.at(CPU).pass=true;
                 }
                 else
                 {
-                    if(m_plateauJeu.vecDominosAP.size()==0)
+                    if(m_plateauJeu.typeJeu==TJ_CLASSIQUE)
                     {
                         laMain=true;
                         laMainBot=false;
@@ -1822,28 +1911,43 @@ void Joueur::gestMaj()
                     }
                     else
                     {
-                        piocher=true;
-                        animAActiver.push_back(ANIM_PIOCHE_V);
-                        m_plateauJeu.vecJoueurs.at(CPU).piocherD=true;
-                        piocherDomino(CPU);
-                        attente=true;
+                        if(m_plateauJeu.vecDominosAP.size()==0)
+                        {
+                            laMain=true;
+                            laMainBot=false;
+                            m_plateauJeu.vecJoueurs.at(CPU).pass=true;
+                        }
+                        else
+                        {
+                            piocher=true;
+                            animAActiver.push_back(ANIM_PIOCHE_V);
+                            m_plateauJeu.vecJoueurs.at(CPU).piocherD=true;
+                            piocherDomino(CPU);
+                            attente=true;
+                        }
+
                     }
 
                 }
+            }
+            else
+            {
 
             }
+
         }
         else
         {
 
         }
-
     }
     else
     {
+        //selectionDominoTMem(CPU);
 
+        //
+        //gestionSelectionDom();
     }
-
 
     //...
     if(finPartie())
