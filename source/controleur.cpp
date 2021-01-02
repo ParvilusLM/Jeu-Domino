@@ -17,20 +17,25 @@ void Controleur::debutJeu()
     piocher=false;
     glisser=false;
     deposer=false;
+    attente=false;
 
     m_animations->miseEnArretAnim();
 
     //init plateauJeu de la classe Joueur
-    m_decor->getJoueur().initPlateauJeu();
     m_decor->getJoueur().getPlateauJeu().typeJeu=m_decor->getMenu().getDonnees(0);
     m_decor->getJoueur().getPlateauJeu().niveauJeu=m_decor->getMenu().getDonnees(1);
+    m_decor->getJoueur().initPlateauJeu();
+
 
     if(m_decor->getMenu().getDonnees(0)!=TJ_MEMORY)
     {
         m_animations->debuterAnim(ANIM_DISTRIBUTION);
         attente=true;
     }
-
+    else
+    {
+        piocher=true;
+    }
 }
 
 void Controleur::pauseJeu()
@@ -235,6 +240,8 @@ void Controleur::gestionMaJ()
                     laMain=false;
                     laMainBot=true;
                     m_decor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).pass=true;
+                    animAActiver.push_back(ANIM_JOUEUR1_C);
+                    animAActiver.push_back(ANIM_JOUEUR2_V);
                 }
                 else
                 {
@@ -290,7 +297,15 @@ void Controleur::gestionMaJ()
 
 void Controleur::piocherD()
 {
-    m_decor->getJoueur().piocherDomino(HUMAIN);
+    if(m_decor->getMenu().getDonnees(0)!=TJ_MEMORY)
+    {
+        m_decor->getJoueur().piocherDomino(HUMAIN);
+    }
+    else
+    {
+        m_decor->getJoueur().selectionDominoTMem(HUMAIN);
+    }
+
 }
 
 void Controleur::afficheMenu()

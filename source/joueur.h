@@ -40,8 +40,10 @@ public:
     //gestion type de jeu Memory
     void selectionDominoTMem(int joueur);
     void gestionSelectionDom();
+    bool retardTraitement; //retarder les traitements des donnees dans la fonction -gestionSelectionDom()
 
 
+    //affichage
     void affichePartie();
     void afficheBouton();
 

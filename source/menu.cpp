@@ -717,46 +717,11 @@ int Menu::getDonnees(int donnees)
 {
     if(donnees==0)
     {
-        if(m_TypeJeuChoisi==TJ_CLASSIQUE)
-        {
-            return TJ_CLASSIQUE;
-        }
-        else if(m_TypeJeuChoisi==TJ_5PARTOUT)
-        {
-            return TJ_5PARTOUT;
-        }
-        else if(m_TypeJeuChoisi==TJ_MATADOR)
-        {
-            return TJ_MATADOR;
-        }
-        else if(m_TypeJeuChoisi==TJ_MEMORY)
-        {
-            return TJ_MEMORY;
-        }
-        else
-        {
-            return AUCUN_TJ;
-        }
-
+        return m_TypeJeuChoisi;
     }
     else
     {
-        if(m_NiveauChoisi==NIV_FACILE)
-        {
-            return NIV_FACILE;
-        }
-        else if(m_NiveauChoisi==NIV_MOYEN)
-        {
-            return NIV_MOYEN;
-        }
-        else if(m_NiveauChoisi==NIV_DIFFICILE)
-        {
-            return NIV_DIFFICILE;
-        }
-        else
-        {
-            return AUCUN_NIV;
-        }
+        return m_NiveauChoisi;
     }
 }
 
