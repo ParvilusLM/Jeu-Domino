@@ -8,6 +8,7 @@ Animations::Animations(Decor& decor):m_pDecor(0)
 
     m_timer=0.f;
     m_delai=0.001f;
+    m_vitesseAnim1=3.f;
 
 
 }
@@ -34,15 +35,25 @@ void Animations::gestionAnimation()
                 bool xFinal=false,yFinal=false;
                 if(compt==0)
                 {
-                    if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.getPosition().x != posReferenceJ1.x +(compt2*70) )
+                    sf::Sprite* dominoEnMouv=&m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino;
+                    if(dominoEnMouv->getPosition().x != posReferenceJ1.x +(compt2*70) )
                     {
-                        if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.getPosition().x > posReferenceJ1.x +(compt2*70))
+                        if(dominoEnMouv->getPosition().x > posReferenceJ1.x +(compt2*70))
                         {
-                            m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.move(-1.f,0);
+                            dominoEnMouv->move(-m_vitesseAnim1,0);
+
+                            if(dominoEnMouv->getPosition().x < posReferenceJ1.x +(compt2*70))
+                            {
+                                dominoEnMouv->setPosition(posReferenceJ1.x +(compt2*70),dominoEnMouv->getPosition().y);
+                            }
                         }
                         else
                         {
-                            m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.move(1.f,0);
+                            dominoEnMouv->move(m_vitesseAnim1,0);
+                            if(dominoEnMouv->getPosition().x > posReferenceJ1.x +(compt2*70))
+                            {
+                                dominoEnMouv->setPosition(posReferenceJ1.x +(compt2*70),dominoEnMouv->getPosition().y);
+                            }
                         }
 
                     }
@@ -52,9 +63,13 @@ void Animations::gestionAnimation()
                     }
 
 
-                    if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.getPosition().y != posReferenceJ1.y)
+                    if(dominoEnMouv->getPosition().y != posReferenceJ1.y)
                     {
-                        m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.move(0.f,1.f);
+                        dominoEnMouv->move(0.f,m_vitesseAnim1);
+                        if(dominoEnMouv->getPosition().y > posReferenceJ1.y)
+                        {
+                            dominoEnMouv->setPosition(dominoEnMouv->getPosition().x,posReferenceJ1.y);
+                        }
                     }
                     else
                     {
@@ -70,16 +85,25 @@ void Animations::gestionAnimation()
                 else
                 {
                     bool xFinal=false,yFinal=false;
+                    sf::Sprite* dominoEnMouv=&m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino;
 
-                    if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.getPosition().x != posReferenceJ2.x +(compt2*50) )
+                    if(dominoEnMouv->getPosition().x != posReferenceJ2.x +(compt2*50) )
                     {
-                        if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.getPosition().x > posReferenceJ2.x +(compt2*50))
+                        if(dominoEnMouv->getPosition().x > posReferenceJ2.x +(compt2*50))
                         {
-                            m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.move(-1.f,0);
+                            dominoEnMouv->move(-m_vitesseAnim1,0);
+                            if(dominoEnMouv->getPosition().x < posReferenceJ2.x +(compt2*50))
+                            {
+                                dominoEnMouv->setPosition(posReferenceJ2.x +(compt2*50),dominoEnMouv->getPosition().y);
+                            }
                         }
                         else
                         {
-                            m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.move(1.f,0);
+                            dominoEnMouv->move(m_vitesseAnim1,0);
+                            if(dominoEnMouv->getPosition().x > posReferenceJ2.x +(compt2*50))
+                            {
+                                dominoEnMouv->setPosition(posReferenceJ2.x +(compt2*50),dominoEnMouv->getPosition().y);
+                            }
                         }
 
                     }
@@ -88,9 +112,13 @@ void Animations::gestionAnimation()
                         xFinal=true;
                     }
 
-                    if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.getPosition().y != posReferenceJ2.y)
+                    if(dominoEnMouv->getPosition().y != posReferenceJ2.y)
                     {
-                        m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(compt).vecDominos.at(compt2)->sDomino.move(0.f,-1.f);
+                        dominoEnMouv->move(0.f,-m_vitesseAnim1);
+                        if(dominoEnMouv->getPosition().y < posReferenceJ2.y)
+                        {
+                            dominoEnMouv->setPosition(dominoEnMouv->getPosition().x,posReferenceJ2.y);
+                        }
                     }
                     else
                     {
@@ -176,12 +204,12 @@ void Animations::gestionAnimation()
         //deplacer le support et les dominos du vector vecDominosAP vers le bas
         if(m_pDecor->getJoueur().getPlateauJeu().sCadreDAP.getPosition().y < 700)
         {
-            m_pDecor->getJoueur().getPlateauJeu().sCadreDAP.move(0,1.f);
+            m_pDecor->getJoueur().getPlateauJeu().sCadreDAP.move(0,m_vitesseAnim1);
 
             int compt=0;
             while(compt < m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.size())
             {
-                m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(compt)->sDomino.move(0,1.f);
+                m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(compt)->sDomino.move(0,m_vitesseAnim1);
                 compt++;
             }
         }
@@ -199,12 +227,12 @@ void Animations::gestionAnimation()
     {
         if(m_pDecor->getJoueur().getPlateauJeu().sCadreDAP.getPosition().y > 25*20)
         {
-            m_pDecor->getJoueur().getPlateauJeu().sCadreDAP.move(0,-1.f);
+            m_pDecor->getJoueur().getPlateauJeu().sCadreDAP.move(0,-m_vitesseAnim1);
 
             int compt=0;
             while(compt < m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.size())
             {
-                m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(compt)->sDomino.move(0,-1.f);
+                m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(compt)->sDomino.move(0,-m_vitesseAnim1);
                 compt++;
             }
         }
@@ -425,6 +453,7 @@ void Animations::gestionAnimation()
 
     if(m_animJoueur1P2)
     {
+        //
 
     }
 

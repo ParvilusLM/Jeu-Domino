@@ -22,6 +22,7 @@ private:
     sf::Clock m_horlorge;
     float m_timer;
     float m_delai;
+    float m_vitesseAnim1;
 
 
 };

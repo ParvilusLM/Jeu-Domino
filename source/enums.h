@@ -120,7 +120,8 @@ enum
 {
     SON_BCLIK,
     SON_AUTORISE,
-    SON_INTERDIT
+    SON_INTERDIT,
+    SON_MUSIQUE
 };
 
 enum TypeJeuChoisi

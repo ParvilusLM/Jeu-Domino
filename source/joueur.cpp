@@ -1376,6 +1376,39 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
 
     }
 
+    //replacer le domino qu'on vient d'attacher aux autres s'il atteigne les cotes
+    ElDomino* pDominoE=m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE);
+
+    if(placerDPossible)
+    {
+        if(m_plateauJeu.detecteurG.intersects(pDominoE->sDomino.getGlobalBounds()) )
+        {
+            if(pDominoE->angle==0)
+            {
+
+            }
+            else if(pDominoE->angle==90)
+            {
+
+            }
+            else if(pDominoE->angle==-90)
+            {
+
+            }
+            else{}
+
+        }
+        else if(m_plateauJeu.detecteurD.intersects(pDominoE->sDomino.getGlobalBounds()) )
+        {
+
+        }
+        else if()
+        {
+
+        }
+    }
+
+
     return placerDPossible;
 }
 

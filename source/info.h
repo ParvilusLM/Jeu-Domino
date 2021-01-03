@@ -28,7 +28,7 @@ private:
     sf::RenderWindow* m_fenetre;
 
     //info joueur1
-    sf::Text
+    //sf::Text
 
 
     //info joueur2
