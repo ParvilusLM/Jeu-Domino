@@ -277,8 +277,6 @@ void Joueur::piocherDomino(int joueur)
         m_plateauJeu.vecDominosAP.at(dominoChoisit)->selectionne=true;
         m_plateauJeu.vecDominosAP.at(dominoChoisit)->etat=VISIBLE;
 
-        gestTextureD();
-
 
         //on determine la position que doit prendre le domino dans le cadre du joueur
         int indicDernEl=m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size()-1;
@@ -1385,15 +1383,26 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
         {
             if(pDominoE->angle==0)
             {
-
+                pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width,-(pDominoE->sDomino.getGlobalBounds().height/2)-(pDominoE->sDomino.getGlobalBounds().width/2) );
+                pDominoE->attacheGP=false;
+                pDominoE->attacheHP=true;
             }
             else if(pDominoE->angle==90)
             {
+                pDominoE->angle=180;
+                pDominoE->sDomino.setRotation(pDominoE->angle);
+                pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width/2,-(pDominoE->sDomino.getGlobalBounds().width/2) );
+                pDominoE->attacheGP=false;
+                pDominoE->attacheHP=true;
 
             }
             else if(pDominoE->angle==-90)
             {
-
+                pDominoE->angle=0;
+                pDominoE->sDomino.setRotation(pDominoE->angle);
+                pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width/2,-(pDominoE->sDomino.getGlobalBounds().width/2) );
+                pDominoE->attacheGP=false;
+                pDominoE->attacheHP=true;
             }
             else{}
 
@@ -1402,10 +1411,15 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
         {
 
         }
-        else if()
+        else if(m_plateauJeu.detecteurH.intersects(pDominoE->sDomino.getGlobalBounds()))
         {
 
         }
+        else if(m_plateauJeu.detecteurB.intersects(pDominoE->sDomino.getGlobalBounds()))
+        {
+
+        }
+        else{}
     }
 
 
@@ -1679,6 +1693,11 @@ bool Joueur::finPartie()
     if(m_plateauJeu.typeJeu==TJ_CLASSIQUE || m_plateauJeu.typeJeu==TJ_5PARTOUT || m_plateauJeu.typeJeu==TJ_MATADOR)
     {
         if(aucunDJ1 || aucunDJ2)
+        {
+            termine=true;
+        }
+
+        if(m_plateauJeu.vecJoueurs.at(HUMAIN).pass && m_plateauJeu.vecJoueurs.at(HUMAIN).pass)
         {
             termine=true;
         }
@@ -2017,10 +2036,7 @@ void Joueur::gestMaj()
         animAActiver.push_back(ANIM_JOUEUR1_V);
         animAActiver.push_back(ANIM_JOUEUR2_C);
     }
-    else
-    {
-
-    }
+    else{}
 
 
     //...

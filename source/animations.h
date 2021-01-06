@@ -23,6 +23,7 @@ private:
     float m_timer;
     float m_delai;
     float m_vitesseAnim1;
+    float m_tempsEcoule;
 
 
 };

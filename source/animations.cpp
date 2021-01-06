@@ -7,14 +7,17 @@ Animations::Animations(Decor& decor):m_pDecor(0)
     miseEnArretAnim();
 
     m_timer=0.f;
-    m_delai=0.001f;
-    m_vitesseAnim1=3.f;
+    m_delai=0.01f;
+    m_tempsEcoule=0;
+    m_vitesseAnim1=0;
 
 
 }
 
 void Animations::gestionAnimation()
 {
+    m_vitesseAnim1=m_tempsEcoule*60.f;
+
     if(m_animDistrib)
     {
         sf::Vector2f posReferenceJ1,posReferenceJ2;
@@ -513,9 +516,9 @@ void Animations::debuterAnim(int typeAnim)
 
 void Animations::gestMaJ()
 {
-    float tempsEcoule =m_horlorge.getElapsedTime().asSeconds();
+    m_tempsEcoule =m_horlorge.getElapsedTime().asSeconds();
     m_horlorge.restart();
-    m_timer+=tempsEcoule;
+    m_timer+=m_tempsEcoule;
 
     if(m_animDistrib || m_animJoueur1C || m_animJoueur1V || m_animJoueur2C || m_animJoueur2V || m_animPiocheC ||
        m_animPiocheV || m_animJoueur2Coup || m_animJoueur1P || m_animJoueur2P || m_animJoueur1P2 || m_animJoueur2P2)
