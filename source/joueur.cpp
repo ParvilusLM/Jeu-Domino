@@ -1374,7 +1374,17 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
 
     }
 
-    //replacer le domino qu'on vient d'attacher aux autres s'il atteigne les cotes
+    //...replacer le domino qu'on vient d'attacher aux autres s'il atteigne les cotes...//
+
+    int angleDominoP=0;
+    for(int commp=0;commp<m_plateauJeu.vecDominosPoses.size();commp++)
+    {
+        if(m_plateauJeu.vecDominosPoses.at(commp)->noDomino==noDominoP)
+        {
+            angleDominoP=m_plateauJeu.vecDominosPoses.at(commp)->angle;
+        }
+    }
+
     ElDomino* pDominoE=m_plateauJeu.vecJoueurs.at(noJoueur).vecDominos.at(noDominoE);
 
     if(placerDPossible)
@@ -1383,7 +1393,8 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
         {
             if(pDominoE->angle==0)
             {
-                pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width,-(pDominoE->sDomino.getGlobalBounds().height/2)-(pDominoE->sDomino.getGlobalBounds().width/2) );
+                pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width,
+                                       -(pDominoE->sDomino.getGlobalBounds().height/2)-(pDominoE->sDomino.getGlobalBounds().width/2) );
                 pDominoE->attacheGP=false;
                 pDominoE->attacheHP=true;
             }
@@ -1391,7 +1402,19 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
             {
                 pDominoE->angle=180;
                 pDominoE->sDomino.setRotation(pDominoE->angle);
-                pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width/2,-(pDominoE->sDomino.getGlobalBounds().width/2) );
+
+                if(angleDominoP==0)
+                {
+                    pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width+(pDominoE->sDomino.getGlobalBounds().width/2),
+                                           -(pDominoE->sDomino.getGlobalBounds().height) );
+                }
+                else
+                {
+                    pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width+(pDominoE->sDomino.getGlobalBounds().width/2),
+                                           -pDominoE->sDomino.getGlobalBounds().width-(pDominoE->sDomino.getGlobalBounds().width/2) );
+                }
+
+
                 pDominoE->attacheGP=false;
                 pDominoE->attacheHP=true;
 
@@ -1400,7 +1423,18 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
             {
                 pDominoE->angle=0;
                 pDominoE->sDomino.setRotation(pDominoE->angle);
-                pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width/2,-(pDominoE->sDomino.getGlobalBounds().width/2) );
+
+                if(angleDominoP==0)
+                {
+                    pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width+(pDominoE->sDomino.getGlobalBounds().width/2),
+                                           -(pDominoE->sDomino.getGlobalBounds().height) );
+                }
+                else
+                {
+                    pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width+(pDominoE->sDomino.getGlobalBounds().width/2),
+                                           -pDominoE->sDomino.getGlobalBounds().width-(pDominoE->sDomino.getGlobalBounds().width/2) );
+                }
+
                 pDominoE->attacheGP=false;
                 pDominoE->attacheHP=true;
             }
@@ -1409,15 +1443,169 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
         }
         else if(m_plateauJeu.detecteurD.intersects(pDominoE->sDomino.getGlobalBounds()) )
         {
+            if(pDominoE->angle==0)
+            {
+                pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().width,
+                                       +(pDominoE->sDomino.getGlobalBounds().height/2)+(pDominoE->sDomino.getGlobalBounds().width/2) );
+                pDominoE->attacheDP=false;
+                pDominoE->attacheBP=true;
+            }
+            else if(pDominoE->angle==90)
+            {
+                pDominoE->angle=180;
+                pDominoE->sDomino.setRotation(pDominoE->angle);
+
+                if(angleDominoP==0)
+                {
+                    pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().width-(pDominoE->sDomino.getGlobalBounds().width/2),
+                                           +pDominoE->sDomino.getGlobalBounds().height );
+                }
+                else
+                {
+                    pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().width-(pDominoE->sDomino.getGlobalBounds().width/2),
+                                           +pDominoE->sDomino.getGlobalBounds().width+(pDominoE->sDomino.getGlobalBounds().width/2) );
+                }
+
+
+                pDominoE->attacheDP=false;
+                pDominoE->attacheBP=true;
+
+            }
+            else if(pDominoE->angle==-90)
+            {
+                pDominoE->angle=0;
+                pDominoE->sDomino.setRotation(pDominoE->angle);
+
+                if(angleDominoP==0)
+                {
+                    pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().width-(pDominoE->sDomino.getGlobalBounds().width/2),
+                                           +pDominoE->sDomino.getGlobalBounds().height );
+                }
+                else
+                {
+                    pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().width-(pDominoE->sDomino.getGlobalBounds().width/2),
+                                           +pDominoE->sDomino.getGlobalBounds().width+(pDominoE->sDomino.getGlobalBounds().width/2) );
+                }
+
+                pDominoE->attacheDP=false;
+                pDominoE->attacheBP=true;
+            }
+            else{}
 
         }
         else if(m_plateauJeu.detecteurH.intersects(pDominoE->sDomino.getGlobalBounds()))
         {
+            if(pDominoE->angle==0)
+            {
+                pDominoE->angle=90;
+                pDominoE->sDomino.setRotation(pDominoE->angle);
 
+                if(angleDominoP==90)
+                {
+                    pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width,
+                                           +pDominoE->sDomino.getGlobalBounds().height+(pDominoE->sDomino.getGlobalBounds().height/2) );
+                }
+                else
+                {
+                    pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().height+(pDominoE->sDomino.getGlobalBounds().height/2),
+                                           +pDominoE->sDomino.getGlobalBounds().height+(pDominoE->sDomino.getGlobalBounds().height/2));
+                }
+
+                pDominoE->attacheHP=false;
+                pDominoE->attacheDP=true;
+
+            }
+            else if(pDominoE->angle==180)
+            {
+                pDominoE->angle=-90;
+                pDominoE->sDomino.setRotation(pDominoE->angle);
+
+                if(angleDominoP==90)
+                {
+                    pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width,
+                                           +pDominoE->sDomino.getGlobalBounds().height+(pDominoE->sDomino.getGlobalBounds().height/2) );
+                }
+                else
+                {
+                    pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().height+(pDominoE->sDomino.getGlobalBounds().height/2),
+                                           pDominoE->sDomino.getGlobalBounds().height+(pDominoE->sDomino.getGlobalBounds().height/2) );
+                }
+
+                pDominoE->attacheHP=false;
+                pDominoE->attacheDP=true;
+            }
+            else if(pDominoE->angle==90)
+            {
+                if(m_plateauJeu.typeJeu==TJ_MATADOR)
+                {
+                    pDominoE->angle=0;
+                    pDominoE->sDomino.setRotation(pDominoE->angle);
+
+                    pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width+(pDominoE->sDomino.getGlobalBounds().width/2),
+                                        +pDominoE->sDomino.getGlobalBounds().width );
+                }
+                else
+                {
+                    pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().height+(pDominoE->sDomino.getGlobalBounds().height/2),
+                                        +pDominoE->sDomino.getGlobalBounds().height );
+                }
+
+
+                pDominoE->attacheHP=false;
+                pDominoE->attacheDP=true;
+            }
+            else{}
         }
         else if(m_plateauJeu.detecteurB.intersects(pDominoE->sDomino.getGlobalBounds()))
         {
+            if(pDominoE->angle==0)
+            {
+                pDominoE->angle=90;
+                pDominoE->sDomino.setRotation(pDominoE->angle);
 
+                if(angleDominoP==90)
+                {
+                    pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().height,
+                                           -pDominoE->sDomino.getGlobalBounds().width-(pDominoE->sDomino.getGlobalBounds().width/2) );
+                }
+                else
+                {
+                    pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().width-(pDominoE->sDomino.getGlobalBounds().width/2),
+                                           -pDominoE->sDomino.getGlobalBounds().height );
+                }
+
+                pDominoE->attacheBP=false;
+                pDominoE->attacheGP=true;
+
+            }
+            else if(pDominoE->angle==180)
+            {
+                pDominoE->angle=-90;
+                pDominoE->sDomino.setRotation(pDominoE->angle);
+
+                if(angleDominoP==90)
+                {
+                    pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().height,
+                                           -pDominoE->sDomino.getGlobalBounds().width-(pDominoE->sDomino.getGlobalBounds().width/2) );
+                }
+                else
+                {
+                    pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().width-(pDominoE->sDomino.getGlobalBounds().width/2),
+                                           -pDominoE->sDomino.getGlobalBounds().height );
+                }
+
+                pDominoE->attacheBP=false;
+                pDominoE->attacheGP=true;
+            }
+            else if(pDominoE->angle==90)
+            {
+                pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().width-(pDominoE->sDomino.getGlobalBounds().width/2),
+                                        -pDominoE->sDomino.getGlobalBounds().width );
+
+                pDominoE->attacheBP=false;
+                pDominoE->attacheGP=true;
+            }
+            else{}
         }
         else{}
     }
