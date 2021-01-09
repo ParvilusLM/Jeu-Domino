@@ -305,10 +305,76 @@ void Animations::gestionAnimation()
         int compt=0;
         while(compt<m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.size())
         {
+            bool xFinal=false,yFinal=false;
             if(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.at(compt)->selectionne)
             {
+                sf::Sprite* pDominoEnMouv=&m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.at(compt)->sDomino;
+
+                if(pDominoEnMouv->getPosition().x<posFinalD.x)
+                {
+                    pDominoEnMouv->move(m_vitesseAnim1,0);
+                    if(pDominoEnMouv->getPosition().x>posFinalD.x)
+                    {
+                        pDominoEnMouv->setPosition(posFinalD.x,pDominoEnMouv->getPosition().y);
+                    }
+                }
+                else if(pDominoEnMouv->getPosition().x>posFinalD.x)
+                {
+                    pDominoEnMouv->move(-m_vitesseAnim1,0);
+                    if(pDominoEnMouv->getPosition().x<posFinalD.x)
+                    {
+                        pDominoEnMouv->setPosition(posFinalD.x,pDominoEnMouv->getPosition().y);
+                    }
+                }
+                else
+                {
+                    xFinal=true;
+                }
+
+                if(pDominoEnMouv->getPosition().y<posFinalD.y)
+                {
+                    pDominoEnMouv->move(0,m_vitesseAnim1);
+                    if(pDominoEnMouv->getPosition().y>posFinalD.y)
+                    {
+                        pDominoEnMouv->setPosition(pDominoEnMouv->getPosition().x,posFinalD.y)
+                    }
+                }
+                else
+                {
+                    yFinal=true;
+                }
 
             }
+
+            if(xFinal && yFinal)
+            {
+                m_animJoueur2Coup=false;
+
+                if(m_pDecor->getJoueur().getPlateauJeu().vecDominosPoses.size()!=0)
+                {
+                    int commp=0;
+                    while(commp<m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.size())
+                    {
+                        ElDomino* pDominoADepl=m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.at(commp);
+                        if(pDominoADepl->selectionne)
+                        {
+                            pDominoADepl->selectionne=false;
+                            m_pDecor->getJoueur().getPlateauJeu().vecDominosPoses.push_back(pDominoADepl);
+
+                            int dernEl=m_pDecor->getJoueur().getPlateauJeu().vecDominosPoses.size()-1;
+                            m_pDecor->getJoueur().getPlateauJeu().vecDominosAuBord.push_back(m_pDecor->getJoueur().getPlateauJeu().vecDominosPoses.at(dernEl));
+                            m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.erase(m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.begin()+commp);
+
+                        }
+                        commp++;
+                    }
+                }
+                else
+                {
+
+                }
+            }
+
             compt++;
         }
     }
@@ -323,7 +389,7 @@ void Animations::gestionAnimation()
             {
                 if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x<posFinalD.x)
                 {
-                    m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.move(3.f,0);
+                    m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.move(m_vitesseAnim1,0);
                     if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x>posFinalD.x)
                     {
                         m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.setPosition(posFinalD.x,m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().y);
@@ -331,7 +397,7 @@ void Animations::gestionAnimation()
                 }
                 else if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x>posFinalD.x)
                 {
-                    m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.move(-3.f,0);
+                    m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.move(-m_vitesseAnim1,0);
                     if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x<posFinalD.x)
                     {
                         m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.setPosition(posFinalD.x,m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().y);
@@ -345,7 +411,7 @@ void Animations::gestionAnimation()
 
                 if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().y<posFinalD.y)
                 {
-                    m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.move(0.f,3.f);
+                    m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.move(0.f,m_vitesseAnim1);
                     if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().y>posFinalD.y)
                     {
                         m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.setPosition(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x,posFinalD.y);
@@ -392,7 +458,7 @@ void Animations::gestionAnimation()
             {
                 if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x<posFinalD.x)
                 {
-                    m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.move(3.f,0);
+                    m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.move(m_vitesseAnim1,0);
                     if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x>posFinalD.x)
                     {
                         m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.setPosition(posFinalD.x,m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().y);
@@ -400,7 +466,7 @@ void Animations::gestionAnimation()
                 }
                 else if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x>posFinalD.x)
                 {
-                    m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.move(-3.f,0);
+                    m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.move(-m_vitesseAnim1,0);
                     if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x<posFinalD.x)
                     {
                         m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.setPosition(posFinalD.x,m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().y);
@@ -413,7 +479,7 @@ void Animations::gestionAnimation()
 
                 if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().y>posFinalD.y)
                 {
-                    m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.move(0.f,-3.f);
+                    m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.move(0.f,-m_vitesseAnim1);
                     if(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().y<posFinalD.y)
                     {
                         m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.setPosition(m_pDecor->getJoueur().getPlateauJeu().vecDominosAP.at(commpt)->sDomino.getPosition().x,posFinalD.y);
@@ -517,6 +583,11 @@ void Animations::debuterAnim(int typeAnim)
 void Animations::gestMaJ()
 {
     m_tempsEcoule =m_horlorge.getElapsedTime().asSeconds();
+    if(m_tempsEcoule>2.f)
+    {
+        m_tempsEcoule=0;
+    }
+
     m_horlorge.restart();
     m_timer+=m_tempsEcoule;
 
