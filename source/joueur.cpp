@@ -783,7 +783,8 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                         }
                         else
                         {
-
+                            posFinalD.x=pDominoParent->sDomino.getPosition().x-boiteEDomP.width+(boiteEDomP.height/2);
+                            posFinalD.y=pDominoParent->sDomino.getPosition().y;
                         }
 
 
@@ -806,15 +807,16 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                             //.
                             if(noJoueur==HUMAIN)
                             {
-
+                                pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x-(boiteEDomP.width/2)-(boiteEDomP.height/2),
+                                                                    pDominoParent->sDomino.getPosition().y);
                             }
                             else
                             {
-
+                                posFinalD.x=pDominoParent->sDomino.getPosition().x-(boiteEDomP.width/2)-(boiteEDomP.height/2);
+                                posFinalD.y=pDominoParent->sDomino.getPosition().y;
                             }
 
-                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x-(boiteEDomP.width/2)-(boiteEDomP.height/2),
-                                                                                                             pDominoParent->sDomino.getPosition().y);
+
                         }
                         else
                         {
@@ -842,15 +844,16 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                             //.
                             if(noJoueur==HUMAIN)
                             {
-
+                                pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x-boiteEDomP.width,
+                                                                    pDominoParent->sDomino.getPosition().y);
                             }
                             else
                             {
-
+                                posFinalD.x=pDominoParent->sDomino.getPosition().x-boiteEDomP.width;
+                                posFinalD.y=pDominoParent->sDomino.getPosition().y;
                             }
 
-                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x-boiteEDomP.width,
-                                                                                                             pDominoParent->sDomino.getPosition().y);
+
                         }
                     }
 
@@ -872,15 +875,16 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                     {
                         if(noJoueur==HUMAIN)
                         {
-
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x+boiteEDomP.width-(boiteEDomP.height/2),
+                                                                pDominoParent->sDomino.getPosition().y);
                         }
                         else
                         {
-
+                            posFinalD.x=pDominoParent->sDomino.getPosition().x+boiteEDomP.width-(boiteEDomP.height/2);
+                            posFinalD.y=pDominoParent->sDomino.getPosition().y;
                         }
 
-                        pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x+boiteEDomP.width-(boiteEDomP.height/2),
-                                                                                                         pDominoParent->sDomino.getPosition().y);
+
                     }
                     else
                     {
@@ -899,15 +903,16 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
 
                             if(noJoueur==HUMAIN)
                             {
-
+                                pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x+(boiteEDomP.width/2)+(boiteEDomP.height/2),
+                                                                    pDominoParent->sDomino.getPosition().y);
                             }
                             else
                             {
-
+                                posFinalD.x=pDominoParent->sDomino.getPosition().x+(boiteEDomP.width/2)+(boiteEDomP.height/2);
+                                posFinalD.y=pDominoParent->sDomino.getPosition().y;
                             }
 
-                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x+(boiteEDomP.width/2)+(boiteEDomP.height/2),
-                                                                                                             pDominoParent->sDomino.getPosition().y);
+
                         }
                         else
                         {
@@ -934,15 +939,16 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
 
                             if(noJoueur==HUMAIN)
                             {
-
+                                pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x+boiteEDomP.width,
+                                                                    pDominoParent->sDomino.getPosition().y);
                             }
                             else
                             {
-
+                                posFinalD.x=pDominoParent->sDomino.getPosition().x+boiteEDomP.width;
+                                posFinalD.y=pDominoParent->sDomino.getPosition().y;
                             }
 
-                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x+boiteEDomP.width,
-                                                                                                             pDominoParent->sDomino.getPosition().y);
+
                         }
                     }
 
@@ -967,15 +973,16 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
 
                         if(noJoueur==HUMAIN)
                         {
-
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                            pDominoParent->sDomino.getPosition().y -(boiteEDomP.height/2)-(boiteEDomP.width/2));
                         }
                         else
                         {
-
+                            posFinalD.x=pDominoParent->sDomino.getPosition().x;
+                            posFinalD.y=pDominoParent->sDomino.getPosition().y -(boiteEDomP.height/2)-(boiteEDomP.width/2);
                         }
 
-                        pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
-                                                                                                         pDominoParent->sDomino.getPosition().y -(boiteEDomP.height/2)-(boiteEDomP.width/2));
+
                     }
                     else
                     {
@@ -991,29 +998,31 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                             {
                                 if(noJoueur==HUMAIN)
                                 {
-
+                                    pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                    pDominoParent->sDomino.getPosition().y-boiteEDomP.height);
                                 }
                                 else
                                 {
-
+                                    posFinalD.x=pDominoParent->sDomino.getPosition().x;
+                                    posFinalD.y=pDominoParent->sDomino.getPosition().y-boiteEDomP.height;
                                 }
 
-                                pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
-                                                                                                             pDominoParent->sDomino.getPosition().y-boiteEDomP.height);
+
                             }
                             else
                             {
                                 if(noJoueur==HUMAIN)
                                 {
-
+                                    pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                    pDominoParent->sDomino.getPosition().y-(boiteEDomP.height/2)-(boiteEDomP.width/2) );
                                 }
                                 else
                                 {
-
+                                    posFinalD.x=pDominoParent->sDomino.getPosition().x;
+                                    posFinalD.y=pDominoParent->sDomino.getPosition().y-(boiteEDomP.height/2)-(boiteEDomP.width/2);
                                 }
 
-                                pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
-                                                                                                             pDominoParent->sDomino.getPosition().y-(boiteEDomP.height/2)-(boiteEDomP.width/2) );
+
                             }
 
                         }
@@ -1042,15 +1051,16 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
 
                             if(noJoueur==HUMAIN)
                             {
-
+                                pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                pDominoParent->sDomino.getPosition().y-boiteEDomP.height);
                             }
                             else
                             {
-
+                                posFinalD.x=pDominoParent->sDomino.getPosition().x;
+                                posFinalD.y=pDominoParent->sDomino.getPosition().y-boiteEDomP.height;
                             }
 
-                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
-                                                                                                             pDominoParent->sDomino.getPosition().y-boiteEDomP.height);
+
                         }
                     }
                     coteH=false;
@@ -1074,15 +1084,16 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
 
                         if(noJoueur==HUMAIN)
                         {
-
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                            pDominoParent->sDomino.getPosition().y +(boiteEDomP.height/2)+(boiteEDomP.width/2));
                         }
                         else
                         {
-
+                            posFinalD.x=pDominoParent->sDomino.getPosition().x;
+                            posFinalD.y=pDominoParent->sDomino.getPosition().y +(boiteEDomP.height/2)+(boiteEDomP.width/2);
                         }
 
-                        pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
-                                                            pDominoParent->sDomino.getPosition().y +(boiteEDomP.height/2)+(boiteEDomP.width/2));
+
                     }
                     else
                     {
@@ -1103,29 +1114,31 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                             {
                                 if(noJoueur==HUMAIN)
                                 {
-
+                                    pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                pDominoParent->sDomino.getPosition().y + boiteEDomP.height);
                                 }
                                 else
                                 {
-
+                                    posFinalD.x=pDominoParent->sDomino.getPosition().x;
+                                    posFinalD.y=pDominoParent->sDomino.getPosition().y + boiteEDomP.height;
                                 }
 
-                                pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
-                                                                pDominoParent->sDomino.getPosition().y + boiteEDomP.height);
+
                             }
                             else
                             {
                                 if(noJoueur==HUMAIN)
                                 {
-
+                                    pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                pDominoParent->sDomino.getPosition().y+(boiteEDomP.width/2)+(boiteEDomP.height/2));
                                 }
                                 else
                                 {
-
+                                    posFinalD.x=pDominoParent->sDomino.getPosition().x;
+                                    posFinalD.y=pDominoParent->sDomino.getPosition().y+(boiteEDomP.width/2)+(boiteEDomP.height/2);
                                 }
 
-                                pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
-                                                                pDominoParent->sDomino.getPosition().y+(boiteEDomP.width/2)+(boiteEDomP.height/2));
+
                             }
 
                         }
@@ -1154,15 +1167,16 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
 
                             if(noJoueur==HUMAIN)
                             {
-
+                                pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                pDominoParent->sDomino.getPosition().y+boiteEDomP.height);
                             }
                             else
                             {
-
+                                posFinalD.x=pDominoParent->sDomino.getPosition().x;
+                                posFinalD.y=pDominoParent->sDomino.getPosition().y+boiteEDomP.height;
                             }
 
-                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
-                                                                                                             pDominoParent->sDomino.getPosition().y+boiteEDomP.height);
+
                         }
                     }
 
@@ -1234,15 +1248,16 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                     {
                         if(noJoueur==HUMAIN)
                         {
-
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x-boiteEDomP.width+(boiteEDomP.height/2),
+                                                            pDominoParent->sDomino.getPosition().y);
                         }
                         else
                         {
-
+                            posFinalD.x=pDominoParent->sDomino.getPosition().x-boiteEDomP.width+(boiteEDomP.height/2);
+                            posFinalD.y=pDominoParent->sDomino.getPosition().y;
                         }
 
-                        pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x-boiteEDomP.width+(boiteEDomP.height/2),
-                                                            pDominoParent->sDomino.getPosition().y);
+
                     }
                     else
                     {
@@ -1263,15 +1278,16 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                             //.
                             if(noJoueur==HUMAIN)
                             {
-
+                                pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x-(boiteEDomP.width/2)-(boiteEDomP.height/2),
+                                                                pDominoParent->sDomino.getPosition().y);
                             }
                             else
                             {
-
+                                posFinalD.x=pDominoParent->sDomino.getPosition().x-(boiteEDomP.width/2)-(boiteEDomP.height/2);
+                                posFinalD.y=pDominoParent->sDomino.getPosition().y;
                             }
 
-                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x-(boiteEDomP.width/2)-(boiteEDomP.height/2),
-                                                                pDominoParent->sDomino.getPosition().y);
+
                         }
                         else
                         {
@@ -1299,15 +1315,16 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                             //.
                             if(noJoueur==HUMAIN)
                             {
-
+                                pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x-boiteEDomP.width,
+                                                                pDominoParent->sDomino.getPosition().y);
                             }
                             else
                             {
-
+                                posFinalD.x=pDominoParent->sDomino.getPosition().x-boiteEDomP.width;
+                                posFinalD.y=pDominoParent->sDomino.getPosition().y;
                             }
 
-                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x-boiteEDomP.width,
-                                                                                                             pDominoParent->sDomino.getPosition().y);
+
                         }
                     }
 
@@ -1333,15 +1350,16 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                     {
                         if(noJoueur==HUMAIN)
                         {
-
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x+boiteEDomP.width-(boiteEDomP.height/2),
+                                                            pDominoParent->sDomino.getPosition().y);
                         }
                         else
                         {
-
+                            posFinalD.x=pDominoParent->sDomino.getPosition().x+boiteEDomP.width-(boiteEDomP.height/2);
+                            posFinalD.y=pDominoParent->sDomino.getPosition().y;
                         }
 
-                        pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x+boiteEDomP.width-(boiteEDomP.height/2),
-                                                            pDominoParent->sDomino.getPosition().y);
+
                     }
                     else
                     {
@@ -1362,15 +1380,16 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                             //.
                             if(noJoueur==HUMAIN)
                             {
-
+                                pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x+(boiteEDomP.width/2)+(boiteEDomP.height/2),
+                                                                pDominoParent->sDomino.getPosition().y);
                             }
                             else
                             {
-
+                                posFinalD.x=pDominoParent->sDomino.getPosition().x+(boiteEDomP.width/2)+(boiteEDomP.height/2);
+                                posFinalD.y=pDominoParent->sDomino.getPosition().y;
                             }
 
-                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x+(boiteEDomP.width/2)+(boiteEDomP.height/2),
-                                                                                                             pDominoParent->sDomino.getPosition().y);
+
                         }
                         else
                         {
@@ -1398,15 +1417,16 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                             //.
                             if(noJoueur==HUMAIN)
                             {
-
+                                pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x+boiteEDomP.width,
+                                                                pDominoParent->sDomino.getPosition().y);
                             }
                             else
                             {
-
+                                posFinalD.x=pDominoParent->sDomino.getPosition().x+boiteEDomP.width;
+                                posFinalD.y=pDominoParent->sDomino.getPosition().y;
                             }
 
-                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x+boiteEDomP.width,
-                                                                                                             pDominoParent->sDomino.getPosition().y);
+
                         }
                     }
 
@@ -1436,15 +1456,16 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                         //.
                         if(noJoueur==HUMAIN)
                         {
-
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                            pDominoParent->sDomino.getPosition().y - (boiteEDomP.height/2) - (boiteEDomP.width/2) );
                         }
                         else
                         {
-
+                            posFinalD.x=pDominoParent->sDomino.getPosition().x;
+                            posFinalD.y=pDominoParent->sDomino.getPosition().y - (boiteEDomP.height/2) - (boiteEDomP.width/2);
                         }
 
-                        pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
-                                                            pDominoParent->sDomino.getPosition().y - (boiteEDomP.height/2) - (boiteEDomP.width/2) );
+
                     }
                     else
                     {
@@ -1460,15 +1481,16 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                             //.
                             if(noJoueur==HUMAIN)
                             {
-
+                                pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                pDominoParent->sDomino.getPosition().y -(boiteEDomP.width/2)-(boiteEDomP.height/2));
                             }
                             else
                             {
-
+                                posFinalD.x=pDominoParent->sDomino.getPosition().x;
+                                posFinalD.y=pDominoParent->sDomino.getPosition().y -(boiteEDomP.width/2)-(boiteEDomP.height/2);
                             }
 
-                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
-                                                                pDominoParent->sDomino.getPosition().y -(boiteEDomP.width/2)-(boiteEDomP.height/2));
+
                         }
                         else
                         {
@@ -1496,15 +1518,16 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                             //.
                             if(noJoueur==HUMAIN)
                             {
-
+                                pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                pDominoParent->sDomino.getPosition().y-boiteEDomP.height);
                             }
                             else
                             {
-
+                                posFinalD.x=pDominoParent->sDomino.getPosition().x;
+                                posFinalD.y=pDominoParent->sDomino.getPosition().y-boiteEDomP.height;
                             }
 
-                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
-                                                                pDominoParent->sDomino.getPosition().y-boiteEDomP.height);
+
                         }
                     }
                     coteH=false;
@@ -1534,15 +1557,16 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                         //.
                         if(noJoueur==HUMAIN)
                         {
-
+                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                            pDominoParent->sDomino.getPosition().y + (boiteEDomP.height/2) + (boiteEDomP.width/2) );
                         }
                         else
                         {
-
+                            posFinalD.x=pDominoParent->sDomino.getPosition().x;
+                            posFinalD.y=pDominoParent->sDomino.getPosition().y + (boiteEDomP.height/2) + (boiteEDomP.width/2);
                         }
 
-                        pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
-                                                            pDominoParent->sDomino.getPosition().y + (boiteEDomP.height/2) + (boiteEDomP.width/2) );
+
                     }
                     else
                     {
@@ -1563,15 +1587,16 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                             //.
                             if(noJoueur==HUMAIN)
                             {
-
+                                pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                pDominoParent->sDomino.getPosition().y +(boiteEDomP.width/2)+(boiteEDomP.height/2));
                             }
                             else
                             {
-
+                                posFinalD.x=pDominoParent->sDomino.getPosition().x;
+                                posFinalD.y=pDominoParent->sDomino.getPosition().y +(boiteEDomP.width/2)+(boiteEDomP.height/2);
                             }
 
-                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
-                                                                pDominoParent->sDomino.getPosition().y +(boiteEDomP.width/2)+(boiteEDomP.height/2));
+
                         }
                         else
                         {
@@ -1599,15 +1624,17 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                             //.
                             if(noJoueur==HUMAIN)
                             {
-
+                                pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
+                                                                pDominoParent->sDomino.getPosition().y + boiteEDomP.height);
                             }
                             else
                             {
 
+                                posFinalD.x=pDominoParent->sDomino.getPosition().x;
+                                posFinalD.y=pDominoParent->sDomino.getPosition().y + boiteEDomP.height;
                             }
 
-                            pDominoEnfant->sDomino.setPosition(pDominoParent->sDomino.getPosition().x,
-                                                                                                             pDominoParent->sDomino.getPosition().y + boiteEDomP.height);
+
                         }
                     }
 
@@ -1667,9 +1694,13 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
     if(placerDPossible)
     {
         sf::FloatRect dominoFinal;
+        dominoFinal.left=posFinalD.x;
+        dominoFinal.top=posFinalD.y;
+        dominoFinal.width=pDominoE->sDomino.getLocalBounds().width;
+        dominoFinal.height=pDominoE->sDomino.getLocalBounds().height;
 
 
-        if(m_plateauJeu.detecteurG.intersects(pDominoE->sDomino.getGlobalBounds()) )
+        if(m_plateauJeu.detecteurG.intersects(pDominoE->sDomino.getGlobalBounds()) || m_plateauJeu.detecteurG.intersects(dominoFinal) )
         {
             if(pDominoE->angle==0)
             {
@@ -1677,11 +1708,33 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                 {
                     pDominoE->angle=90;
                     pDominoE->sDomino.setRotation(pDominoE->angle);
+
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().height+(pDominoE->sDomino.getGlobalBounds().height/2),
                                        -pDominoE->sDomino.getGlobalBounds().height );
                 }
                 else
                 {
+
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width,
                                        -(pDominoE->sDomino.getGlobalBounds().height/2)-(pDominoE->sDomino.getGlobalBounds().width/2) );
                 }
@@ -1697,11 +1750,31 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
 
                 if(angleDominoP==0)
                 {
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width+(pDominoE->sDomino.getGlobalBounds().width/2),
                                            -(pDominoE->sDomino.getGlobalBounds().height) );
                 }
                 else
                 {
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width+(pDominoE->sDomino.getGlobalBounds().width/2),
                                            -pDominoE->sDomino.getGlobalBounds().width-(pDominoE->sDomino.getGlobalBounds().width/2) );
                 }
@@ -1718,11 +1791,31 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
 
                 if(angleDominoP==0)
                 {
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width+(pDominoE->sDomino.getGlobalBounds().width/2),
                                            -(pDominoE->sDomino.getGlobalBounds().height) );
                 }
                 else
                 {
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width+(pDominoE->sDomino.getGlobalBounds().width/2),
                                            -pDominoE->sDomino.getGlobalBounds().width-(pDominoE->sDomino.getGlobalBounds().width/2) );
                 }
@@ -1733,7 +1826,7 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
             else{}
 
         }
-        else if(m_plateauJeu.detecteurD.intersects(pDominoE->sDomino.getGlobalBounds()) )
+        else if(m_plateauJeu.detecteurD.intersects(pDominoE->sDomino.getGlobalBounds()) || m_plateauJeu.detecteurD.intersects(dominoFinal) )
         {
             if(pDominoE->angle==0)
             {
@@ -1742,11 +1835,31 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                     pDominoE->angle=90;
                     pDominoE->sDomino.setRotation(pDominoE->angle);
 
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().height-(pDominoE->sDomino.getGlobalBounds().height/2),
                                        +pDominoE->sDomino.getGlobalBounds().height );
                 }
                 else
                 {
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().width,
                                        +(pDominoE->sDomino.getGlobalBounds().height/2)+(pDominoE->sDomino.getGlobalBounds().width/2) );
                 }
@@ -1761,11 +1874,31 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
 
                 if(angleDominoP==0)
                 {
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().width-(pDominoE->sDomino.getGlobalBounds().width/2),
                                            +pDominoE->sDomino.getGlobalBounds().height );
                 }
                 else
                 {
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().width-(pDominoE->sDomino.getGlobalBounds().width/2),
                                            +pDominoE->sDomino.getGlobalBounds().width+(pDominoE->sDomino.getGlobalBounds().width/2) );
                 }
@@ -1782,11 +1915,31 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
 
                 if(angleDominoP==0)
                 {
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().width-(pDominoE->sDomino.getGlobalBounds().width/2),
                                            +pDominoE->sDomino.getGlobalBounds().height );
                 }
                 else
                 {
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().width-(pDominoE->sDomino.getGlobalBounds().width/2),
                                            +pDominoE->sDomino.getGlobalBounds().width+(pDominoE->sDomino.getGlobalBounds().width/2) );
                 }
@@ -1797,7 +1950,7 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
             else{}
 
         }
-        else if(m_plateauJeu.detecteurH.intersects(pDominoE->sDomino.getGlobalBounds()))
+        else if(m_plateauJeu.detecteurH.intersects(pDominoE->sDomino.getGlobalBounds()) || m_plateauJeu.detecteurH.intersects(dominoFinal) )
         {
             if(pDominoE->angle==0)
             {
@@ -1806,11 +1959,31 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
 
                 if(angleDominoP==90)
                 {
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width,
                                            +pDominoE->sDomino.getGlobalBounds().height+(pDominoE->sDomino.getGlobalBounds().height/2) );
                 }
                 else
                 {
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().height+(pDominoE->sDomino.getGlobalBounds().height/2),
                                            +pDominoE->sDomino.getGlobalBounds().height+(pDominoE->sDomino.getGlobalBounds().height/2));
                 }
@@ -1826,11 +1999,31 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
 
                 if(angleDominoP==90)
                 {
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width,
                                            +pDominoE->sDomino.getGlobalBounds().height+(pDominoE->sDomino.getGlobalBounds().height/2) );
                 }
                 else
                 {
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().height+(pDominoE->sDomino.getGlobalBounds().height/2),
                                            pDominoE->sDomino.getGlobalBounds().height+(pDominoE->sDomino.getGlobalBounds().height/2) );
                 }
@@ -1845,11 +2038,31 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                     pDominoE->angle=0;
                     pDominoE->sDomino.setRotation(pDominoE->angle);
 
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().width,
                                         +pDominoE->sDomino.getGlobalBounds().width+(pDominoE->sDomino.getGlobalBounds().width/2) );
                 }
                 else
                 {
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(pDominoE->sDomino.getGlobalBounds().height+(pDominoE->sDomino.getGlobalBounds().height/2),
                                         +pDominoE->sDomino.getGlobalBounds().height );
                 }
@@ -1860,7 +2073,7 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
             }
             else{}
         }
-        else if(m_plateauJeu.detecteurB.intersects(pDominoE->sDomino.getGlobalBounds()))
+        else if(m_plateauJeu.detecteurB.intersects(pDominoE->sDomino.getGlobalBounds()) || m_plateauJeu.detecteurB.intersects(dominoFinal) )
         {
             if(pDominoE->angle==0)
             {
@@ -1869,11 +2082,31 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
 
                 if(angleDominoP==90)
                 {
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().width,
                                            -pDominoE->sDomino.getGlobalBounds().height-(pDominoE->sDomino.getGlobalBounds().height/2) );
                 }
                 else
                 {
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().height-(pDominoE->sDomino.getGlobalBounds().height/2),
                                            -pDominoE->sDomino.getGlobalBounds().height-(pDominoE->sDomino.getGlobalBounds().height/2));
                 }
@@ -1889,11 +2122,31 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
 
                 if(angleDominoP==90)
                 {
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().width,
                                            -pDominoE->sDomino.getGlobalBounds().height-(pDominoE->sDomino.getGlobalBounds().height/2) );
                 }
                 else
                 {
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().height-(pDominoE->sDomino.getGlobalBounds().height/2),
                                            -pDominoE->sDomino.getGlobalBounds().height-(pDominoE->sDomino.getGlobalBounds().height/2) );
                 }
@@ -1908,11 +2161,31 @@ bool Joueur::placerDomino(int joueur, int noDominoP,int noDominoE)
                     pDominoE->angle=0;
                     pDominoE->sDomino.setRotation(pDominoE->angle);
 
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().width,
                                         -pDominoE->sDomino.getGlobalBounds().width-(pDominoE->sDomino.getGlobalBounds().width/2) );
                 }
                 else
                 {
+                    if(noJoueur==HUMAIN)
+                    {
+
+                    }
+                    else
+                    {
+                        posFinalD.x=
+                        posFinalD.y=
+                    }
+
                     pDominoE->sDomino.move(-pDominoE->sDomino.getGlobalBounds().height-(pDominoE->sDomino.getGlobalBounds().height/2),
                                         -pDominoE->sDomino.getGlobalBounds().height );
                 }
