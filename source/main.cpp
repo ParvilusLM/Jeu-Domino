@@ -17,6 +17,7 @@ bool laMain=false,laMainBot=false; //laMainBot pour le CPU
 int sourisX=0,sourisY=0;
 bool glisser=false,deposer=false,piocher=false; //pour autoriser les actions glisser, deposer ou piocher
 sf::Vector2f posFinalD; //pour enregister la position finale ou on doit mettre le domino joue par le CPU
+sf::Vector2f posFinalD2;
 std::vector<int > animAActiver;
 bool attente=true; //pour eviter les joueurs d'effectuer des actions pendant les transitions
 

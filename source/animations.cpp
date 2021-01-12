@@ -310,20 +310,20 @@ void Animations::gestionAnimation()
             {
                 sf::Sprite* pDominoEnMouv=&m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.at(compt)->sDomino;
 
-                if(pDominoEnMouv->getPosition().x<posFinalD.x)
+                if(pDominoEnMouv->getPosition().x<posFinalD2.x)
                 {
                     pDominoEnMouv->move(m_vitesseAnim1,0);
-                    if(pDominoEnMouv->getPosition().x>posFinalD.x)
+                    if(pDominoEnMouv->getPosition().x>posFinalD2.x)
                     {
-                        pDominoEnMouv->setPosition(posFinalD.x,pDominoEnMouv->getPosition().y);
+                        pDominoEnMouv->setPosition(posFinalD2.x,pDominoEnMouv->getPosition().y);
                     }
                 }
-                else if(pDominoEnMouv->getPosition().x>posFinalD.x)
+                else if(pDominoEnMouv->getPosition().x>posFinalD2.x)
                 {
                     pDominoEnMouv->move(-m_vitesseAnim1,0);
-                    if(pDominoEnMouv->getPosition().x<posFinalD.x)
+                    if(pDominoEnMouv->getPosition().x<posFinalD2.x)
                     {
-                        pDominoEnMouv->setPosition(posFinalD.x,pDominoEnMouv->getPosition().y);
+                        pDominoEnMouv->setPosition(posFinalD2.x,pDominoEnMouv->getPosition().y);
                     }
                 }
                 else
@@ -331,12 +331,12 @@ void Animations::gestionAnimation()
                     xFinal=true;
                 }
 
-                if(pDominoEnMouv->getPosition().y<posFinalD.y)
+                if(pDominoEnMouv->getPosition().y<posFinalD2.y)
                 {
                     pDominoEnMouv->move(0,m_vitesseAnim1);
-                    if(pDominoEnMouv->getPosition().y>posFinalD.y)
+                    if(pDominoEnMouv->getPosition().y>posFinalD2.y)
                     {
-                        pDominoEnMouv->setPosition(pDominoEnMouv->getPosition().x,posFinalD.y)
+                        pDominoEnMouv->setPosition(pDominoEnMouv->getPosition().x,posFinalD2.y);
                     }
                 }
                 else
@@ -369,10 +369,10 @@ void Animations::gestionAnimation()
                         commp++;
                     }
                 }
-                else
-                {
 
-                }
+                m_animJoueur2C=true;
+                m_animJoueur1V=true;
+
             }
 
             compt++;
