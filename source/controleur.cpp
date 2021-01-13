@@ -6,6 +6,10 @@ Controleur::Controleur(sf::RenderWindow& fenetre):m_decor(0),m_animations(0)
 
     m_decor=new Decor(*m_fenetre);
     m_animations=new Animations(*m_decor);
+
+    m_tMasque.loadFromFile("donnees/masque.png");
+
+    m_sMasque.setTexture(m_tMasque);
 }
 
 void Controleur::debutJeu()
@@ -324,6 +328,11 @@ void Controleur::afficheJeu()
 
     if(jeuPause)
     {
+        if(m_decor->getMenu().getTypeMenu()==MenuInstructions)
+        {
+            m_fenetre->draw(m_sMasque);
+        }
+
         m_decor->getMenu().afficheMenu();
     }
 }

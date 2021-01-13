@@ -170,7 +170,7 @@ void Joueur::initPlateauJeu()
     placement.width=8.2f*20;
     placement.height=4.2f*20;
     m_plateauJeu.sIndicPremDom.setTextureRect(placement);
-    m_plateauJeu.sIndicPremDom.setScale(0.5f,0.5f);
+    m_plateauJeu.sIndicPremDom.setScale(0.45f,0.45f);
 
 
 

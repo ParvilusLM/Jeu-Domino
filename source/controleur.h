@@ -32,6 +32,8 @@ private:
     sf::RenderWindow* m_fenetre;
     Decor* m_decor;
     Animations* m_animations;
+    sf::Texture m_tMasque;
+    sf::Sprite m_sMasque;
 
 
 };
