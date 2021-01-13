@@ -2314,7 +2314,15 @@ void Joueur::retourneDominos(int joueur,bool rendreVisible)
         int compt=0;
         while(compt<m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size())
         {
-            m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->etat=VISIBLE;
+            if(rendreVisible)
+            {
+                m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->etat=VISIBLE;
+            }
+            else
+            {
+                m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(compt)->etat=RETOURNE;
+            }
+
             compt++;
         }
     }
@@ -2323,7 +2331,15 @@ void Joueur::retourneDominos(int joueur,bool rendreVisible)
         int compt=0;
         while(compt<m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size())
         {
-            m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->etat=VISIBLE;
+            if(rendreVisible)
+            {
+                m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->etat=VISIBLE;
+            }
+            else
+            {
+                m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->etat=RETOURNE;
+            }
+
             compt++;
         }
     }
@@ -2695,7 +2711,9 @@ void Joueur::gestionSelectionDom()
         std::cout<<"Domino 2:  "<<m_plateauJeu.vecDominosAP.at(indicEl2)->cote1<<" ; "<<m_plateauJeu.vecDominosAP.at(indicEl2)->cote2<<std::endl;
 
         if(m_plateauJeu.vecDominosAP.at(indicEl1)->cote1==m_plateauJeu.vecDominosAP.at(indicEl2)->cote1 ||
-            m_plateauJeu.vecDominosAP.at(indicEl1)->cote2==m_plateauJeu.vecDominosAP.at(indicEl2)->cote2)
+           m_plateauJeu.vecDominosAP.at(indicEl1)->cote1==m_plateauJeu.vecDominosAP.at(indicEl2)->cote2 ||
+            m_plateauJeu.vecDominosAP.at(indicEl1)->cote2==m_plateauJeu.vecDominosAP.at(indicEl2)->cote1 ||
+           m_plateauJeu.vecDominosAP.at(indicEl1)->cote2==m_plateauJeu.vecDominosAP.at(indicEl2)->cote2)
         {
             cotesIdentiques=true;
         }
@@ -2712,6 +2730,7 @@ void Joueur::gestionSelectionDom()
                 if(laMain)
                 {
                     m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.push_back(m_plateauJeu.vecDominosAP.at(indicPos));
+
                 }
                 else
                 {
@@ -2739,8 +2758,35 @@ void Joueur::gestionSelectionDom()
             laMain=false;
             laMainBot=true;
             attente=true;
-            animAActiver.push_back(ANIM_JOUEUR1_C);
-            animAActiver.push_back(ANIM_JOUEUR2_V);
+
+            if(cotesIdentiques)
+            {
+
+                animAActiver.push_back(ANIM_JOUEUR1_P2);
+
+                if(m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size()==2)
+                {
+                    posFinalD.x=13*20;
+                    posFinalD.y=33*20-5;
+
+                    posFinalD2.x=14*20;
+                    posFinalD2.y=33*20-5;
+                }
+                else
+                {
+                    int dernEl=m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.size()-1;
+                    posFinalD.x=m_plateauJeu.vecJoueurs.at(HUMAIN).vecDominos.at(dernEl-2)->sDomino.getPosition().x+20;
+                    posFinalD.y=33*20-5;
+
+                    posFinalD2.x=posFinalD.x+20;
+                    posFinalD2.y=33*20-5;
+                }
+            }
+            else
+            {
+                animAActiver.push_back(ANIM_JOUEUR1_C);
+                animAActiver.push_back(ANIM_JOUEUR2_V);
+            }
 
         }
         else
@@ -2748,8 +2794,38 @@ void Joueur::gestionSelectionDom()
             laMain=true;
             laMainBot=false;
             attente=true;
-            animAActiver.push_back(ANIM_JOUEUR1_V);
-            animAActiver.push_back(ANIM_JOUEUR2_C);
+
+            if(cotesIdentiques)
+            {
+
+                animAActiver.push_back(ANIM_JOUEUR2_P2);
+
+                if(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size()==2)
+                {
+                    posFinalD.x=15*20;
+                    posFinalD.y=2*20+5;
+
+                    posFinalD2.x=16*20;
+                    posFinalD2.y=2*20+5;
+                }
+                else
+                {
+                    int dernEl=m_plateauJeu.vecJoueurs.at(CPU).vecDominos.size()-1;
+                    posFinalD.x=m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(dernEl-2)->sDomino.getPosition().x+20;
+                    posFinalD.y=2*20+5;
+
+                    posFinalD2.x=posFinalD.x+20;
+                    posFinalD2.y=2*20+5;
+                }
+            }
+            else
+            {
+                animAActiver.push_back(ANIM_JOUEUR2_C);
+                animAActiver.push_back(ANIM_JOUEUR1_V);
+
+            }
+
+
         }
 
     }
@@ -2914,19 +2990,7 @@ void Joueur::gestMaj()
                                     {
                                         //attente=true;
                                         animAActiver.push_back(ANIM_JOUEUR2_COUP);
-
-
-                                        /*
-                                        m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->selectionne=false;
-                                        m_plateauJeu.vecDominosPoses.push_back(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt));
-
-                                        int dernEl=m_plateauJeu.vecDominosPoses.size()-1;
-                                        m_plateauJeu.vecDominosAuBord.push_back(m_plateauJeu.vecDominosPoses.at(dernEl));
-                                        m_plateauJeu.vecJoueurs.at(CPU).vecDominos.erase(m_plateauJeu.vecJoueurs.at(CPU).vecDominos.begin()+compt);
-                                        */
-
-                                        //laMain=true;
-                                        //laMainBot=false;
+                                        m_plateauJeu.vecJoueurs.at(CPU).vecDominos.at(compt)->etat=VISIBLE;
                                     }
                                     compt+=100;
                                 }

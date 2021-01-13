@@ -143,7 +143,6 @@ void Animations::gestionAnimation()
         {
             m_animDistrib=false;
             m_pDecor->getJoueur().retourneDominos(HUMAIN,true);
-            m_pDecor->getJoueur().retourneDominos(CPU,true);
             sf::Vector2f augmenteScale;
             augmenteScale.x=0.4;
             augmenteScale.y=0.4;
@@ -523,11 +522,199 @@ void Animations::gestionAnimation()
     if(m_animJoueur1P2)
     {
         //
+        bool xFinal1=false,xFinal2=false,yFinal1=false,yFinal2=false;
+        int dernEl=m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).vecDominos.size()-1;
+
+        sf::Sprite *pDominoEnMouv1=&m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).vecDominos.at(dernEl-1)->sDomino ,
+        *pDominoEnMouv2=&m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(HUMAIN).vecDominos.at(dernEl)->sDomino;
+
+        {
+            if(pDominoEnMouv1->getPosition().x<posFinalD.x)
+            {
+                pDominoEnMouv1->move(m_vitesseAnim1,0);
+                if(pDominoEnMouv1->getPosition().x>posFinalD.x)
+                {
+                    pDominoEnMouv1->setPosition(posFinalD.x,pDominoEnMouv1->getPosition().y);
+                }
+            }
+            else if(pDominoEnMouv1->getPosition().x>posFinalD.x)
+            {
+                pDominoEnMouv1->move(-m_vitesseAnim1,0);
+                if(pDominoEnMouv1->getPosition().x<posFinalD.x)
+                {
+                    pDominoEnMouv1->setPosition(posFinalD.x,pDominoEnMouv1->getPosition().y);
+                }
+            }
+            else
+            {
+                xFinal1=true;
+            }
+
+            if(pDominoEnMouv1->getPosition().y<posFinalD.y)
+            {
+                pDominoEnMouv1->move(0,m_vitesseAnim1);
+                if(pDominoEnMouv1->getPosition().y>posFinalD.y)
+                {
+                    pDominoEnMouv1->setPosition(pDominoEnMouv1->getPosition().x,posFinalD.y);
+                }
+            }
+            else
+            {
+                yFinal1=true;
+            }
+
+
+        }
+
+
+        //..
+        {
+            if(pDominoEnMouv2->getPosition().x<posFinalD2.x)
+            {
+                pDominoEnMouv2->move(m_vitesseAnim1,0);
+                if(pDominoEnMouv2->getPosition().x>posFinalD2.x)
+                {
+                    pDominoEnMouv2->setPosition(posFinalD2.x,pDominoEnMouv2->getPosition().y);
+                }
+            }
+            else if(pDominoEnMouv2->getPosition().x>posFinalD2.x)
+            {
+                pDominoEnMouv2->move(-m_vitesseAnim1,0);
+                if(pDominoEnMouv2->getPosition().x<posFinalD2.x)
+                {
+                    pDominoEnMouv2->setPosition(posFinalD2.x,pDominoEnMouv2->getPosition().y);
+                }
+            }
+            else
+            {
+                xFinal2=true;
+            }
+
+            if(pDominoEnMouv2->getPosition().y<posFinalD2.y)
+            {
+                pDominoEnMouv2->move(0,m_vitesseAnim1);
+                if(pDominoEnMouv2->getPosition().y>posFinalD2.y)
+                {
+                    pDominoEnMouv2->setPosition(pDominoEnMouv2->getPosition().x,posFinalD2.y);
+                }
+            }
+            else
+            {
+                yFinal2=true;
+            }
+
+
+        }
+
+
+        //..
+        if(xFinal1 && xFinal2 && yFinal1 && yFinal2)
+        {
+            m_animJoueur1P2=false;
+            m_animJoueur1C=true;
+            m_animJoueur2V=true;
+            m_pDecor->getJoueur().retourneDominos(HUMAIN,false);
+        }
 
     }
 
     if(m_animJoueur2P2)
     {
+        //
+        bool xFinal1=false,xFinal2=false,yFinal1=false,yFinal2=false;
+        int dernEl=m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.size()-1;
+
+        sf::Sprite *pDominoEnMouv1=&m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.at(dernEl-1)->sDomino ,
+        *pDominoEnMouv2=&m_pDecor->getJoueur().getPlateauJeu().vecJoueurs.at(CPU).vecDominos.at(dernEl)->sDomino;
+
+        {
+            if(pDominoEnMouv1->getPosition().x<posFinalD.x)
+            {
+                pDominoEnMouv1->move(m_vitesseAnim1,0);
+                if(pDominoEnMouv1->getPosition().x>posFinalD.x)
+                {
+                    pDominoEnMouv1->setPosition(posFinalD.x,pDominoEnMouv1->getPosition().y);
+                }
+            }
+            else if(pDominoEnMouv1->getPosition().x>posFinalD.x)
+            {
+                pDominoEnMouv1->move(-m_vitesseAnim1,0);
+                if(pDominoEnMouv1->getPosition().x<posFinalD.x)
+                {
+                    pDominoEnMouv1->setPosition(posFinalD.x,pDominoEnMouv1->getPosition().y);
+                }
+            }
+            else
+            {
+                xFinal1=true;
+            }
+
+            if(pDominoEnMouv1->getPosition().y>posFinalD.y)
+            {
+                pDominoEnMouv1->move(0,-m_vitesseAnim1);
+                if(pDominoEnMouv1->getPosition().y<posFinalD.y)
+                {
+                    pDominoEnMouv1->setPosition(pDominoEnMouv1->getPosition().x,posFinalD.y);
+                }
+            }
+            else
+            {
+                yFinal1=true;
+            }
+
+
+        }
+
+
+        //..
+        {
+            if(pDominoEnMouv2->getPosition().x<posFinalD2.x)
+            {
+                pDominoEnMouv2->move(m_vitesseAnim1,0);
+                if(pDominoEnMouv2->getPosition().x>posFinalD2.x)
+                {
+                    pDominoEnMouv2->setPosition(posFinalD2.x,pDominoEnMouv2->getPosition().y);
+                }
+            }
+            else if(pDominoEnMouv2->getPosition().x>posFinalD2.x)
+            {
+                pDominoEnMouv2->move(-m_vitesseAnim1,0);
+                if(pDominoEnMouv2->getPosition().x<posFinalD2.x)
+                {
+                    pDominoEnMouv2->setPosition(posFinalD2.x,pDominoEnMouv2->getPosition().y);
+                }
+            }
+            else
+            {
+                xFinal2=true;
+            }
+
+            if(pDominoEnMouv2->getPosition().y>posFinalD2.y)
+            {
+                pDominoEnMouv2->move(0,-m_vitesseAnim1);
+                if(pDominoEnMouv2->getPosition().y<posFinalD2.y)
+                {
+                    pDominoEnMouv2->setPosition(pDominoEnMouv2->getPosition().x,posFinalD2.y);
+                }
+            }
+            else
+            {
+                yFinal2=true;
+            }
+
+
+        }
+
+
+
+        //..
+        if(xFinal1 && xFinal2 && yFinal1 && yFinal2)
+        {
+            m_animJoueur2P2=false;
+            m_animJoueur2C=true;
+            m_animJoueur1V=true;
+            m_pDecor->getJoueur().retourneDominos(CPU,false);
+        }
 
     }
 }
@@ -573,6 +760,14 @@ void Animations::debuterAnim(int typeAnim)
     else if(typeAnim==ANIM_JOUEUR2_P)
     {
         m_animJoueur2P=true;
+    }
+    else if(typeAnim==ANIM_JOUEUR1_P2)
+    {
+        m_animJoueur1P2=true;
+    }
+    else if(typeAnim==ANIM_JOUEUR2_P2)
+    {
+        m_animJoueur2P2=true;
     }
     else
     {
